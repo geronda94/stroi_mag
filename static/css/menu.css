@@ -1,0 +1,45 @@
+.menu__ul {
+    min-width: 40%;
+    max-width: 90%;
+    margin: 0 auto;
+    display: flex;
+    gap:30px;
+    justify-content: center;
+}
+
+.menu__link {
+    padding: 15px 15px;
+    color:#2d2d2d;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-bottom: 1px solid #000;
+    
+}
+
+.menu__link:hover{
+    background: #2d2d2d;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.menu__title {
+    position: relative;
+}
+
+.submenu__ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #000;
+    transition: opacity 0.5s ease;
+}
+
+.menu__link:hover .submenu__ul {
+    opacity: 1;
+    visibility: visible;
+}

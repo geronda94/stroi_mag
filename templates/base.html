@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block styles %}
+        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/menu.css')}}">
+    {% endblock styles %}
+    <title>
+        {% if title %}
+            {{title}}
+        {% else %}
+            Магазин строй материалов
+        {% endif %}
+    </title>
+</head>
+<body>
+    <header class="block_header">
+        {% block header %}
+            {% if menu %}
+                <div class="menu__wrapper">
+                    <nav class="menu__top menu">
+                        <ul class="menu__ul menu__ul-top">
+                        {% for title, link in menu.items() %}
+                            {% if title=='Каталог товаров' %}
+                                <li class="menu__link menu__title submenu__activator">{{title}}
+
+                                    <ul class="submenu__ul">
+                                        {% for t, l in link.items() %}
+                                            <a href="{{url_for(l)}}" class="submenu__link">
+                                                <li class="submenu__title">{{t}}</li>
+                                            </a>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            
+                                                                    
+                                
+                                
+                            {% else %}
+                            <a href="{{ url_for(link) }}" class="menu__link">
+                                <li class="menu__title">{{title}}</li>
+                            </a>
+                            {% endif %}
+                                
+                        {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+            {% endif %}
+            
+        {% endblock header %}
+    </header>
+
+    <main class="block_content">
+        <!-- {% block content %}
+            {% block title__content %}
+                <h1 class="title__content">
+                {% if title %}
+                    {{title}}
+                {% else %}
+                    Магазин строй материалов
+                {% endif %}
+                </h1>
+            {% endblock title__content %}
+
+            
+        {% endblock content %} -->
+    </main>
+
+    <footer class="block_footer">
+        {% block footer %}
+            
+        {% endblock footer %}
+    </footer>
+    
+</body>
+</html>
