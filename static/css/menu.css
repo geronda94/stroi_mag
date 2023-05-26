@@ -184,10 +184,19 @@
 }
 
 
-@media(max-width:320px){
+@media(max-width:350px){
     .menu__link {
         font-size: 11px;
-        letter-spacing: 2px
+        letter-spacing: 2px;
+    }
+    .submenu__ul{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .submenu__link {
+        font-size: 11px;
+        border-top: 1px solid #f3f2f2;
     }
 }
 

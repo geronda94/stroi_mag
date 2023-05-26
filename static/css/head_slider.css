@@ -2,17 +2,105 @@
     z-index: 1;
 }
 
+.carousel-item {
+  position: relative;
+}
+
+.slide__title-inner {
+  width:45%;
+  height: 350px;
+  position: absolute;
+  top: 5%;
+  right:10%;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+
+
+  background-color: rgba(196, 236, 230, 0.4); /* Непрозрачный цвет фона (черный в данном случае) */
+  backdrop-filter: blur(7px); /* Размытие фона */
+}
+
+
+  
+
+.slide__title{
+  font-family: 'PT Serif', serif;
+  display: block;
+  user-select: none;    
+  color:#082022;
+  font-size: 45px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-align: center;
+
+  padding: 10px;
+}
+
 .head__slider .carousel-inner {
-    height: 500px;
+    height: 350px;
     width: 100%;
   }
   
   .head__slider .carousel-inner .carousel-item img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
   
   .head__slider .carousel-control-prev,
   .head__slider .carousel-control-next {
-    height: 500px;
+    height: 350px;
   }
+
+
+  @media(max-width:1120px){
+    .head__slider .carousel-inner {
+      height: 250px;
+    }
+    
+    .head__slider .carousel-control-prev,
+    .head__slider .carousel-control-next {
+      height: 250px;
+    }
+
+    .slide__title-inner{
+      height: 30%;
+    }
+    .slide__title{
+      font-size: 40px;
+    }
+  }
+
+
+@media(max-width:1058px){
+  .slide__title-inner{
+    width: 50%;
+
+  }
+}
+
+@media(max-width:910px){
+  .slide__title-inner{
+    height: 380px;
+  }
+  .slide__title{
+    font-size: 35px;
+  }
+}
+
+@media(max-width:815px) {
+  .slide__title{
+    font-size: 32px;
+  }
+}
+
+
+@media(max-width:760px) {
+  .slide__title{
+    font-size: 29px;
+  }
+}
