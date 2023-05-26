@@ -1,20 +1,39 @@
+.menu__wrapper {  
+    width: 100%;
+}
+
+.menu__inner {
+    position: fixed;
+    width: 100%;
+}
+
+.menu__padding {
+    position: relative; /* Устанавливаем позиционирование для контейнера меню */
+    z-index: 9999; /* Устанавливаем высокий z-index для меню */
+  }
+
+
 .menu__ul {
-    min-width: 40%;
-    max-width: 90%;
+    
+    width:100%;
     margin: 0 auto;
     display: flex;
     gap:30px;
-    justify-content: center;
+    justify-content:space-evenly;
+    background-color: #fff;
 }
 
 .menu__link {
     padding: 15px 15px;
     color:#2d2d2d;
     font-size: 15px;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 3px;
-    border-bottom: 1px solid #000;
-    
+    border-bottom: 1px solid #d1d1d1;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
 }
 
 .menu__link:hover{
@@ -28,18 +47,192 @@
 }
 
 .submenu__ul {
+    margin-top: 1px;
     position: absolute;
     top: 100%;
     left: 0;
     opacity: 0;
     visibility: hidden;
-    background: #fff;
-    padding: 10px;
-    border: 1px solid #000;
-    transition: opacity 0.5s ease;
+    color: #2d2d2d;
+    background-color: #fff;
+    padding: 10px 0 40px;
+    background-color: fff;
+    transition: opacity 0.7s ease;
+    max-width:450%;
+    min-width: 400%;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) ;
+    grid-template-rows: repeat(2, 1fr) ;
+    grid-gap: 20px;
 }
 
 .menu__link:hover .submenu__ul {
     opacity: 1;
     visibility: visible;
 }
+
+.submenu__link {
+    padding: 15px;
+    text-align: center;
+    font-weight: 500;
+    text-transform: none;
+    font-size: 14px;
+}
+
+.submenu__link:hover{
+    background:#2d2d2d ;
+    color:#fff;
+    transition: 0.3s;
+}
+
+
+@media (max-width: 1067px) {
+    .menu__link{
+        font-size: 13px;
+        line-height: 15px;
+    }
+
+}
+
+@media (max-width: 985px) {
+    .menu__link{
+        font-size: 11px;
+        padding: 15px 10px;
+        letter-spacing: 2px;
+    }
+
+    .menu__ul{
+        gap: 20px;
+    }
+
+}
+
+
+@media (max-width: 790px) {
+    .menu__link{
+        font-size: 10px;
+    }
+    .menu__ul{
+        gap: 15px;
+    }
+
+}
+
+
+@media (max-width: 695px) {
+    .menu__link{
+        padding: 12px 5px;
+    }
+}
+
+@media (max-width: 650px) {
+    .menu__link{
+        font-size: 11px;       
+        
+    }
+}
+
+@media (max-width: 500px) {
+    .menu__ul {
+        flex-direction: column;
+        gap:0;
+    }
+    .menu__link:hover{
+        background: #2d2d2d;
+        color: #fff;
+        transition: 0.3s;
+    }
+    
+    
+    #submenu__activator {
+        background-color: #fff;
+        color: #2d2d2d;
+    }
+    .submenu__ul {
+        
+        opacity: 0;
+        visibility: hidden;
+        color: #2d2d2d;
+        padding: 20px 0 10px;
+        background-color: fff;
+        transition: opacity 0.7s ease;
+        max-width: 100%; 
+        min-width: 70%; 
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) ;
+        grid-template-rows: repeat(3, 1fr) ;
+        grid-gap: 10px;
+    }
+    
+    .menu__link:hover .submenu__ul {
+        opacity: 1;
+        visibility: visible;
+        position:static;
+    }
+    
+    .menu__link {
+        font-size: 13px;
+        letter-spacing: 3px;
+        padding: 15px;
+    }
+    .submenu__link {
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-transform: none;
+    }
+}
+
+
+@media(max-width:320px){
+    .menu__link {
+        font-size: 11px;
+        letter-spacing: 2px
+    }
+}
+
+
+
+
+
+#toggle, .toggle-btn{
+    display: none;
+}
+
+
+
+@media(max-width: 500px) {
+    .menu__ul {
+        display: none; 
+    }
+     
+
+
+    #toggle{
+    opacity: 0;
+    position: absolute;
+    }
+
+    #toggle:checked ~ .menu__wrapper .menu__ul {
+        display: flex; /* Отображаем меню, когда чекбокс выбран */
+    }
+
+
+
+    .toggle-btn{
+        user-select: none;
+        display: flex;
+        justify-content: center;
+        font-size: 15px;
+        letter-spacing: 4px;
+        background-color: #2d2d2d;
+        color: #fff;
+        padding: 15px;
+    }
+
+}
+
+
+
+
+

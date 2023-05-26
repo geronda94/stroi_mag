@@ -1,5 +1,11 @@
-.menu__wrapper {
-    width: 100%;
-    position: absolute;
+a {
+    color: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    line-height: inherit;
+}
 
+.block__header{
+    min-height: 60px;
 }
