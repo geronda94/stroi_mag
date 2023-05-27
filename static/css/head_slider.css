@@ -35,8 +35,8 @@
   text-align: center;
 
   padding: 20px 10px;
-  background-color: rgba(196, 236, 230, 0.4); /* Непрозрачный цвет фона (черный в данном случае) */
-  backdrop-filter: blur(7px); /* Размытие фона */
+  background-color: rgba(196, 236, 230, 0.2); /* Непрозрачный цвет фона (черный в данном случае) */
+  backdrop-filter: blur(6px); /* Размытие фона */
 
 }
 
