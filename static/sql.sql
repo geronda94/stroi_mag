@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS product_img(
 
 
 
+
 INSERT INTO seller(name, description,address,phone,telegram, email) VALUES
 ('self', 'self', 'aval', '77553291', '15444654565', 'iiiliev.igor@gmail.com'),
 ('Аваль', 'Цемент Песок Гравий', 'Мегатранс', '77782349', '15444654565', 'iiiliev.igor@gmail.com');
@@ -73,3 +74,13 @@ INSERT INTO product(name, description, link, seller_id, price, price2, price3, c
 ('Песок Мытый', 'Цемент мытый, без глины', 'pesok-2', '2','14', '0','0','0','0','3'),
 ('Гравий', 'Гравий среднего размера', 'gravii', '2','18', '0','0','0','0','4'),
 ('Мелуза', 'Мелуза или известковый отсев. Молотая, отлично подходит для добавки в штукатурные смеси, фасадной отделки и для добавления в корм животных', 'meluza', '2','25', '0','0','0','0','5');
+
+
+INSERT INTO cat_prod(category_id, product_id) VALUES
+('1','1'),
+('1','2'),
+('1','3'),
+('1','4'),
+('1','5'),
+('1','6'),
+('1','7');
