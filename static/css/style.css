@@ -82,6 +82,7 @@ a {
 }
 
 .card__description{
+    height: 80px;
     margin-top: 7px;
     font-size: 14px;
     color: rgb(101, 102, 102);
@@ -101,7 +102,7 @@ a {
 
 
 .add__to-cart{
-    margin-top: 15px;
+    margin-top: 30px;
     width: 100%;
     display: flex;
     justify-content:center;
@@ -112,26 +113,26 @@ a {
 
 .input__to-cart{
     width: 40px;
-    border-bottom:1px solid rgb(25, 73, 218);
-    padding: 5px;
+    border-bottom:1px solid rgb(67, 67, 67);;
     text-align: center;
-    color: rgb(25, 73, 218);
+    color: rgb(67, 67, 67);
+    font-size: 14px;
 }
 
 
 .add__label{
     font-size: 14px;
-    padding: 5px 0;
-    color: rgb(25, 73, 218);
+    color: rgb(67, 67, 67);
     text-align: center;
-    width: 100%;
+
 }
 .button__to-cart{
+    width: 90%;
     margin: 15px auto;
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    padding: 8px 20px;
+    letter-spacing: 2px;
+    padding: 10px;
     background-color: #fff;
     border: 1px solid rgb(25, 73, 218);
     color: rgb(25, 73, 218);
