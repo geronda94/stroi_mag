@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@400;500&family=PT+Serif:wght@700&display=swap');
 a {
     color: inherit;
     font-size: inherit;
@@ -10,4 +10,22 @@ a {
 
 .block__header{
     min-height: 60px;
+}
+
+.block__content {
+    width: 85%;
+    min-height: 300px;
+    margin: 0 auto;
+    outline:1px solid yellow;
+    padding: 20px;
+}
+
+.title__content {
+    font-family: 'Noto Serif Display', serif;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 19px;
+    font-family: 500;
+    letter-spacing: 3px;
+    font-weight: 500;
 }

@@ -17,6 +17,6 @@ menu = {
   
 @app.route('/')
 def index():
-	return render_template('index.html', title='Главная страница', menu=menu)
+	return render_template('index.html', title='Domstroi.pro - Наш ассортимент', menu=menu)
 
 

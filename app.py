@@ -1,4 +1,8 @@
 from flask import Flask
+from pg import PgConnect, PgRequest
+from config import DB
+
+
 
 
 

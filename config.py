@@ -9,7 +9,7 @@ class Configuration(object):
 class DB:
     host="localhost"
     port='5432'
-    database="self"
+    database="stroimarket"
     user="geronda"
     password="1994"
 
