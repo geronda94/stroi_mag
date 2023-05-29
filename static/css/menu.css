@@ -34,7 +34,7 @@ ul{
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 3px;
-    border-bottom: 1px solid #d1d1d1;
+    border-bottom: 1px solid rgb(106, 137, 230);
     user-select: none;
     cursor: pointer;
     text-align: center;
@@ -42,6 +42,7 @@ ul{
 
 .menu__link:hover{
     background: rgb(31, 39, 37);
+    border-bottom: rgb(31, 39, 37);
     color: #fff;
     transition: 0.3s;
 }
