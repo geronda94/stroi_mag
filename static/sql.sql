@@ -1,9 +1,11 @@
-CREATE DATABASE stroimarket;
+-- CREATE DATABASE stroimarket;
+
 
 CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     name varchar(50),
-    description varchar(150)
+    description varchar(150),
+    order_num INT
 );
 
 
@@ -46,7 +48,8 @@ CREATE TABLE IF NOT EXISTS cat_prod(
 CREATE TABLE IF NOT EXISTS product_img(
     id SERIAL PRIMARY KEY,
     product_id INT REFERENCES product(id),
-    link text
+    link text, 
+    order_num INT 
 );
 
 
@@ -54,7 +57,8 @@ CREATE TABLE IF NOT EXISTS product_img(
 
 INSERT INTO seller(name, description,address,phone,telegram, email) VALUES
 ('self', 'self', 'aval', '77553291', '15444654565', 'iiiliev.igor@gmail.com'),
-('Аваль', 'Цемент Песок Гравий', 'Мегатранс', '77782349', '15444654565', 'iiiliev.igor@gmail.com');
+('Аваль', 'Цемент Песок Гравий', 'Мегатранс', '77782349', '15444654565', 'iiiliev.igor@gmail.com'),
+('Кирпичок', 'Кирпичи, бетонные изделия, печное оборудование', 'Мегатранс', '77782349', '15444654565', 'nikolay@gmail.com');
 
 
 
@@ -73,7 +77,12 @@ INSERT INTO product(name, description, link, seller_id, price, price2, price3, c
 ('Песок сеянный', 'Цемент сеянный с содержанием глины подходит для кладки и штукатурки', 'pesok-1', '2','13', '0','0','0','0',NULL),
 ('Песок Мытый', 'Цемент мытый, без глины', 'pesok-2', '2','14', '0','0','0','0','3'),
 ('Гравий', 'Гравий среднего размера', 'gravii', '2','18', '0','0','0','0','4'),
-('Мелуза', 'Мелуза или известковый отсев. Молотая, отлично подходит для добавки в штукатурные смеси, фасадной отделки и для добавления в корм животных', 'meluza', '2','25', '0','0','0','0','5');
+('Мелуза', 'Мелуза или известковый отсев. Молотая, отлично подходит для добавки в штукатурные смеси, фасадной отделки и для добавления в корм животных', 'meluza', '2','25', '0','0','0','0','5'),
+('Кирпич полнотелый', 'Полнотелый кирпич', 'kirpich_poln', '3','4', '0','0','0','0','1'),
+('Кирпич полый', 'Полый кирпич', 'kirpich_polii', '3','3.8', '0','0','0','0','2'),
+('Кирпич полуторный', 'Полый кирпич', 'kirpich_polutor', '3','4.5', '0','0','0','0',NULL),
+('Кирпич Огнеупорный', 'Огнеупорный кирпич', 'kirpich_ogneupor', '3','45', '0','0','0','0','3')
+;
 
 
 INSERT INTO cat_prod(category_id, product_id) VALUES
@@ -83,4 +92,9 @@ INSERT INTO cat_prod(category_id, product_id) VALUES
 ('1','4'),
 ('1','5'),
 ('1','6'),
-('1','7');
+('1','7'),
+('2','8'),
+('2','9'),
+('2','10'),
+('2','11')
+;

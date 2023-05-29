@@ -1,5 +1,7 @@
 from flask import render_template, url_for, redirect, session
 from app import app
+from pg import PgConnect, PgRequest, products
+from config import DB
 
 menu = {
 	'Каталог товаров':{
@@ -17,6 +19,10 @@ menu = {
   
 @app.route('/')
 def index():
-	return render_template('index.html', title='Domstroi.pro - Наш ассортимент', menu=menu)
+	cats = products.select_categories()
+	list_products = products.select_4_for_category()
+
+	return render_template('index.html', title='Наш ассортимент', menu=menu, cats=cats, \
+			products=list_products)
 
 
