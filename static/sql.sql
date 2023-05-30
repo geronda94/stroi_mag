@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS product (
     id SERIAL PRIMARY KEY,
     name varchar(50),
     description text,
+    ava_link text,
     link text,
     seller_id INT REFERENCES seller (id),
     price numeric(5, 2),
@@ -70,10 +71,10 @@ INSERT INTO categories(name, description) VALUES
 ('Клей, шпатлевка и сетка', 'Клей 333, Шпатлевка первичная и вторичная. Армирующая сетка 1*2м с ячейкой: 100*100мм, 150*150мм.');
 
 
-INSERT INTO product(name, description, link, seller_id, price, price2, price3, comission, sold, order_num)VALUES
-('Цемент М 400', 'Цемент марки 400 рыбницкого завода', 'cement-m400', '2','85', '84','83','0','0','1'),
-('Цемент М 500', 'Цемент марки 500 рыбницкого завода', 'cement-m500', '2','90', '89','88','0','0','2'),
-('Цемент М 550', 'Цемент марки 550 рыбницкого завода', 'cement-m550', '2','90', '89','88','0','0',NULL),
+INSERT INTO product(name, description,  ava_link, link, seller_id, price, price2, price3, comission, sold, order_num)VALUES
+('Цемент М 400', 'Цемент марки 400 рыбницкого завода', 'cement_m400.png', 'cement-m400', '2','85', '84','83','0','0','1'),
+('Цемент М 500', 'Цемент марки 500 рыбницкого завода', 'cement_m500.png','cement-m500', '2','90', '89','88','0','0','2'),
+('Цемент М 550', 'Цемент марки 550 рыбницкого завода', 'cement_m550.png','cement-m550', '2','90', '89','88','0','0',NULL),
 ('Песок сеянный', 'Цемент сеянный с содержанием глины подходит для кладки и штукатурки', 'pesok-1', '2','13', '0','0','0','0',NULL),
 ('Песок Мытый', 'Цемент мытый, без глины', 'pesok-2', '2','14', '0','0','0','0','3'),
 ('Гравий', 'Гравий среднего размера', 'gravii', '2','18', '0','0','0','0','4'),

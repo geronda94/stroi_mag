@@ -16,31 +16,44 @@
                 <a href="#" class="category__link">
                     <div class="category__name">{{cat.name}}</div>
                     <div class="category__description">{{cat.description}}</div>
-                </a>
-                <div class="category__cards">
-                    {% for i in products %}
-                        
-                        {% if i.category_id==cat.id %}
-                        
-                            <div class="product__card">
-                                <div class="card__img"><img src="{{url_for('static', filename='img/catalog/cement_m400.png')}}" alt=""></div>
-                                <div class="card__title">{{i.product_name}}</div>
-                                <div class="card__description">{{i.description}}</div>
-                                <div class="price__main">{{i.price}} <img class="currency__img" src="{{url_for('static', filename='img/currency.jpg')}}" alt=""></div>
-                                
-                                <form action="">
-                                    <div class="add__to-cart">
-                                        <label for="input_{{i.product_id}}" class="add__label">Количество: </label>
-                                        <input type="text" value="1" class="input__to-cart" name="coll" id="input_{{i.product_id}}">
-                                                                            </div>
-                                    <input type="submit" class="button__to-cart" name="add" value="Добавить в корзину">
-                                </form>
-                            </div>
-                        
-                        {% endif %}
+                    
+                    <div class="category__cards">
+                        {% for i in products %}
+                            
+                            {% if i.category_id==cat.id %}
+                            
+                                <div class="product__card">
+                                    {% if not i.ava_link %}
+                                        {% set ava_link = 'cement_m550.png' %}
+                                    {% else %}
+                                        {% set ava_link = i.ava_link %}
+                                    {% endif %}
+                                    <div class="card__img"><img src="{{url_for('static', filename='img/catalog/')}}{{ava_link}}" alt=""></div>
+                                    <div class="card__title">{{i.product_name}}</div>
+                                    <div class="card__description">{{i.description}}</div>
+                                    <div class="inner__more-info"><a href="#" class="link__more-info">Подробнее о товаре...</a></div>
 
-                    {% endfor %}
-                </div>
+                                    <div class="price__main">{{i.price}} <img class="currency__img" src="{{url_for('static', filename='img/currency.jpg')}}" alt=""></div>
+                                    
+                                    <form action="">
+                                        <div class="add__to-cart">
+                                            <label for="input_{{i.product_id}}" class="add__label">Количество: </label>
+                                            <input type="text" value="1" class="input__to-cart" name="coll" id="input_{{i.product_id}}">
+                                                                                </div>
+                                        <input type="submit" class="button__to-cart" name="add" value="Добавить в корзину">
+                                    </form>
+                                </div>
+                            
+                            {% endif %}
+                            
+                        {% endfor %}
+                        
+                    </div>
+                    <div class="more__porudcts-cat">
+                        <a href="#" class="category__link">Открыть категорию</a>
+                    </div>
+                </a>
+                
             </div>
         {% endfor %}
     {% endblock categories %}

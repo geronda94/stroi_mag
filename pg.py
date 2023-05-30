@@ -112,6 +112,7 @@ class Products:
                                         c.id AS category_id,
                                         p.id AS product_id,
                                         p.name AS product_name,
+                                        p.ava_link,
                                         p.description,
                                         p.link,
                                         p.seller_id,
