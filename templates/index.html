@@ -34,7 +34,18 @@
                                     <div class="inner__more-info"><a href="#" class="link__more-info">Подробнее о товаре...</a></div>
 
                                     <div class="price__main">{{i.price}} <img class="currency__img" src="{{url_for('static', filename='img/currency.jpg')}}" alt=""></div>
-                                    
+                                    <div class="sales__info">
+                                        {% if i.sale_for1 %}
+                                            <div class="sales__info-item">
+                                               *{{i.price2}} р. от {{i.sale_for1}} шт.
+                                            </div>
+                                        {% endif %}
+                                        {% if i.sale_for2 %}
+                                            <div class="sales__info-item">
+                                               *{{i.price3}} р. от {{i.sale_for2}} шт.
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                     <form action="" class="form__add-cart">
                                         <div class="add__to-cart">
                                             <label for="input_{{i.product_id}}" class="add__label">Количество: </label>

@@ -119,6 +119,8 @@ class Products:
                                         p.price,
                                         p.price2,
                                         p.price3,
+                                        p.sale_for1,
+                                        p.sale_for2,
                                         p.comission,
                                         p.order_num,
                                         p.sold
