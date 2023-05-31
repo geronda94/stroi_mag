@@ -68,7 +68,9 @@
 }
 
 .card__ava {
-    height: 100%;
+    width: 100%; /* Ширина картинки равна 100% блока */
+  height: 100%;
+    object-fit: cover;
 }
 
 .card__title{
@@ -178,7 +180,7 @@
 }
 
 .sales__info-item{
-    width: 33%;
+    width: 30%;
     font-size: 13px;
     text-align: center;
     color: #e69731;
