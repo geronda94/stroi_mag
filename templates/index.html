@@ -35,7 +35,7 @@
 
                                     <div class="price__main">{{i.price}} <img class="currency__img" src="{{url_for('static', filename='img/currency.jpg')}}" alt=""></div>
                                     
-                                    <form action="">
+                                    <form action="" class="form__add-cart">
                                         <div class="add__to-cart">
                                             <label for="input_{{i.product_id}}" class="add__label">Количество: </label>
                                             <input type="text" value="1" class="input__to-cart" name="coll" id="input_{{i.product_id}}">
@@ -50,7 +50,7 @@
                         
                     </div>
                     <div class="more__porudcts-cat">
-                        <a href="#" class="category__link">Открыть категорию</a>
+                        <a href="#" class="category__link">Смотреть всю категорию...</a>
                     </div>
                 </a>
                 
