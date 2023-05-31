@@ -3,7 +3,7 @@
 
 {% block styles %}
 {{super()}}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    
 {% endblock styles %}
 
 
@@ -13,7 +13,7 @@
     {% block categories %}
         {% for cat in cats %}
             <div class="category__inner">
-                <a href="#" class="category__link">
+                <a href="{{url_for('category', cat=cat.link)}}" class="category__link">
                     <div class="category__name">{{cat.name}}</div>
                     <div class="category__description">{{cat.description}}</div>
                     
@@ -61,7 +61,7 @@
                         
                     </div>
                     <div class="more__porudcts-cat">
-                        <a href="#" class="category__link">Смотреть всю категорию...</a>
+                        <a href="{{url_for('category', cat=cat.link)}}" class="category__link">Смотреть всю категорию...</a>
                     </div>
                 </a>
                 

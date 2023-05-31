@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/menu.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/head_slider.css')}}">
-        
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
         
     {% endblock styles %}
     <title>
@@ -39,7 +39,7 @@
                                     <li class="menu__link menu__title submenu__activator" id="submenu__activator">{{title}}
                                         <ul class="submenu__ul">
                                             {% for t, l in link.items() %}
-                                                <a href="{{url_for(l)}}" class="submenu__link">
+                                                <a href="{{url_for('category', cat=l)}}" class="submenu__link">
                                                     <li class="submenu__title">{{t}}</li>
                                                 </a>
                                             {% endfor %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{{super}}
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/category.css')}}">
+{% endblock styles %}
+
+
+{% block content %}
+    {{super()}}
+    <div class="category__inner">
+            <div class="category__name category__name-page">{{cat.name}}</div>
+            <div class="category__description">{{cat.description}}</div>
+
+            {% if products is defined and products|length > 0 %}
+                <div class="category__cards category__cards-page">
+                    {% for i in products %}   
+                        <div class="product__card">
+                            {% if not i.ava_link %}
+                                {% set ava_link = 'cement_m550.png' %}
+                            {% else %}
+                                {% set ava_link = i.ava_link %}
+                            {% endif %}
+                            <div class="card__img">
+                                <img class="card__ava" src="{{url_for('static', filename='img/catalog/')}}{{ava_link}}" alt="">
+                            </div>
+                            <div class="card__title">{{i.product_name}}</div>
+                            <div class="card__description">{{i.description}}</div>
+                            <div class="inner__more-info"><a href="#" class="link__more-info">Подробнее о товаре...</a></div>
+
+                            <div class="price__main">{{i.price}} <img class="currency__img" src="{{url_for('static', filename='img/currency.jpg')}}" alt=""></div>
+                            <div class="sales__info">
+                                {% if i.sale_for1 %}
+                                    <div class="sales__info-item">
+                                        *{{i.price2}} р. от {{i.sale_for1}} шт.
+                                    </div>
+                                {% endif %}
+                                {% if i.sale_for2 %}
+                                    <div class="sales__info-item">
+                                        *{{i.price3}} р. от {{i.sale_for2}} шт.
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <form action="" class="form__add-cart">
+                                <div class="add__to-cart">
+                                    <label for="input_{{i.product_id}}" class="add__label">Количество: </label>
+                                    <input type="text" value="1" class="input__to-cart" name="coll" id="input_{{i.product_id}}">
+                                                                        </div>
+                                <input type="submit" class="button__to-cart" name="add" value="Добавить в корзину">
+                            </form>
+                        </div>
+                    {% endfor %}
+                    
+                </div>
+            {% else %}
+                <div class="error__cat">Мы еще не успели заполнить этот раздел. Товар скоро появится.</div>
+            {% endif %}
+        
+    </div>
+{% endblock content %}

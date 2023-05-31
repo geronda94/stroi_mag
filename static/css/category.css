@@ -1,0 +1,14 @@
+.category__cards-page {
+    flex-wrap: wrap;
+}
+
+.error__cat{
+    margin: 40px auto;
+    text-align: center;
+    font-size: 30px;
+    color: rgb(171, 16, 47);
+}
+
+.category__name-page {
+    text-decoration: none;
+}

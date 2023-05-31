@@ -105,7 +105,7 @@ class Products:
 
     
     def select_categories(self):
-        return self.__request.selectd('SELECT * FROM categories;')
+        return self.__request.selectd('SELECT * FROM categories ORDER BY order_num;')
 
     def select_4_for_category(self):
         return self.__request.selectd("""SELECT
@@ -136,6 +136,50 @@ class Products:
                                         JOIN product p ON subquery.product_id = p.id
                                         WHERE subquery.row_num <= 4
                                         ORDER BY c.order_num, subquery.category_id, p.order_num""")
+
+
+
+
+
+    def select_product_for_cat(self, category_link):
+        return self.__request.selectd("""SELECT
+                                        c.id AS category_id,
+                                        p.id AS product_id,
+                                        p.name AS product_name,
+                                        p.ava_link,
+                                        p.description,
+                                        p.link,
+                                        p.seller_id,
+                                        p.price,
+                                        p.price2,
+                                        p.price3,
+                                        p.sale_for1,
+                                        p.sale_for2,
+                                        p.comission,
+                                        p.order_num,
+                                        p.sold
+                                    FROM (
+                                        SELECT
+                                            cp.category_id,
+                                            cp.product_id,
+                                            ROW_NUMBER() OVER (PARTITION BY cp.category_id ORDER BY p.order_num) AS row_num
+                                        FROM cat_prod cp
+                                        JOIN product p ON cp.product_id = p.id
+                                        JOIN categories c ON cp.category_id = c.id
+                                        WHERE c.link = %s
+                                    ) AS subquery
+                                    JOIN categories c ON subquery.category_id = c.id
+                                    JOIN product p ON subquery.product_id = p.id
+                                    
+                                    ORDER BY c.order_num, subquery.category_id, p.order_num
+
+                                    """,(category_link,))
+
+
+    def cat_info(self, category_link):
+        return self.__request.selectd("SELECT * FROM categories WHERE link = %s;",(category_link,))
+
+
 
 
 connect = PgConnect(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
