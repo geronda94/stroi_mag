@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{{super()}}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/product.css')}}">
+{% endblock styles %}
+
+
+{% block content %}
+    {{super()}}
+    <div class="product__inner">
+        {% if products %}
+            <div class="img_desc-inner">
+                <div class="img__inner">
+                    <img class="product__img" src="{{url_for('static', filename='img/catalog/')}}{{products.ava_link}}" alt="">
+                </div>
+                <div class="desc__inner">{{products.description}}</div>
+            </div>
+            <div class="clear__both"></div>
+
+            <div class="price__inner">
+                <div class="price__main">{{products.price}} р. за единицу</div>
+                <div class="sales__info">
+                    {% if products.price2 %}
+                        <div class="sales__info-item">{{products.price2}} р. за единицу, при покупке от {{products.sale_for1}} шт.</div>
+                    {% endif %}
+                    {% if products.price3 %}
+                        <div class="sales__info-item">{{products.price3}} р. за единицу, при покупке от {{products.sale_for2}} шт.</div>
+                    {% endif %}
+                </div>
+                
+            </div>
+        {% else %}
+        <div class="error__product">Запрашиваемый вами продукт не найден, попробуйте еще раз.</div>
+        {% endif %}
+
+
+
+    </div>
+
+{% endblock content %}

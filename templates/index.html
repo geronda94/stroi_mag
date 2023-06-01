@@ -28,10 +28,12 @@
                                     {% else %}
                                         {% set ava_link = i.ava_link %}
                                     {% endif %}
-                                    <div class="card__img"><img src="{{url_for('static', filename='img/catalog/')}}{{ava_link}}" alt=""></div>
-                                    <div class="card__title">{{i.product_name}}</div>
-                                    <div class="card__description">{{i.description}}</div>
-                                    <div class="inner__more-info"><a href="#" class="link__more-info">Подробнее о товаре...</a></div>
+                                    <a href="{{url_for('get_product', link=i.link)}}" class="product__link">
+                                        <div class="card__img"><img src="{{url_for('static', filename='img/catalog/')}}{{ava_link}}" alt=""></div>
+                                        <div class="card__title">{{i.product_name}}</div>
+                                        <div class="card__description">{{i.description}}</div>
+                                    </a>
+                                    <div class="inner__more-info"><a href="{{url_for('get_product', link=i.link)}}" class="link__more-info">Подробнее о товаре...</a></div>
 
                                     <div class="price__main">{{i.price}} р. 1 шт.</div>
                                     <div class="sales__info">

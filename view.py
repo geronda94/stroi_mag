@@ -30,7 +30,25 @@ def index():
 def category(cat):
 	list_products = products.select_product_for_cat(category_link=cat)
 	category_info = products.cat_info(category_link=cat)
-	print(category_info)
+	
 
 	return render_template('category.html', title='Категория товаров',menu=menu, cat=category_info[0], \
 							products=list_products)
+
+
+@app.route('/product/<link>')
+def get_product(link):
+	try:
+		product_info = products.product_for_link(link)[0]
+	except:
+		product_info = False
+
+	if product_info:
+		product_title = product_info.get("product_name")
+	else:
+		product_title = False
+
+	return render_template('product.html', title=product_title, menu=menu, \
+			products=product_info)
+
+	
