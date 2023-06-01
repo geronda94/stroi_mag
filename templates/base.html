@@ -25,6 +25,7 @@
 <body>
     <header class="block__header">
         {% block header %}
+            {% block top_menu %}
             {% if menu %}
             <div class="menu__padding">
                 <div class="menu__inner">
@@ -62,9 +63,11 @@
                 </div>
             </div>
 
+            {% endif %}
+            {% endblock top_menu %}
 
 
-
+            {% block slider %}
             <div class="head__slider">
                 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                     
@@ -108,8 +111,8 @@
                     </button>
                 </div>
             </div>
-            {% endif %}
             
+            {% endblock slider %}
         {% endblock header %}
     </header>
 

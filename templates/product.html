@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/product.css')}}">
 {% endblock styles %}
 
+{% block header %}
+    {% block top_menu %}
+        {{super()}}
+    {% endblock top_menu %}
+{% endblock header %}
 
 {% block content %}
     {{super()}}
@@ -15,22 +20,36 @@
                 <div class="img__inner">
                     <img class="product__img" src="{{url_for('static', filename='img/catalog/')}}{{products.ava_link}}" alt="">
                 </div>
-                <div class="desc__inner">{{products.description}}</div>
+                <div class="desc__inner">
+                    <p class="desc__title">Описание товара</p>
+                    <div class="desc__body">{{products.description}}</div></div>
             </div>
             <div class="clear__both"></div>
 
             <div class="price__inner">
-                <div class="price__main">{{products.price}} р. за единицу</div>
+                <div class="price__main"><span class="span__price">{{products.price}} р.</span> за единицу</div>
                 <div class="sales__info">
                     {% if products.price2 %}
-                        <div class="sales__info-item">{{products.price2}} р. за единицу, при покупке от {{products.sale_for1}} шт.</div>
+                        <div class="price__sale"><span class="span__price">{{products.price2}} р.</span> за единицу, при покупке от <span class="span__price">{{products.sale_for1}}</span> шт.</div>
                     {% endif %}
                     {% if products.price3 %}
-                        <div class="sales__info-item">{{products.price3}} р. за единицу, при покупке от {{products.sale_for2}} шт.</div>
+                        <div class="price__sale"><span class="span__price">{{products.price3}} р.</span> за единицу, при покупке от <span class="span__price">{{products.sale_for2}}</span> шт.</div>
                     {% endif %}
                 </div>
                 
             </div>
+
+            <form action="" class="form__add-cart">
+                
+                <div class="product__buy-items">
+                    <label for="input_{{products.product_id}}" class="add__label product__buy-item">Укажите количество: </label>
+                    <input type="text" value="1" class="input__to-cart  product__buy-item" name="coll" id="input_{{products.product_id}}">
+                </div>
+                <div class="product__buy-items">
+                    <input type="submit" class="button__to-cart " name="add" value="Добавить в корзину">
+                    <input type="submit" class="button__to-cart " name="buy" value="Купить сейчас">
+                </div>
+            </form>
         {% else %}
         <div class="error__product">Запрашиваемый вами продукт не найден, попробуйте еще раз.</div>
         {% endif %}

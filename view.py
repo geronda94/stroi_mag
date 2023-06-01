@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, session
+from flask import render_template, url_for, redirect, session, request
 from app import app
 from pg import PgConnect, PgRequest, products
 from config import DB
