@@ -27,8 +27,8 @@
         {% for cat,msg in get_flashed_messages(with_categories=true) %}
             <div class="flash__msg flash__{{cat}}">
                 <div class="flash__text ">{{msg}} </div>
-                <label for="flash__close_{{loop.index}}" class="flash__close-btn">Х закрыть уведомление
-                    <input id="flash__close_{{loop.index}}" class="flash__close" type="checkbox">
+                <label for="flash__close_{{loop.index}}" class="flash__close-btn"><span class="close__flash">Х</span> закрыть уведомление
+                    <input id="flash__close_{{loop.index}}" class="flash__close" type="checkbox" checked>
                 </label>
             </div>
         {% endfor %}
