@@ -2,6 +2,7 @@ from flask import render_template, url_for, redirect, session, request
 from app import app
 from pg import PgConnect, PgRequest, products
 from config import DB
+import uuid
 
 cats = products.select_categories()
 cats_submenu = dict((category.get('name'), category.get('link') )for category in products.select_categories())
@@ -52,9 +53,16 @@ def get_product(link):
 			products=product_info)
 
 
+
+
 @app.route('/to_bag', methods=['POST'])
 def add_to_bag():
+	if session.get('user_id'):
+		uid = 'Сессия  '+session.get('user_id')
+	else:
+		uid = 'Сейчас установим айди'
+
 	if request.form.get('add'):
-		return f"order coll = {request.form.get('coll')} id = {request.form.get('product_id')}"
+		return f"order coll = {request.form.get('coll')} id = {request.form.get('product_id')}  {uid}"
 	elif request.form.get('buy'):
-		return f"now coll = {request.form.get('coll')} id = {request.form.get('product_id')}"
+		return f"now coll = {request.form.get('coll')} id = {request.form.get('product_id')}  {uid}"
