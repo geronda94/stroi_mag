@@ -140,7 +140,7 @@ ul{
 
 @media (max-width: 500px) {
     .menu__ul {
-        flex-direction: column;
+        flex-direction: column-reverse;
         gap:0;
     }
     .menu__link:hover{

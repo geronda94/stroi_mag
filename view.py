@@ -1,11 +1,16 @@
-from flask import render_template, url_for, redirect, session, request
+from flask import render_template, url_for, redirect, session, request,flash
+from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from app import app
 from pg import PgConnect, PgRequest, products
 from config import DB
 import uuid
 
+
+
 cats = products.select_categories()
 cats_submenu = dict((category.get('name'), category.get('link') )for category in products.select_categories())
+
+
 
 
 
@@ -23,7 +28,7 @@ menu = {
 def index():
 	list_products = products.select_4_for_category()
 
-	return render_template('index.html', title='Наш ассортимент', menu=menu, cats=cats, \
+	return render_template('index.html', title='Стройматериалы в Тирасполе и ПМР', menu=menu, cats=cats, \
 			products=list_products)
 
 
@@ -57,12 +62,53 @@ def get_product(link):
 
 @app.route('/to_bag', methods=['POST'])
 def add_to_bag():
-	if session.get('user_id'):
-		uid = 'Сессия  '+session.get('user_id')
-	else:
-		uid = 'Сейчас установим айди'
+	user_agent = request.headers.get('User-Agent')
+	real_ip = request.headers.get('X-Forwarded-For')
+	ip_address = request.remote_addr
+	prev_page = request.args.get('next')
+	if not session.get('bag'):
+		session['bag'] = dict()
+
+	
 
 	if request.form.get('add'):
-		return f"order coll = {request.form.get('coll')} id = {request.form.get('product_id')}  {uid}"
+
+		if session.get('history'):
+			flash(message='Товар добавлен в корзину',category='success')
+			return redirect(session['history'][-2])
+			
+		else:
+			flash(message='Товар не  добавлен в корзину',category='error')
+			return redirect(url_for('index'))
+	
+	
 	elif request.form.get('buy'):
-		return f"now coll = {request.form.get('coll')} id = {request.form.get('product_id')}  {uid}"
+		return f"{prev_page}   now coll = {request.form.get('coll')} id = {request.form.get('product_id')}  real_ip={real_ip}  ua={user_agent}"
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.before_request
+def before_request():
+	if not session.get('history'):
+		session['history'] = list()
+
+	link =request.path
+
+	if 'static' not in link:
+		session['history'].append(link)
+		session.modified = True 
+	
+	
+	
+	
