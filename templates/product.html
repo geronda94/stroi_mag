@@ -39,12 +39,15 @@
                 
             </div>
 
-            <form action="" class="form__add-cart">
-                
-                <div class="product__buy-items">
-                    <label for="input_{{products.product_id}}" class="add__label product__buy-item">Укажите количество: </label>
+            <form action="{{url_for('add_to_bag')}}" method="post" class="form__add-cart">
+                <label class="label__for-buy" for="input_{{products.product_id}}">
+                <div  class="product__buy-items">
+                    <label for="input_{{products.product_id}}" class="add__label product__buy-item">Укажите количество:</label>
                     <input type="text" value="1" class="input__to-cart  product__buy-item" name="coll" id="input_{{products.product_id}}">
+                    <input type="hidden" name="product_id" value="{{products.product_id}}">
+                </label>
                 </div>
+
                 <div class="product__buy-items">
                     <input type="submit" class="button__to-cart " name="add" value="Добавить в корзину">
                     <input type="submit" class="button__to-cart " name="buy" value="Купить сейчас">

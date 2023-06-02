@@ -34,6 +34,11 @@ a {
     font-weight:400;
 }
 
+.label__for-buy{
+    width: 100%;
+    display: block;
+}
+
 
 @media(max-width:570px){
     .title__content{

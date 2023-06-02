@@ -12,7 +12,7 @@ menu = {
 	'Каталог товаров':cats_submenu,
 	'Связаться с нами':'index',
 	'Достава и разгрузка':'index',
-	'Ваши заказы':'index',
+	'Ваша корзина':'index',
 	}
 
 
@@ -51,4 +51,10 @@ def get_product(link):
 	return render_template('product.html', title=product_title, menu=menu, \
 			products=product_info)
 
-	
+
+@app.route('/to_bag', methods=['POST'])
+def add_to_bag():
+	if request.form.get('add'):
+		return f"order coll = {request.form.get('coll')} id = {request.form.get('product_id')}"
+	elif request.form.get('buy'):
+		return f"now coll = {request.form.get('coll')} id = {request.form.get('product_id')}"

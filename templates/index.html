@@ -48,12 +48,16 @@
                                             </div>
                                         {% endif %}
                                     </div>
-                                    <form action="" class="form__add-cart">
-                                        <div class="add__to-cart">
-                                            <label for="input_{{i.product_id}}" class="add__label">Количество: </label>
-                                            <input type="text" value="1" class="input__to-cart" name="coll" id="input_{{i.product_id}}">
-                                                                                </div>
+                                    <form action="{{url_for('add_to_bag')}}" method="post" class="form__add-cart" >
+                                        <label class="label__for-buy" for="input_{{i.product_id}}"> 
+                                            <div class="add__to-cart">                                                    
+                                                    <label for="input_{{i.product_id}}" class="add__label">Укажите количество: </label>
+                                                    <input type="text" value="" placeholder="1" class="input__to-cart" name="coll" id="input_{{i.product_id}}">
+                                                    <input type="hidden" name="product_id" value="{{i.product_id}}">
+                                                </div>
+                                        </label>    
                                         <input type="submit" class="button__to-cart" name="add" value="Добавить в корзину">
+                                        <input type="submit" class="button__to-cart" name="buy" value="Купить сейчас">
                                     </form>
                                 </div>
                             
