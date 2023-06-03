@@ -64,45 +64,81 @@ a {
     }
 }
 
-.flash__msg {   
-    z-index: 9000;
+.flash__inner{   
+    z-index: 9000; 
     position: fixed;
+    left:25%;
+    right: 25%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    top:150px;
-    width: 100%;
+    top:100px;
+    background-color: rgba(41, 41, 41, 0.5);
+    backdrop-filter: blur(3px);
+    
+}
+
+.flash__msg {   
+    width:100%;
     min-height: 100px;
     display: flex;
     text-align: center;
     font-size: 20px;
-    color: rgb(255, 255, 255);
-    background-color: rgba(11, 60, 124, 0.5); /* Непрозрачный цвет фона (черный в данном случае) */
-    backdrop-filter: blur(3px); /* Размытие фона */
+    color: rgb(255, 255, 255); 
+    border: 1px sodlid rgba(41, 41, 41, 0.5);;
 }
 
 .flash__text{  
     padding: 10px;  
-    width: 50%;
+    width: 100%;
     height: 100%;
-    
+    align-self: center;
 }
 
 .flash__close-btn{
-    justify-self: end;
-    align-self: flex-end;
-    font-size: 12px;
-    line-height: 25px;
+    position: absolute;
+    top:4%;
+    right:4%;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    font-size: 10px;
+    z-index: 9001;
+    color: rgb(41, 41, 41);
+    background-color: #fff;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.close__flash-x{    
+    font-size:13px;
+    font-weight: 500;  
+    color: rgb(41, 41, 41);
+}
+
+.close__flash-x:hover,
+.close__flash-x:active{
+    color: rgb(25, 73, 218);
+}
+
 
 .flash__close{
-    opacity: 0;
+    display: none;
 }
 
-.close__flash{
 
-    padding: 10px;
-    font-size: 25px;
-    border-radius: 50%;
-
+#toggle__flash:checked ~ .flash__msg  {
+    display: none;
 }
+
+#toggle__flash:checked ~ .flash__close-btn  {
+    display: none;
+}
+#toggle__flash:checked ~ .close-flash-x  {
+    display: none;
+}
+
