@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{{super()}}
+
+{% block header %}
+    {% block top_menu %}
+        {{super()}}
+    {% endblock top_menu %}
+{% endblock header %}
+
+{% block content %}
+    {{super()}}
+{% endblock content %}

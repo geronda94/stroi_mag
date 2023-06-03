@@ -35,11 +35,11 @@
 
                     {% if cat=='cart' %}
                         <div class="flash__panel">
-                            <a href="#" class="flash__link">Перейти в корзину</a>
+                            <a href="{{url_for('get_bag')}}" class="flash__link">Перейти в корзину</a>
                             <a href="#" class="flash__link">Оформить заказ</a>                
                         </div>
                     {% endif %}
-                    
+
                 </div>
             </div>
         {% endfor %}

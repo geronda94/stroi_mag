@@ -19,7 +19,7 @@ menu = {
 	'Каталог товаров':cats_submenu,
 	'Связаться с нами':'index',
 	'Достава и разгрузка':'index',
-	'Ваша корзина':'index',
+	'Ваша корзина':'get_bag',
 	}
 
 
@@ -71,17 +71,18 @@ def add_to_bag():
 	product_id = request.form.get('product_id')
 	product_name = request.form.get("product_name")
 
-
-	if not session.get('bag'):
-		session['bag'] = []
 	
-	session['bag'].append({product_id:coll})
-	print('Корзина:')
+	if not session.get('bag'):
+		session['bag'] = dict()
+	
+	if session['bag'].get(product_id):
+		session['bag'][product_id] += coll
+	else:
+		session['bag'][product_id] = coll
 
-	for item in session['bag']:
-		for product_id, quantity in item.items():
-			print({product_id: quantity})
-
+	for i,j in session['bag'].items():
+		print(i,j)
+		
 	if request.form.get('add'):		
 		flash(message=f'В корзину добавлен товар: {product_name} * {coll} шт. ',category='cart')
 		return redirect(return_next(session['history']))
@@ -92,6 +93,16 @@ def add_to_bag():
 	elif request.form.get('buy'):
 		flash(message=f'Оформляем покупку:     {request.form.get("product_name")} * {coll} шт. ',category='cart')
 		return redirect(return_next(session['history']))
+	
+
+
+
+@app.route('/bag')
+def get_bag():
+	cart = session.get('bag')
+
+
+	return render_template('bag.html', title='Корзина', menu=menu)
 
 
 
@@ -112,7 +123,7 @@ def before_request():
 
 	link =request.path
 
-	if 'static' not in link:
+	if 'static' not in link and 'bag' not in link:
 		session['history'].append(link)
 		session.modified = True
 	
