@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/menu.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/head_slider.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/flash.css')}}">
         
     {% endblock styles %}
     <title>
@@ -26,12 +27,19 @@
     <header class="block__header">
         {% for cat,msg in get_flashed_messages(with_categories=true) %}
             <div class="flash__inner">
-                <input id="toggle__flash" class="flash__close" type="checkbox" >
+                <input id="toggle__flash" class="flash__close" type="checkbox" >                                  
                 <label for="toggle__flash" class="flash__close-btn"><div class="close__flash-x"> X </div></label>
-                
+                                    
                 <div class="flash__msg flash__{{cat}}">
                     <div class="flash__text ">{{msg}} </div>
 
+                    {% if cat=='cart' %}
+                        <div class="flash__panel">
+                            <a href="#" class="flash__link">Перейти в корзину</a>
+                            <a href="#" class="flash__link">Оформить заказ</a>                
+                        </div>
+                    {% endif %}
+                    
                 </div>
             </div>
         {% endfor %}

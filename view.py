@@ -4,6 +4,7 @@ from app import app
 from pg import PgConnect, PgRequest, products
 from config import DB
 import uuid
+from func import return_next, coll_to_int
 
 
 
@@ -65,26 +66,32 @@ def add_to_bag():
 	user_agent = request.headers.get('User-Agent')
 	real_ip = request.headers.get('X-Forwarded-For')
 	ip_address = request.remote_addr
-	prev_page = request.args.get('next')
+
+	coll = coll_to_int(request.form.get('coll'))
+	product_id = request.form.get('product_id')
+	product_name = request.form.get("product_name")
+
+
 	if not session.get('bag'):
-		session['bag'] = dict()
-
+		session['bag'] = []
 	
+	session['bag'].append({product_id:coll})
+	print('Корзина:')
 
-	if request.form.get('add'):
+	for item in session['bag']:
+		for product_id, quantity in item.items():
+			print({product_id: quantity})
 
-		if session.get('history'):
-			flash(message='Товар добавлен в корзину',category='success')
-			return redirect(session['history'][-2])
+	if request.form.get('add'):		
+		flash(message=f'В корзину добавлен товар: {product_name} * {coll} шт. ',category='cart')
+		return redirect(return_next(session['history']))
 			
-		else:
-			flash(message='Товар не  добавлен в корзину',category='error')
-			return redirect(url_for('index'))
+		
 	
 	
 	elif request.form.get('buy'):
-		return f"{prev_page}   now coll = {request.form.get('coll')} id = {request.form.get('product_id')}  real_ip={real_ip}  ua={user_agent}"
-	
+		flash(message=f'Оформляем покупку:     {request.form.get("product_name")} * {coll} шт. ',category='cart')
+		return redirect(return_next(session['history']))
 
 
 
@@ -107,7 +114,7 @@ def before_request():
 
 	if 'static' not in link:
 		session['history'].append(link)
-		session.modified = True 
+		session.modified = True
 	
 	
 	

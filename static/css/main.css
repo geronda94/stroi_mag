@@ -212,6 +212,9 @@
     .card__title{
         font-size:16px;
     }
+    .add__label{
+        font-size: 11px;
+    }
 }
 
 @media(max-width:1120px){
@@ -221,9 +224,7 @@
         letter-spacing: 2px;
     }
 
-    .add__label{
-        font-size: 11px;
-    }
+    
 
     .card__img{
         height: 180px;
