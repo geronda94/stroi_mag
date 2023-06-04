@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {{super()}}
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bag.css')}}">
+{% endblock styles %}
 
 {% block header %}
     {% block top_menu %}
@@ -9,4 +13,17 @@
 
 {% block content %}
     {{super()}}
+    <div class="cart__inner">
+        {% if cart %}
+            {% for i in cart %}
+                <p>{{i}}</p>
+            {% endfor %}
+
+                
+        {% else %}
+                
+            Нет товара
+        {% endif %}
+        
+    </div>
 {% endblock content %}

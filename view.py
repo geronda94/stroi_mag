@@ -17,7 +17,7 @@ cats_submenu = dict((category.get('name'), category.get('link') )for category in
 
 menu = {
 	'Каталог товаров':cats_submenu,
-	'Связаться с нами':'index',
+	'Главная страница':'index',
 	'Достава и разгрузка':'index',
 	'Ваша корзина':'get_bag',
 	}
@@ -100,9 +100,14 @@ def add_to_bag():
 @app.route('/bag')
 def get_bag():
 	cart = session.get('bag')
+	if cart:
+		prod_id = [x[0] for x in cart]
+		product_list = products.in_cart(prod_id)
+	else:
+		product_list = None
 
 
-	return render_template('bag.html', title='Корзина', menu=menu)
+	return render_template('bag.html', title='Корзина', menu=menu, cart=product_list)
 
 
 

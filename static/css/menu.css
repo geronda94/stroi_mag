@@ -18,7 +18,7 @@ ul{
 
 
 .menu__ul {
-    
+    border-bottom: 2px solid rgb(106, 137, 230);
     width:100%;
     margin: 0 auto;
     display: flex;
@@ -34,7 +34,7 @@ ul{
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 3px;
-    border-bottom: 1px solid rgb(106, 137, 230);
+
     user-select: none;
     cursor: pointer;
     text-align: center;
