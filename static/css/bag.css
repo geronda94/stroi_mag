@@ -15,7 +15,7 @@
 
 .cart__item{
     padding: 7px 10px;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
 }
 
@@ -87,4 +87,15 @@
     width: 25px;
     border-bottom: 1px solid rgb(25, 73, 218);
     text-align: center;
+}
+
+.clear__cart{
+    color:rgb(25, 73, 218);
+    text-decoration: underline;
+}
+
+.no_bag{
+    font-size: 35px;
+    text-align: center;
+    color: #a5a5a5;
 }

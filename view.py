@@ -124,14 +124,13 @@ def get_bag():
 					weight = float(i.get('weight'))
 
 					if (condition1 and price2) or (condition2 and price3):
-						if coll >= condition1 :
-							sale = int(price2)
-
-						elif coll >=  condition2:
-							sale = int(price3)
-
+						if coll >= condition1:
+							if condition2 and condition2 > coll:
+								sale = int(price2)
+							else:
+								sale = int(price3)
 						else:
-							sale = price
+							sale = int(price)
 					else:
 						sale = int(price)
 
@@ -176,6 +175,8 @@ def edit_bag():
 
 		if request.form.get('minus'):
 			session['bag'][product_id] -= coll
+			if session['bag'][product_id] < 1:
+				del session['bag'][product_id]
 			flash(message=f'Убрали из корзины {coll} шт. {product_name}', category='cart')
 
 		if request.form.get('plus'):
@@ -185,8 +186,10 @@ def edit_bag():
 	return redirect(url_for('get_bag'))
 
 
-
-
+@app.route('/drop_bag')
+def drop_bag():
+	session['bag'] = dict()
+	return redirect(url_for('get_bag'))
 
 
 
