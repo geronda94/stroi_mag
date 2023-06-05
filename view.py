@@ -80,8 +80,7 @@ def add_to_bag():
 	else:
 		session['bag'][product_id] = coll
 
-	for i,j in session['bag'].items():
-		print(i,j)
+
 		
 	if request.form.get('add'):		
 		flash(message=f'В корзину добавлен товар: {product_name} * {coll} шт. ',category='cart')
@@ -100,20 +99,90 @@ def add_to_bag():
 @app.route('/bag')
 def get_bag():
 	cart = session.get('bag')
+	total_price = 0
+	total_weight = 0
+
+
 	if cart:
 		prod_id = [x[0] for x in cart]
 		product_list = products.in_cart(prod_id)
+		
+		bag_refactored= []
+		for i in product_list:
+			
+			for key, value in cart.items():
+				product_id = int(i.get('product_id'))
+				cart_id = int(key)
+				if product_id ==cart_id:
+					sale = 0
+					price = int(i.get('price'))
+					price2 = i.get('price2')
+					price3 = i.get('price3')
+					condition1 = i.get('sale_for1')
+					condition2 = i.get('sale_for2')
+					coll = int(value)
+					weight = float(i.get('weight'))
+
+					if (condition1 and price2) or (condition2 and price3):
+						if coll >= condition1 :
+							sale = int(price2)
+
+						elif coll >=  condition2:
+							sale = int(price3)
+
+						else:
+							sale = price
+					else:
+						sale = int(price)
+
+					total = int(sale)*int(coll)
+					total_price+=total
+					sum_weight = int(weight*int(coll))
+					total_weight += sum_weight
+
+					if sale == price:
+						sale = '-'
+
+					bag_refactored.append({
+						'product_id':i.get('product_id'),
+						'product_name':i.get('product_name'),
+						'product_ava':i.get('ava_link'),
+						'coll':coll,
+						'weight':sum_weight,
+						'price':price,
+						'sale':sale,
+						'total':total,
+						'link':i.get('link')
+					})
+
+				else:
+					continue
+
 	else:
-		product_list = None
+		bag_refactored = False
 
 
-	return render_template('bag.html', title='Корзина', menu=menu, cart=product_list)
-
-
-
+	return render_template('bag.html', title='Корзина', menu=menu, cart=bag_refactored,\
+							total=total_price, weight=total_weight)
 
 
 
+@app.route('/edit_bag', methods=['POST'])
+def edit_bag():
+	if request.method == 'POST':
+		coll = coll_to_int(request.form.get('coll'))
+		product_id = request.form.get('product_id')
+		product_name = request.form.get('product_name')
+
+		if request.form.get('minus'):
+			session['bag'][product_id] -= coll
+			flash(message=f'Убрали из корзины {coll} шт. {product_name}', category='cart')
+
+		if request.form.get('plus'):
+			session['bag'][product_id] += coll
+			flash(message=f'Добавили в корзину {coll} шт. {product_name}', category='cart')
+	
+	return redirect(url_for('get_bag'))
 
 
 

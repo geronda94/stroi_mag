@@ -13,17 +13,72 @@
 
 {% block content %}
     {{super()}}
+
     <div class="cart__inner">
         {% if cart %}
+        <table class="cart__tabale">
+            <thead class="cart__items-head">
+                <tr class="cart__table-line">
+                    <th class="cart__items-title cart__item"></th>
+                    <th class="cart__items-title cart__item">Название</th>
+                    <th class="cart__items-title cart__item">Колл-во</th>
+                    <th class="cart__items-title cart__item">Общий вес</th>
+                    <th class="cart__items-title cart__item">1 шт.</th>
+                    <th class="cart__items-title cart__item">По скидке</th>
+                    <th class="cart__items-title cart__item">Сумма</th>             
+                    <th class="cart__items-title cart__item">Изменить</th>             
+                                
+                                      
+                </tr>
+            </thead>
+            <tbody class="cart__items">
             {% for i in cart %}
-                <p>{{i}}</p>
-            {% endfor %}
+                <tr class="cart__table-line">
+                    <td class="cart__product cart__item cart__ava">
+                        <img  class="ava__img" src="{{url_for('static', filename='img/catalog/')}}{{i.product_ava}}" alt="">
+                    </td>
 
-                
-        {% else %}
-                
-            Нет товара
-        {% endif %}
+                    <td class="cart__product cart__item ">
+                        <a href="{{url_for('get_product', link=i.link)}}" class="p__name">{{i.product_name}}</a>
+                    </td>
+                    <td class="cart__product cart__item">{{i.coll}} шт.</td>
+                    <td class="cart__product cart__item">{{i.weight}} кг.</td>
+                    <td class="cart__product cart__item">{{i.price}} р.</td>
+                    <td class="cart__product cart__item">{{i.sale}} </td>
+                    <td class="cart__product cart__item">{{i.total}} </td>
+                    <td class="cart__product cart__item">
+                        <form action="{{url_for('edit_bag')}}" method="post" class="cart__edit">
+                            <div class="input__wrapper">
+                                <input type="submit" name="minus" value="убрать" class="edit__input">
+                            </div>
+                            
+                            <label for="coll__{{i.product_id}}">
+                                <input type="text" name="coll" id="coll__{{i.product_id}}" placeholder="1" value="" class="coll__input">
+                            </label>
+                            <div class="input__wrapper">
+                                <input type="submit" name="plus" value="добавить" class="edit__input">
+                            </div>
+                            <input type="hidden" name="product_id" value="{{i.product_id}}">
+                            <input type="hidden" name="product_name" value="{{i.product_name}}">
+                        </form>
+                     </td>
+                     
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            <div class="total__block">
+                <div class="total__clear">
+                    <a href="#">Очистить корзину</a>
+                </div>
+                <div class="total__info">
+                    <div class="total__summ">Вес: {{weight / 1000}} тон.</div>
+                    <div class="total__summ">Итоговая сумма: {{total}} р.</div>
+                </div>
+            </div>
+            {% else %}                
+                {{cart}}
+            {% endif %}
         
     </div>
 {% endblock content %}

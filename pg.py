@@ -196,6 +196,7 @@ class Products:
                                         p.sale_for2,
                                         p.comission,
                                         p.order_num,
+                                        p.weight,
                                         p.sold
                                     FROM (
                                         SELECT
@@ -229,6 +230,7 @@ class Products:
                         p.sale_for1,
                         p.sale_for2,
                         p.comission,
+                        p.weight,
                         p.sold
                     FROM (
                         SELECT
