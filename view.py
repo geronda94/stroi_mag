@@ -37,7 +37,6 @@ def index():
 def category(cat):
 	list_products = products.select_product_for_cat(category_link=cat)
 	category_info = products.cat_info(category_link=cat)
-	
 
 	return render_template('category.html', title='Категория товаров',menu=menu, cat=category_info[0], \
 							products=list_products)
@@ -63,15 +62,10 @@ def get_product(link):
 
 @app.route('/to_bag', methods=['POST'])
 def add_to_bag():
-	user_agent = request.headers.get('User-Agent')
-	real_ip = request.headers.get('X-Forwarded-For')
-	ip_address = request.remote_addr
-
 	coll = coll_to_int(request.form.get('coll'))
 	product_id = request.form.get('product_id')
 	product_name = request.form.get("product_name")
 
-	
 	if not session.get('bag'):
 		session['bag'] = dict()
 	
@@ -84,10 +78,13 @@ def add_to_bag():
 		
 	if request.form.get('add'):		
 		flash(message=f'В корзину добавлен товар: {product_name} * {coll} шт. ',category='cart')
-		return redirect(return_next(session['history']))
-			
 		
-	
+		next_url = request.args.get('next')
+		if next_url is None:
+			next_url = 'index'
+		return redirect(url_for(next_url))
+					
+		
 	
 	elif request.form.get('buy'):
 		flash(message=f'Оформляем покупку:     {request.form.get("product_name")} * {coll} шт. ',category='cart')
@@ -102,11 +99,20 @@ def get_bag():
 	total_price = 0
 	total_weight = 0
 
+	
+
 
 	if cart:
-		prod_id = [x[0] for x in cart]
+		print(cart.items())
+		prod_id = [x[0] for x in cart.items()]
+		print(prod_id, '                             PROD ID')
 		product_list = products.in_cart(prod_id)
 		
+		print('BAG   ------------')
+		for i in product_list:
+			print(i.get('product_name'))
+		
+
 		bag_refactored= []
 		for i in product_list:
 			
@@ -130,7 +136,7 @@ def get_bag():
 							sale = int(price3)
 						elif (condition1 and price2):
 							if coll >= int(condition1):
-								sale = int(price3)
+								sale = int(price2)
 
 					
 						
@@ -161,6 +167,7 @@ def get_bag():
 	else:
 		bag_refactored = False
 
+	
 
 	return render_template('bag.html', title='Корзина', menu=menu, cart=bag_refactored,\
 							total=total_price, weight=total_weight)
@@ -178,11 +185,11 @@ def edit_bag():
 			session['bag'][product_id] -= coll
 			if session['bag'][product_id] < 1:
 				del session['bag'][product_id]
-			flash(message=f'Убрали из корзины {coll} шт. {product_name}', category='cart')
+			flash(message=f'Убрали из корзины {coll} шт. {product_name}', category='success')
 
 		if request.form.get('plus'):
 			session['bag'][product_id] += coll
-			flash(message=f'Добавили в корзину {coll} шт. {product_name}', category='cart')
+			flash(message=f'Добавили в корзину {coll} шт. {product_name}', category='success')
 	
 	return redirect(url_for('get_bag'))
 
@@ -190,6 +197,7 @@ def edit_bag():
 @app.route('/drop_bag')
 def drop_bag():
 	session['bag'] = dict()
+	flash(message=f'Корзина очищена',category='success')
 	return redirect(url_for('get_bag'))
 
 

@@ -5,6 +5,10 @@
 img {
     pointer-events:none;
 }
+body, html,a,li, div,p, span, input{
+    font-family: 'Lora', serif;
+    letter-spacing: 2px;
+}
 a {
     color: inherit;
     font-size: inherit;
