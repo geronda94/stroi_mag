@@ -122,17 +122,18 @@ def get_bag():
 					condition2 = i.get('sale_for2')
 					coll = int(value)
 					weight = float(i.get('weight'))
+					
+					sale = int(price)
 
-					if (condition1 and price2) or (condition2 and price3):
-						if coll >= condition1:
-							if condition2 and condition2 > coll:
-								sale = int(price2)
-							else:
+					if (condition2 and price3):
+						if coll >= int(condition2):
+							sale = int(price3)
+						elif (condition1 and price2):
+							if coll >= int(condition1):
 								sale = int(price3)
-						else:
-							sale = int(price)
-					else:
-						sale = int(price)
+
+					
+						
 
 					total = int(sale)*int(coll)
 					total_price+=total
