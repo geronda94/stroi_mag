@@ -181,10 +181,11 @@
 }
 
 .sales__info-item{
-    width: 30%;
+    width: 40%;
     font-size: 13px;
     text-align: center;
     color: #e69731;
+    letter-spacing: 1px;
 }
 
 

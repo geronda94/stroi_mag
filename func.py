@@ -32,6 +32,9 @@ def bag_construct(cart:dict):
     total_weight = 0
     prod_id = [x[0] for x in cart.items()]
     product_list = products.in_cart(prod_id)
+    loaders__calc = dict()
+
+
 
     bag_refactored= []
     for i in product_list:
@@ -81,17 +84,19 @@ def bag_construct(cart:dict):
                     'link':i.get('link')
                 })
 
-
-                if not session.get('delivery'):
-                    session['delivery'] = dict()
-
-                
-
-
-                session['delivery']['total_weight'] = total_weight
-                session['delivery']['total_price'] = total_price
-
+                if loaders__calc.get(weight):
+                    loaders__calc[weight] += sum_weight
+                else:  
+                    loaders__calc[weight] = sum_weight
             else:
                 continue
+        
+    if not session.get('delivery'):
+        session['delivery'] = dict()
+
+    session['bag_refactored'] = cart
+    session['loaders_calc'] = loaders__calc
+    session['delivery']['total_weight'] = total_weight
+    session['delivery']['total_price'] = total_price
 
     return [bag_refactored, total_price, total_weight]

@@ -248,6 +248,12 @@ class Products:
                     """
         params = {'ids': tuple(lst)}
         return self.__request.selectd(query, params)
+    
+    def select_loaders(self):
+        return self.__request.selectd("SELECT * FROM load_price ORDER BY order_num;")
+    
+    def select_delivery(self):
+        return self.__request.selectd("SELECT * FROM delivery_price ORDER BY order_num;")
 
 
 

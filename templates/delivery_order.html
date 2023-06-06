@@ -1,19 +1,59 @@
-<form action="" class="order__form">
-    <div class="dop__block">
-        <div class="delivery__block">
-            <label for="delivery" class="delivery__label dop__label">Выберите способ доставки:</label>
-            <select class="delivery__select dop__select" id="delivery"></label>
-                <option class="delivery__value select__value" value="Tiraspol">По тирасполю 150р. <span class="delivery__span">(до 3-х тонн за рейс)</span> </option>
-                <option class="delivery__value select__value" value="option2">Без доставки(самовывоз)</option>
-                <option class="delivery__value select__value" value="option3">Вариант 3</option>
-                <option class="delivery__value select__value" value="option4">Вариант 4</option>
-            </select>
-            
+{% extends 'base.html' %}
+    {{super()}}
+
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bag.css')}}">
+{% endblock styles %}
+
+{% block header %}
+    {% block top_menu %}
+        {{super()}}
+    {% endblock top_menu %}
+{% endblock header %}
+
+
+
+{% block content %}
+    {{super()}}
+    <form action="{{url_for('set_delivery')}}" method="post" class="order__form">
+        <div class="dop__block">
+            <div class="delivery__block">
+                <label for="delivery" class="delivery__label dop__label">Выберите способ доставки:</label>
+                <select class="delivery__select dop__select" id="delivery" name="delivery">
+                    <option class="delivery__value select__value" value="0">
+                        <div class="option__name">Самовывоз</div>
+                    </option>
+                    {% for i in delivery %}
+                    <option class="delivery__value select__value" value="{{i.id}}">
+                        <div class="option__name">{{i.name}}</div>
+                        <div class="option__desc">{{i.price}} р.</div>
+                    </option>
+                    {% endfor %}
+                    
+                    
+                </select>
+                
+            </div>
+            <div class="delivery__block">
+                <div class="loaders__label dop__label">Нужны грузчики?</div>
+                <div class="radio__block">
+                    <label for="loaders_yes">
+                        Если да, нажмите здесь <input type="checkbox" id="loaders_yes" name="loaders" value="loaders_yes">
+                    </label>
+                </div>
+                <div class="load__select">
+                    <label for="load__select" class="delivery__label dop__label">Выберите способ разгрузки</label>
+                    <select class="delivery__select dop__select" id="load__select" name="load_coficient">
+                        {% for name, cof in load_cof.items() %}
+                        <option class="delivery__value select__value" value="{{cof}}">
+                            <div class="option__name">{{name}}</div>
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="delivery__block">
-            <label for="loaders" class="loaders__label dop__label">Нужны грузчики?</label>
-            
-            
-        </div>
-    </div>
-</form>
+    </form>
+{% endblock content %}

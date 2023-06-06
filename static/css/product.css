@@ -61,8 +61,12 @@
 .sales__info{
     margin: 0 auto;
     width: 60%;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    letter-spacing: 3px;
 }
+
+
+
 .price__sale{
     font-size: 12px;
     width: 48%;
@@ -95,7 +99,7 @@
     max-width: 25%;
     margin:0 15px;
     padding: auto 10px;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .button__to-cart{
@@ -229,5 +233,10 @@
     .desc__title {
         font-size: 17px;
         letter-spacing: 2px;
+    }
+
+    .product__buy-items{
+        width: 115%;
+        letter-spacing: 1px;
     }
 }

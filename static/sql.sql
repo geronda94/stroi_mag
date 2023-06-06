@@ -66,13 +66,22 @@ CREATE TABLE IF NOT EXISTS load_price(
     order_num INT
 );
 
+CREATE TABLE IF NOT EXISTS delivery_price(
+    id SERIAL PRIMARY KEY, 
+    name VARCHAR(30), 
+    descriprion VARCHAR(200), 
+    price DECIMAL, 
+    max_weight DECIMAL, 
+    order_num INT
+);
+
 
 
 INSERT INTO seller(name, description,address,phone,telegram, email) VALUES
 ('self', 'self', 'aval', '77553291', '15444654565', 'iiiliev.igor@gmail.com'),
 ('Аваль', 'Цемент Песок Гравий', 'Мегатранс', '77782349', '15444654565', 'iiiliev.igor@gmail.com'),
-('Кирпичок', 'Кирпичи, бетонные изделия, печное оборудование', 'Мегатранс', '77782349', '15444654565', 'nikolay@gmail.com');
-
+('Кирпичок', 'Кирпичи, бетонные изделия, печное оборудование', 'Мегатранс', '77782349', '15444654565', 'nikolay@gmail.com')
+;
 
 
 INSERT INTO categories(name, link, description, order_num) VALUES
@@ -80,7 +89,8 @@ INSERT INTO categories(name, link, description, order_num) VALUES
 ('Кирпичи, фортан и блоки', 'chirpich','Кирпичи: Полнотелые, Щелевые, Полуторные, Огнеупорные, Декоративные, Клинкерные. Фортан, Газоблоки, Пеноблоки.', NULL),
 ('Плитка, бордюры и прочие изделия', 'plitka','Тротуарная плитка, Коньки и крышки для заборов, Бордюры, Водостоки',NULL),
 ('Камины и печи', 'kamini', 'Дверцы печные, Жаровые Решетки, Дымоходные затворы, Клей огнеупорный','2'),
-('Клей, шпатлевка и сетка', 'klei', 'Клей 333, Шпатлевка первичная и вторичная. Армирующая сетка 1*2м с ячейкой: 100*100мм, 150*150мм.', NULL);
+('Клей, шпатлевка и сетка', 'klei', 'Клей 333, Шпатлевка первичная и вторичная. Армирующая сетка 1*2м с ячейкой: 100*100мм, 150*150мм.', NULL)
+;
 
 
 INSERT INTO product(name, description,  ava_link, link, seller_id, price, price2, price3, sale_for1,sale_for2, weight, comission, sold, order_num)VALUES
@@ -96,12 +106,6 @@ INSERT INTO product(name, description,  ava_link, link, seller_id, price, price2
 ('Кирпич полуторный', 'Полый кирпич','polutor_kirpich.jpg', 'kirpich_polutor', '3','4.5', '0','0',NULL, NULL,'3.5', '0','0',NULL),
 ('Кирпич Огнеупорный', 'Огнеупорный кирпич', 'ogneupor_kirpich.jpeg','kirpich_ogneupor', '3','45', '0','0', NULL, NULL,'3.5', '0','0','3')
 ;
-
-
-
-
-
-
 
 
 INSERT INTO cat_prod(category_id, product_id) VALUES
@@ -125,4 +129,12 @@ INSERT INTO load_price(name, descriprion,price, weight, order_num) VALUES
 ('Кирпичи.', 'Кирпичи по 3.5 рубля за 5 кирпичей этаж или каждые 15 метров', '0.75', '3.5','3'),
 ('Фортан и Пеноблоки маленькие(до 10 кг).', 'Блоки по 1 рублю до 10кг за этаж или каждые 15 метров', '1', '10','4'),
 ('Фортан и Пеноблоки крупные(от 10 кг).', 'Блоки по 1.5 рублей от 10кг за этаж или каждые 15 метров', '1.5', '10','5')
+;
+
+
+
+INSERT INTO delivery_price(name, descriprion, price, max_weight, order_num) VALUES
+('Тирасполь','Доставка по Тирасполю грузовой машинной грузоподъемностью до 3-х тонн', '150','3000','1'),
+('Пригород Тирасполя','Доставка в с. Ближний Хутор, с. Суклея, с. Терновка грузовой машинной грузоподъемностью до 3-х тонн', '180','3000','2'),
+('Кицканы','Доставка в с. Кицканы, грузовой машинной грузоподъемностью до 3-х тонн', '300','3000','3')
 ;

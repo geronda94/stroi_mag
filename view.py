@@ -142,14 +142,71 @@ def edit_bag():
 @app.route('/drop_bag')
 def drop_bag():
 	session['bag'] = dict()
+	del session['bag_refactored']
+	del session['loaders_calc']
+	session['delivery']['total_weight'] = 0
+	session['delivery']['total_price'] = 0
 	flash(message=f'Корзина очищена',category='success')
+
 	return redirect(url_for('get_bag'))
 
 
 
-@app.route('/delivery')
-def get_delivery():
-	return False
+@app.route('/delivery', methods=['GET', 'POST'])
+def set_delivery():
+	total_weight = session.get('delivery').get('total_weight')
+	total_price = session.get('delivery').get('price')
+	bag_refactored = session.get('bag_refactored')
+	bag = session.get('bag')
+	loaders_calc = session.get('loaders_calc')
+	load_cof = {
+				'1 Этаж': 1,
+				'2 Этаж': 2,
+				'Лифт': 2,
+				'3 Этаж': 4,
+				'5 Этаж': 5,
+				'6 Этаж': 6,
+				'7 Этаж': 7,
+				'8 Этаж': 8,
+				'9 Этаж': 9,
+				'По земле до 3 метров': 0.4,
+				'По земле до 15 метров': 1,
+				'По земле от 15 до 30 метров': 2,
+				'По земле от 30 до 45 метров': 3,
+				'По земле от 45 до 60 метров': 4,
+			}
+
+	
+	for i in loaders_calc.items():
+		print(i)
+
+
+	if total_weight and int(total_weight) > 0:
+		if (bag_refactored and bag) and (bag_refactored ==  bag):
+			delivery_options = products.select_delivery()
+			loaders_options = products.select_loaders()
+
+
+			if  request.method == 'POST':
+				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
+										total_weight=total_weight, total_price=total_price, delivery=delivery_options,\
+										loaders=loaders_options, load_cof=load_cof)
+			
+
+
+			return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
+			  total_weight=total_weight, total_price=total_price, delivery=delivery_options,\
+				loaders=loaders_options, load_cof=load_cof)
+		
+		
+		
+		
+		else:
+			return redirect(url_for('get_bag'))
+	else:
+		return redirect(url_for('get_bag'))
+	
+
 
 
 
