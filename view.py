@@ -147,6 +147,21 @@ def drop_bag():
 
 
 
+@app.route('/delivery')
+def get_delivery():
+	return False
+
+
+
+
+
+
+
+
+
+
+
+
 @app.before_request
 def before_request():
 	if not session.get('history'):
