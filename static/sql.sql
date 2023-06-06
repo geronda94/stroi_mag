@@ -57,6 +57,14 @@ CREATE TABLE IF NOT EXISTS product_img(
     order_num INT 
 );
 
+CREATE TABLE IF NOT EXISTS load_price(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    descriprion VARCHAR(150),
+    price DECIMAL,
+    weight DECIMAL,
+    order_num INT
+);
 
 
 
@@ -110,14 +118,6 @@ INSERT INTO cat_prod(category_id, product_id) VALUES
 ('2','11')
 ;
 
-CREATE TABLE IF NOT EXISTS load_price(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50),
-    descriprion VARCHAR(150),
-    price DECIMAL,
-    weight DECIMAL,
-    order_num INT
-);
 
 INSERT INTO load_price(name, descriprion,price, weight, order_num) VALUES
 ('Мешок 40 кг.', 'Мешки по 40 кг. по 5 рублей за этаж или каждые 15 метров', '5', '40','1'),

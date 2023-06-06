@@ -4,7 +4,7 @@ from app import app
 from pg import PgConnect, PgRequest, products
 from config import DB
 import uuid
-from func import return_next, coll_to_int
+from func import return_next, coll_to_int, bag_construct
 
 
 
@@ -99,70 +99,15 @@ def get_bag():
 	total_price = 0
 	total_weight = 0
 
-	
 
 
 	if cart:
-		print(cart.items())
-		prod_id = [x[0] for x in cart.items()]
-		print(prod_id, '                             PROD ID')
-		product_list = products.in_cart(prod_id)
+		new_bag = bag_construct(cart)
+		bag_refactored = new_bag[0]
+		total_price = new_bag[1]
+		total_weight = new_bag[2]
+
 		
-		print('BAG   ------------')
-		for i in product_list:
-			print(i.get('product_name'))
-		
-
-		bag_refactored= []
-		for i in product_list:
-			
-			for key, value in cart.items():
-				product_id = int(i.get('product_id'))
-				cart_id = int(key)
-				if product_id ==cart_id:
-					sale = 0
-					price = int(i.get('price'))
-					price2 = i.get('price2')
-					price3 = i.get('price3')
-					condition1 = i.get('sale_for1')
-					condition2 = i.get('sale_for2')
-					coll = int(value)
-					weight = float(i.get('weight'))
-					
-					sale = int(price)
-
-					if (condition2 and price3):
-						if coll >= int(condition2):
-							sale = int(price3)
-						elif (condition1 and price2):
-							if coll >= int(condition1):
-								sale = int(price2)
-
-					
-						
-
-					total = int(sale)*int(coll)
-					total_price+=total
-					sum_weight = int(weight*int(coll))
-					total_weight += sum_weight
-
-					if sale == price:
-						sale = '-'
-
-					bag_refactored.append({
-						'product_id':i.get('product_id'),
-						'product_name':i.get('product_name'),
-						'product_ava':i.get('ava_link'),
-						'coll':coll,
-						'weight':sum_weight,
-						'price':price,
-						'sale':sale,
-						'total':total,
-						'link':i.get('link')
-					})
-
-				else:
-					continue
 
 	else:
 		bag_refactored = False
@@ -170,7 +115,7 @@ def get_bag():
 	
 
 	return render_template('bag.html', title='Корзина', menu=menu, cart=bag_refactored,\
-							total=total_price, weight=total_weight)
+							total=total_price, weight=session['delivery']['total_weight'])
 
 
 
