@@ -160,6 +160,7 @@ def set_delivery():
 	bag = session.get('bag')
 	loaders_calc = session.get('loaders_calc')
 	load_cof = {
+				'Грузчики не нужны': 0,
 				'1 Этаж': 1,
 				'2 Этаж': 2,
 				'Лифт': 2,

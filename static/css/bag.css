@@ -177,13 +177,7 @@
 
 
 
-.load__select {
-    opacity: 0;
-}
 
-#loaders_yes:checked ~ #load__select {
-    opacity: 1;
-}
 
 @media(max-width:1000px){
     .cart__inner{
