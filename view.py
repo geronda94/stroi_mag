@@ -170,10 +170,10 @@ def set_delivery():
 
 
 			if  request.method == 'POST':
-				delivery_value = request.form.get('delivery')
+				delivery_value = int(request.form.get('delivery'))
 				load_coficient = float(request.form.get('load_coficient'))
 
-
+				delivery_list = None
 				load_list = None
 				if load_coficient > 0:
 					load_list = []
@@ -186,14 +186,18 @@ def set_delivery():
 									'price': float(i.get('price')) * float(load_coficient),
 									'total_price': num * float(i.get('price'))* float(load_coficient)
 									})
-
+								
+				
+				if delivery_value > 0:
+					delivery_list = []
+					
 
 
 
 
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
                        total_weight=total_weight, total_price=total_price, delivery=delivery_options,
-                       loaders=loaders_options, load_cof=load_cof, delivery_value=delivery_value,
+                       loaders=loaders_options, load_cof=load_cof, delivery_value=int(delivery_value),
                        load_coficient=float(load_coficient), load_list=load_list)
 
 			

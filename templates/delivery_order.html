@@ -23,13 +23,22 @@
                 <label for="delivery" class="delivery__label dop__label">Выберите способ доставки:</label>
                 <select class="delivery__select dop__select" id="delivery" name="delivery">
                     {% for i in delivery %}
-                    <option class="delivery__value select__value" value="{{i.id}}">
-                        <div class="option__name">{{i.name}}</div>
-                        {% if i.price !=0 %}
-                            <div class="option__desc">{{i.price}} р.</div>
-                        {% endif %}
-                        
-                    </option>
+                    {% if i.id == delivery_value %}
+                        <option class="delivery__value select__value" value="{{i.id}}" selected>
+                            <div class="option__name">{{i.name}}</div>
+                            {% if i.price !=0 %}
+                                <div class="option__desc">{{i.price}} р.</div>
+                            {% endif %}
+                            
+                        </option>
+                    {% endif %}
+                        <option class="delivery__value select__value" value="{{i.id}}">
+                            <div class="option__name">{{i.name}}</div>
+                            {% if i.price !=0 %}
+                                <div class="option__desc">{{i.price}} р.</div>
+                            {% endif %}
+                            
+                        </option>
                     {% endfor %}
                     
                     
