@@ -22,13 +22,13 @@
             <div class="delivery__block">
                 <label for="delivery" class="delivery__label dop__label">Выберите способ доставки:</label>
                 <select class="delivery__select dop__select" id="delivery" name="delivery">
-                    <option class="delivery__value select__value" value="0">
-                        <div class="option__name">Самовывоз</div>
-                    </option>
                     {% for i in delivery %}
                     <option class="delivery__value select__value" value="{{i.id}}">
                         <div class="option__name">{{i.name}}</div>
-                        <div class="option__desc">{{i.price}} р.</div>
+                        {% if i.price !=0 %}
+                            <div class="option__desc">{{i.price}} р.</div>
+                        {% endif %}
+                        
                     </option>
                     {% endfor %}
                     
@@ -42,28 +42,34 @@
                     <div class="delivery__label dop__label">Выберите один из вариантов для расчета стоимости разгрузки:</div>
                     <select class="delivery__select dop__select" id="load__select" name="load_coficient">
                         {% for name, cof in load_cof.items() %}
-                        <option class="delivery__value select__value" value="{{cof}}">
-                            <div class="option__name">{{name}}</div>
-                        </option>
+                            {% if load_coficient == cof %}
+                                <option class="delivery__value select__value" value="{{ cof }}" selected>
+                                    <div class="option__name">{{ name }}</div>
+                                </option>
+                            {% else %}
+                            
+                                <option class="delivery__value select__value" value="{{ cof }}">
+                                    <div class="option__name">{{ name }}</div>
+                                </option>
+                            {% endif %}
                         {% endfor %}
                     </select>
+                    
                 </div>
             </div>
-
+            {% if load_list %}
+                {% for i in load_list %}
+                    {{i.coll}} единиц весом {{i.weight}} кг. по цене {{i.price}} р. в сумме {{i.total_price}}
+                {% endfor %}
+            {% endif %}
             <div class="send__order-block">
                 <input type="submit" value="Отправить заявку" class="send__deliver" id="send__order" name="send_order">
                 <input type="submit" value="Расчитать стоимость" class="send__deliver" id="send__deliver" name="calulate_delivery">
                 
             </div>
             
-            {% if load_list %}
-                {% for i in load_list %}
-                    Вес: {{i.weight}}
-                    Количетсво: {{i.coll}}
-                    Цена за единицу: {{i.weight}}
-                    Итого: {{i.price}}
-                {% endfor %}
-            {% endif %}
+            
+            
             
 
         </div>

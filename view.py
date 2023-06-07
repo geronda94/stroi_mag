@@ -171,28 +171,31 @@ def set_delivery():
 
 			if  request.method == 'POST':
 				delivery_value = request.form.get('delivery')
-				load_coficient = request.form.get('load_coficient')
+				load_coficient = float(request.form.get('load_coficient'))
 
 
-				load__list = []
-				for i in loaders_options:
-					for weight, num in loaders_calc.items():
-						if float(weight) == float(i.get('weight')):
-							load_list.append({
-								'weight':float(weight),
-								'coll':num,
-								'price': float(i.get('price') * float(load_coficient),
-								'total_price': num * float(i.get('price'))
-								})
+				load_list = None
+				if load_coficient > 0:
+					load_list = []
+					for i in loaders_options:
+						for weight, num in loaders_calc.items():
+							if float(weight) == float(i.get('weight')):
+								load_list.append({
+									'weight':float(weight),
+									'coll':num,
+									'price': float(i.get('price')) * float(load_coficient),
+									'total_price': num * float(i.get('price'))* float(load_coficient)
+									})
 
 
 
 
 
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
-										total_weight=total_weight, total_price=total_price, delivery=delivery_options,\
-										loaders=loaders_options, load_cof=load_cof, delivery_value=delivery_value,\
-											load_coficient= load_coficient, load_list=load_list)
+                       total_weight=total_weight, total_price=total_price, delivery=delivery_options,
+                       loaders=loaders_options, load_cof=load_cof, delivery_value=delivery_value,
+                       load_coficient=float(load_coficient), load_list=load_list)
+
 			
 
 

@@ -251,6 +251,10 @@ class Products:
     
     def select_loaders(self):
         return self.__request.selectd("SELECT * FROM load_price ORDER BY order_num DESC;")
+    
+
+    def select_delivery(self):
+        return self.__request.selectd("SELECT * FROM delivery_price ORDER BY order_num;")
 
 
 

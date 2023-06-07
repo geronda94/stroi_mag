@@ -68,8 +68,7 @@ CREATE TABLE IF NOT EXISTS load_price(
 
 CREATE TABLE IF NOT EXISTS delivery_price(
     id SERIAL PRIMARY KEY, 
-    name VARCHAR(30), 
-    descriprion VARCHAR(200), 
+    name VARCHAR(200), 
     price DECIMAL, 
     max_weight DECIMAL, 
     order_num INT
@@ -132,9 +131,11 @@ INSERT INTO load_price(name, descriprion,price, weight, order_num) VALUES
 ;
 
 
-
-INSERT INTO delivery_price(name, descriprion, price, max_weight, order_num) VALUES
-('Тирасполь','Доставка по Тирасполю грузовой машинной грузоподъемностью до 3-х тонн', '150','3000','1'),
-('Суклея  или Бл. Хутор','Доставка в с. Ближний Хутор, с. Суклея, с. Терновка грузовой машинной грузоподъемностью до 3-х тонн', '180','3000','2'),
-('Кицканы','Доставка в с. Кицканы, грузовой машинной грузоподъемностью до 3-х тонн', '300','3000','3')
+INSERT INTO delivery_price(name,  price, max_weight, order_num) VALUES
+('Самовывоз','0', '9999999','1'),
+('Тирасполь до 3х тон','150','3000','2'),
+('Суклея  до 3х тон', '180','3000','3'),
+('Кицканы до 3х тон', '300','3000','4'),
+('Манипулятор по Тирасполю до 5 тон', '500','5000','5'),
+('ЗИЛ по Тирасполю до 6 тон', '300','6000','6')
 ;
