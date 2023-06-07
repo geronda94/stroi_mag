@@ -104,9 +104,13 @@
     display:flex;
     width:100%;
     justify-content: center;
+    gap:20px;
+    flex-wrap: wrap;
 }
 
-.send__oder {
+.send__oder, 
+#send__deliver,
+#send__order {
     color: #fff;
     background: rgb(25, 73, 218);
     border: 1px solid rgb(25, 73, 218);
@@ -114,10 +118,15 @@
     padding: 10px 25px;
     text-transform: uppercase;
     letter-spacing: 3px;
+    
 }
 
 .send__oder:hover,
-.send__oder:active{
+.send__oder:active,
+#send__deliver:hover,
+#send__deliver:active,
+#send__order:hover,
+#send__order:active{
     color:rgb(25, 73, 218);
     background-color: #fff;
     transition: 0.3s;
@@ -147,7 +156,9 @@
 }
 
 .dop__label{
-    margin-top: 40px;
+    margin-top: 25px;
+    width: 370px;
+    text-align: center;
 }
 
 .dop__select{
@@ -174,7 +185,6 @@
 .option__name{
     font-size: 17px;
 }   
-
 
 
 

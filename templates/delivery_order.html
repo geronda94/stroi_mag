@@ -39,7 +39,7 @@
             
             <div class="delivery__block">                
                 <div class="load__select">
-                    <label for="load__select" class="delivery__label dop__label">Выберите способ разгрузки</label>
+                    <div class="delivery__label dop__label">Выберите один из вариантов для расчета стоимости разгрузки:</div>
                     <select class="delivery__select dop__select" id="load__select" name="load_coficient">
                         {% for name, cof in load_cof.items() %}
                         <option class="delivery__value select__value" value="{{cof}}">
@@ -49,6 +49,22 @@
                     </select>
                 </div>
             </div>
+
+            <div class="send__order-block">
+                <input type="submit" value="Отправить заявку" class="send__deliver" id="send__order" name="send_order">
+                <input type="submit" value="Расчитать стоимость" class="send__deliver" id="send__deliver" name="calulate_delivery">
+                
+            </div>
+            
+            {% if load_list %}
+                {% for i in load_list %}
+                    Вес: {{i.weight}}
+                    Количетсво: {{i.coll}}
+                    Цена за единицу: {{i.weight}}
+                    Итого: {{i.price}}
+                {% endfor %}
+            {% endif %}
+            
 
         </div>
     </form>

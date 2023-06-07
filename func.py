@@ -85,9 +85,9 @@ def bag_construct(cart:dict):
                 })
 
                 if loaders__calc.get(weight):
-                    loaders__calc[weight] += sum_weight
+                    loaders__calc[weight] += int(sum_weight/weight)
                 else:  
-                    loaders__calc[weight] = sum_weight
+                    loaders__calc[weight] = int(sum_weight/weight)
             else:
                 continue
         

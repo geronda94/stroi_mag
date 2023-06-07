@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, session, request,flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from app import app
 from pg import PgConnect, PgRequest, products
-from config import DB
+from config import DB, load_cof
 import uuid
 from func import return_next, coll_to_int, bag_construct
 
@@ -159,28 +159,8 @@ def set_delivery():
 	bag_refactored = session.get('bag_refactored')
 	bag = session.get('bag')
 	loaders_calc = session.get('loaders_calc')
-	load_cof = {
-				'Грузчики не нужны': 0,
-				'1 Этаж': 1,
-				'2 Этаж': 2,
-				'Лифт': 2,
-				'3 Этаж': 4,
-				'5 Этаж': 5,
-				'6 Этаж': 6,
-				'7 Этаж': 7,
-				'8 Этаж': 8,
-				'9 Этаж': 9,
-				'По земле до 3 метров': 0.4,
-				'По земле до 15 метров': 1,
-				'По земле от 15 до 30 метров': 2,
-				'По земле от 30 до 45 метров': 3,
-				'По земле от 45 до 60 метров': 4,
-			}
-
 	
-	for i in loaders_calc.items():
-		print(i)
-
+	
 
 	if total_weight and int(total_weight) > 0:
 		if (bag_refactored and bag) and (bag_refactored ==  bag):
@@ -188,10 +168,31 @@ def set_delivery():
 			loaders_options = products.select_loaders()
 
 
+
 			if  request.method == 'POST':
+				delivery_value = request.form.get('delivery')
+				load_coficient = request.form.get('load_coficient')
+
+
+				load__list = []
+				for i in loaders_options:
+					for weight, num in loaders_calc.items():
+						if float(weight) == float(i.get('weight')):
+							load_list.append({
+								'weight':float(weight),
+								'coll':num,
+								'price': float(i.get('price') * float(load_coficient),
+								'total_price': num * float(i.get('price'))
+								})
+
+
+
+
+
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 										total_weight=total_weight, total_price=total_price, delivery=delivery_options,\
-										loaders=loaders_options, load_cof=load_cof)
+										loaders=loaders_options, load_cof=load_cof, delivery_value=delivery_value,\
+											load_coficient= load_coficient, load_list=load_list)
 			
 
 
