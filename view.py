@@ -176,6 +176,8 @@ def set_delivery():
 				delivery_dict = None
 				load_list = None
 				total_load_price = 0
+				total_delivery_price = 0
+
 
 				if load_coficient > 0:
 					load_list = []
@@ -215,7 +217,7 @@ def set_delivery():
 										'total_price':total_price
 										}
 						
-						
+
 				if request.form.get('send_order'):
 					return 'ALL READY'
 						
@@ -224,7 +226,7 @@ def set_delivery():
 										total_weight=total_weight, total_price=total_price, delivery=delivery_options,
 										loaders=loaders_options, load_cof=load_cof, delivery_value=int(delivery_value),
 										load_coficient=float(load_coficient), load_list=load_list, delivery_dict=delivery_dict,
-										total_load_price = total_load_price, anchor='1'
+										total_load_price = total_load_price, anchor='1', all_total_price = total_load_price+total_delivery_price
 										)
 
 			

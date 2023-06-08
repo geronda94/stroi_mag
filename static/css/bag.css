@@ -213,7 +213,7 @@
 .li__item{
     text-align: left;
     display:grid;
-    grid-template-columns: 11fr 4fr;
+    grid-template-columns: 11fr 5fr;
     border-bottom: #a5a5a5 1px solid;
 }
 .li__item-value{

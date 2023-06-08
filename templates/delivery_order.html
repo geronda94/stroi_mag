@@ -138,7 +138,21 @@
             </div > 
         
                 {% endif %}
-            
+            {% if delivery_dict and load_list %}
+            <div delivery__list-inner>
+                    
+                <ul class="delivery__list">
+                    <li class="cart__product cart__item">
+                        <div class="table__title">Итог доставка / разгрузка</div> 
+                     </li>
+                    <li class="li__item cart__item">
+                        <div class="li__item-name">Сумма: </div>
+                        <div class="li__item-value">{{delivery_dict.total_price + total_load_price}} р.</div>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+                
             {% endif %}
             <div class="send__order-block send__order-block--delivery">
                 <input type="submit" value="Отправить заявку" class="send__deliver" id="send__order" name="send_order">
