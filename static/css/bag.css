@@ -185,8 +185,14 @@
 .option__name{
     font-size: 17px;
 }   
-
-
+.delivery__table{
+    max-width: 500px;
+}
+.table__title{
+    font-size: 16px;
+    color:rgb(25, 73, 218);
+    font-weight: 600;
+}
 
 
 @media(max-width:1000px){

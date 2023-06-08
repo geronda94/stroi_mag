@@ -5,7 +5,7 @@ from pg import PgConnect, PgRequest, products
 from config import DB, load_cof
 import uuid
 from func import return_next, coll_to_int, bag_construct
-
+import math
 
 
 cats = products.select_categories()
@@ -172,8 +172,8 @@ def set_delivery():
 			if  request.method == 'POST':
 				delivery_value = int(request.form.get('delivery'))
 				load_coficient = float(request.form.get('load_coficient'))
-
-				delivery_list = None
+				
+				delivery_dict = None
 				load_list = None
 				if load_coficient > 0:
 					load_list = []
@@ -188,17 +188,34 @@ def set_delivery():
 									})
 								
 				
-				if delivery_value > 0:
-					delivery_list = []
-					
+				if delivery_value > 1:
+					delivery_option = next(filter(lambda i: int(i.get('id')) == int(delivery_value), delivery_options), {})
 
+					if len(delivery_option) > 0:
+						delivery_name = delivery_option.get('name')
+						max_weight = float(delivery_option.get('max_weight'))
+						total_weight = float(total_weight)
+						price_for_once = float(delivery_option.get('price'))
+						need_ride =  math.ceil(float(total_weight) / float(delivery_option.get('max_weight')))
+						total_price = need_ride* price_for_once
+						
+						delivery_dict = {
+										'value': delivery_value,
+										'name':delivery_name,
+										'max_weight':max_weight,
+										'total_weight': total_weight ,
+										'price_for_once': price_for_once,
+										'need_ride':need_ride,
+										'total_price':total_price
+										}
 
-
+						
 
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
-                       total_weight=total_weight, total_price=total_price, delivery=delivery_options,
-                       loaders=loaders_options, load_cof=load_cof, delivery_value=int(delivery_value),
-                       load_coficient=float(load_coficient), load_list=load_list)
+										total_weight=total_weight, total_price=total_price, delivery=delivery_options,
+										loaders=loaders_options, load_cof=load_cof, delivery_value=int(delivery_value),
+										load_coficient=float(load_coficient), load_list=load_list, delivery_dict=delivery_dict,
+										)
 
 			
 
@@ -206,9 +223,6 @@ def set_delivery():
 			return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 			  total_weight=total_weight, total_price=total_price, delivery=delivery_options,\
 				loaders=loaders_options, load_cof=load_cof)
-		
-		
-		
 		
 		else:
 			return redirect(url_for('get_bag'))

@@ -31,7 +31,8 @@
                             {% endif %}
                             
                         </option>
-                    {% endif %}
+                       
+                    {% else %}
                         <option class="delivery__value select__value" value="{{i.id}}">
                             <div class="option__name">{{i.name}}</div>
                             {% if i.price !=0 %}
@@ -39,6 +40,8 @@
                             {% endif %}
                             
                         </option>
+
+                    {% endif %}
                     {% endfor %}
                     
                     
@@ -48,9 +51,9 @@
             
             <div class="delivery__block">                
                 <div class="load__select">
-                    <div class="delivery__label dop__label">Выберите один из вариантов для расчета стоимости разгрузки:</div>
+                    <div class="delivery__label dop__label">Для расчета стоимости выгрузки, выберите какая из услуг грузчиков вам нужна:</div>
                     <select class="delivery__select dop__select" id="load__select" name="load_coficient">
-                        {% for name, cof in load_cof.items() %}
+                        {% for name,cof in load_cof.items() %}
                             {% if load_coficient == cof %}
                                 <option class="delivery__value select__value" value="{{ cof }}" selected>
                                     <div class="option__name">{{ name }}</div>
@@ -66,11 +69,47 @@
                     
                 </div>
             </div>
+            <div class="cart__inner">
             {% if load_list %}
-                {% for i in load_list %}
-                    {{i.coll}} единиц весом {{i.weight}} кг. по цене {{i.price}} р. в сумме {{i.total_price}}
-                {% endfor %}
+                <table class="cart__tabale">
+                    <div class="table__title"> Стоимость услуг грузчиков</div>
+                    <thead class="cart__items-head">
+                        <tr class="cart__table-line">
+                            <th class="cart__items-title cart__item">Вес</th>
+                            <th class="cart__items-title cart__item">Кол-во</th>
+                            <th class="cart__items-title cart__item">За единицу</th>
+                            <th class="cart__items-title cart__item">Сумма</th>
+                    
+                        </tr>
+                    </thead>
+                    <tbody class="cart__items">
+                    {% for i in load_list %}
+                        <tr class="cart__table-line">
+                            <td class="cart__product cart__item">{{i.weight}} кг.</td>
+                            <td class="cart__product cart__item">{{i.coll}} шт.</td>
+                            <td class="cart__product cart__item">{{i.price}} р.</td>
+                            <td class="cart__product cart__item">{{i.total_price}} р.</td>                             
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
             {% endif %}
+            </div>
+            
+            {% if delivery_dict %}     
+            <delivery__list-inner>
+                <div class="table__title"> Стоимость доставки</div>
+                 <ul class="delivery__list">
+                     <td class="cart__product cart__item">{{delivery_dict.total_weight / 1000}} т.</td>
+                     <td class="cart__product cart__item">{{delivery_dict.max_weight / 1000}} т.</td>
+                     <td class="cart__product cart__item">{{delivery_dict.price_for_once}} р.</td>
+                     <td class="cart__product cart__item">{{delivery_dict.need_ride}}</td>
+                     <td class="cart__product cart__item">{{delivery_dict.total_price}} р.</td>
+                 </ul>
+            </delivery__list-inner> 
+                {% endif %}
+
+
             <div class="send__order-block">
                 <input type="submit" value="Отправить заявку" class="send__deliver" id="send__order" name="send_order">
                 <input type="submit" value="Расчитать стоимость" class="send__deliver" id="send__deliver" name="calulate_delivery">
