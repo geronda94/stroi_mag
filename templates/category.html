@@ -16,7 +16,7 @@
                 <div class="category__cards category__cards-page">
                     {% for i in products %}
                         
-                        <div class="product__card">
+                        <div class="product__card" id="{{i.product_id}}">
                             <a href="{{url_for('get_product', link=i.link)}}" class="product__link">
                                 {% if not i.ava_link %}
                                     {% set ava_link = 'cement_m550.png' %}
@@ -49,6 +49,7 @@
                                     <div class="add__to-cart">
                                         <label for="input_{{i.product_id}}" class="add__label">Количество: </label>
                                         <input type="text" value="" placeholder="1"  class="input__to-cart" name="coll" id="input_{{i.product_id}}">
+                                        <input type="hidden" name="anchor" value="{{i.product_id}}">
                                         <input type="hidden" name="product_id" value="{{i.product_id}}">
                                         <input type="hidden" name="product_name" value="{{i.product_name}}">
                                     </div>

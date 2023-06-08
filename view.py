@@ -77,18 +77,18 @@ def add_to_bag():
 
 		
 	if request.form.get('add'):		
+		anchor = request.form.get('anchor')
 		flash(message=f'В корзину добавлен товар: {product_name} * {coll} шт. ',category='cart')
 		
 		next_url = request.args.get('next')
 		if next_url is None:
 			next_url = 'index'
-		return redirect(url_for(next_url))
+		return redirect(request.referrer+'#'+str(anchor))
 					
 		
 	
 	elif request.form.get('buy'):
-		flash(message=f'Оформляем покупку:     {request.form.get("product_name")} * {coll} шт. ',category='cart')
-		return redirect(return_next(session['history']))
+		return redirect(url_for('get_bag'))
 	
 
 
@@ -175,15 +175,21 @@ def set_delivery():
 				
 				delivery_dict = None
 				load_list = None
+				total_load_price = 0
+
 				if load_coficient > 0:
 					load_list = []
 					for i in loaders_options:
 						for weight, num in loaders_calc.items():
 							if float(weight) == float(i.get('weight')):
+								price = float(i.get('price')) * float(load_coficient)
+								total_price = price * num
+								total_load_price += total_price
+
 								load_list.append({
 									'weight':float(weight),
 									'coll':num,
-									'price': float(i.get('price')) * float(load_coficient),
+									'price': round(price,2),
 									'total_price': num * float(i.get('price'))* float(load_coficient)
 									})
 								
@@ -208,13 +214,17 @@ def set_delivery():
 										'need_ride':need_ride,
 										'total_price':total_price
 										}
-
 						
-
+						
+				if request.form.get('send_order'):
+					return 'ALL READY'
+						
+				
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 										total_weight=total_weight, total_price=total_price, delivery=delivery_options,
 										loaders=loaders_options, load_cof=load_cof, delivery_value=int(delivery_value),
 										load_coficient=float(load_coficient), load_list=load_list, delivery_dict=delivery_dict,
+										total_load_price = total_load_price, anchor='1'
 										)
 
 			

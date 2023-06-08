@@ -22,7 +22,7 @@
                             
                             {% if i.category_id==cat.id %}
                             
-                                <div class="product__card">
+                                <div class="product__card" id="{{cat.id}}{{i.product_id}}">
                                     {% if not i.ava_link %}
                                         {% set ava_link = 'cement_m550.png' %}
                                     {% else %}
@@ -53,6 +53,8 @@
                                             <div class="add__to-cart">                                                    
                                                     <label for="input_{{i.product_id}}" class="add__label">Укажите количество: </label>
                                                     <input type="text" value="" placeholder="1" class="input__to-cart" name="coll" id="input_{{i.product_id}}">
+                                                    
+                                                    <input type="hidden" name="anchor" value="{{cat.id}}{{i.product_id}}">
                                                     <input type="hidden" name="product_id" value="{{i.product_id}}">
                                                     <input type="hidden" name="product_name" value="{{i.product_name}}">
                                                 </div>

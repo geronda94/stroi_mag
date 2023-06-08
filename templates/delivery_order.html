@@ -69,57 +69,89 @@
                     
                 </div>
             </div>
-            <div class="cart__inner">
-            {% if load_list %}
-                <table class="cart__tabale">
-                    <div class="table__title"> Стоимость услуг грузчиков</div>
-                    <thead class="cart__items-head">
-                        <tr class="cart__table-line">
-                            <th class="cart__items-title cart__item">Вес</th>
-                            <th class="cart__items-title cart__item">Кол-во</th>
-                            <th class="cart__items-title cart__item">За единицу</th>
-                            <th class="cart__items-title cart__item">Сумма</th>
-                    
-                        </tr>
-                    </thead>
-                    <tbody class="cart__items">
-                    {% for i in load_list %}
-                        <tr class="cart__table-line">
-                            <td class="cart__product cart__item">{{i.weight}} кг.</td>
-                            <td class="cart__product cart__item">{{i.coll}} шт.</td>
-                            <td class="cart__product cart__item">{{i.price}} р.</td>
-                            <td class="cart__product cart__item">{{i.total_price}} р.</td>                             
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    </table>
-            {% endif %}
+            <div class="send__order-block  send__order-block--delivery">
+                <input type="submit" value="Расчитать стоимость" class="send__deliver" id="send__deliver" name="calulate_delivery">
             </div>
+            <div id="1"></div>
+            {% if load_list or delivery_dict %}
+                {% if load_list %}
+                <div class="cart__inner loaders__inner">
+                    <table class="cart__tabale">
+                        <div class="table__title"> Стоимость услуг грузчиков</div>
+                        <thead class="cart__items-head">
+                            <tr class="cart__table-line">
+                                <th class="cart__items-title cart__item">Вес</th>
+                                <th class="cart__items-title cart__item">Кол-во</th>
+                                <th class="cart__items-title cart__item">За единицу</th>
+                                <th class="cart__items-title cart__item">Сумма</th>
+                        
+                            </tr>
+                        </thead>
+                        <tbody class="cart__items">
+                        {% for i in load_list %}
+                            <tr class="cart__table-line">
+                                <td class="cart__product cart__item">{{i.weight}} кг.</td>
+                                <td class="cart__product cart__item">{{i.coll}} шт.</td>
+                                <td class="cart__product cart__item">{{i.price}} р.</td>
+                                <td class="cart__product cart__item">{{i.total_price}} р.</td>                             
+                            </tr>
+                        {% endfor %}
+                        <tr class="cart__table-line">
+                            <td class="cart__product cart__item"></td><td class="cart__product cart__item"></td>                            
+                            <td class="cart__product cart__item"><b>Итого:</b></td>
+                            <td class="cart__product cart__item"><b>{{total_load_price}} р.</b></td>                             
+                        </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            
             
             {% if delivery_dict %}     
-            <delivery__list-inner>
-                <div class="table__title"> Стоимость доставки</div>
-                 <ul class="delivery__list">
-                     <td class="cart__product cart__item">{{delivery_dict.total_weight / 1000}} т.</td>
-                     <td class="cart__product cart__item">{{delivery_dict.max_weight / 1000}} т.</td>
-                     <td class="cart__product cart__item">{{delivery_dict.price_for_once}} р.</td>
-                     <td class="cart__product cart__item">{{delivery_dict.need_ride}}</td>
-                     <td class="cart__product cart__item">{{delivery_dict.total_price}} р.</td>
-                 </ul>
-            </delivery__list-inner> 
-                {% endif %}
-
-
-            <div class="send__order-block">
-                <input type="submit" value="Отправить заявку" class="send__deliver" id="send__order" name="send_order">
-                <input type="submit" value="Расчитать стоимость" class="send__deliver" id="send__deliver" name="calulate_delivery">
+            <div delivery__list-inner>
                 
+                 <ul class="delivery__list">
+                    <li class="cart__product cart__item">
+                       <div class="table__title"> Стоимость доставки</div> 
+                    </li>
+                    <li class="li__item cart__item">
+                        <div class="li__item-name">Общий вес товара: </div>
+                        <div class="li__item-value">{{delivery_dict.total_weight / 1000}} т.</div>
+                    </li>
+                    <li class="li__item cart__item">
+                        <div class="li__item-name">Грузподъемность: </div>
+                        <div class="li__item-value">{{delivery_dict.max_weight / 1000}} т.</div>
+                    </li>
+                    <li class="li__item cart__item">
+                        <div class="li__item-name">Цена за рейс: </div>
+                        <div class="li__item-value">{{delivery_dict.price_for_once}} р.</div>
+                    </li>
+                    <li class="li__item cart__item">
+                        <div class="li__item-name">Необходимо рейсов: </div>
+                        <div class="li__item-value">{{delivery_dict.need_ride}}</div>
+                    </li>
+                    <li class="li__item cart__item">
+                        <div class="li__item-name">Итого: </div>
+                        <div class="li__item-value">{{delivery_dict.total_price}} р.</div>
+                    </li>
+                 </ul>
+            </div > 
+        
+                {% endif %}
+            
+            {% endif %}
+            <div class="send__order-block send__order-block--delivery">
+                <input type="submit" value="Отправить заявку" class="send__deliver" id="send__order" name="send_order">
+                               
             </div>
             
             
             
             
 
-        </div>
+        
+        
     </form>
 {% endblock content %}
+
+
