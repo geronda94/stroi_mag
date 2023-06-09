@@ -20,8 +20,10 @@ def coll_to_int(coll):
             result = result+i
         else:
             continue
-    if result != None and result != '':
+    if result != None and result != '' and result not in ['0','00','000']:
         return int(result)
+    elif result in ['0','00','000']:
+        result = int('1'+ str(result))
     else:
         return 1
 
@@ -32,7 +34,7 @@ def bag_construct(cart:dict):
     total_weight = 0
     prod_id = [x[0] for x in cart.items()]
     product_list = products.in_cart(prod_id)
-    loaders__calc = dict()
+    weight_calc = dict()
 
 
 
@@ -84,19 +86,34 @@ def bag_construct(cart:dict):
                     'link':i.get('link')
                 })
 
-                if loaders__calc.get(weight):
-                    loaders__calc[weight] += int(sum_weight/weight)
+                if weight_calc.get(weight):
+                    weight_calc[weight] += int(sum_weight/weight)
                 else:  
-                    loaders__calc[weight] = int(sum_weight/weight)
+                    weight_calc[weight] = int(sum_weight/weight)
             else:
                 continue
         
-    if not session.get('delivery'):
-        session['delivery'] = dict()
+    if not session.get('product'):
+        session['product'] = dict()
 
     session['bag_refactored'] = cart
-    session['loaders_calc'] = loaders__calc
-    session['delivery']['total_weight'] = total_weight
-    session['delivery']['total_price'] = total_price
+    session['weight_calc'] = weight_calc
+    session['product']['total_weight'] = total_weight
+    session['product']['total_price'] = total_price
 
-    return [bag_refactored, total_price, total_weight]
+    return bag_refactored
+
+
+def clear_bag():
+    session['bag'] = dict()
+    session['product'] = dict()
+    session['product']['total_weight'] = 0
+    session['product']['total_price'] = 0
+    session['bag_refactored'] = dict()
+    session['weight_calc'] = 0
+    session['delivery_dict'] = {}
+    session['load_list'] = []
+    session['load_name'] = ''
+    session['total_load_price '] = 0.0
+    session['total_delivery_price '] = 0.0
+    session['dl_total_price'] = 0.0

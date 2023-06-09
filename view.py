@@ -4,7 +4,7 @@ from app import app
 from pg import PgConnect, PgRequest, products
 from config import DB, load_cof
 import uuid
-from func import return_next, coll_to_int, bag_construct
+from func import coll_to_int, bag_construct, clear_bag
 import math
 from datetime import datetime
 
@@ -69,6 +69,10 @@ def add_to_bag():
 	if not session.get('bag'):
 		session['bag'] = dict()
 	
+	if not session.get('delivery'):
+		session['delivery'] = dict()
+		session['delivery']['total_weight'] = 0
+	
 	if session['bag'].get(product_id):
 		session['bag'][product_id] += coll
 	else:
@@ -96,27 +100,21 @@ def add_to_bag():
 @app.route('/bag')
 def get_bag():
 	cart = session.get('bag')
-	total_price = 0
-	total_weight = 0
-
-
-
+	
 	if cart:
-		new_bag = bag_construct(cart)
-		bag_refactored = new_bag[0]
-		total_price = new_bag[1]
-		total_weight = new_bag[2]
-
+		bag_refactored = bag_construct(cart)
 		
+
+		return render_template('bag.html', title='Корзина', menu=menu, cart=bag_refactored,\
+							total=session['product']['total_price'], weight=session['product']['total_weight'])
+
 
 	else:
 		bag_refactored = False
 
+		return render_template('bag.html', title='Корзина', menu=menu)
+
 	
-
-	return render_template('bag.html', title='Корзина', menu=menu, cart=bag_refactored,\
-							total=total_price, weight=session['delivery']['total_weight'])
-
 
 
 @app.route('/edit_bag', methods=['POST'])
@@ -141,11 +139,7 @@ def edit_bag():
 
 @app.route('/drop_bag')
 def drop_bag():
-	session['bag'] = dict()
-	del session['bag_refactored']
-	del session['loaders_calc']
-	session['delivery']['total_weight'] = 0
-	session['delivery']['total_price'] = 0
+	clear_bag()
 	flash(message=f'Корзина очищена',category='success')
 
 	return redirect(url_for('get_bag'))
@@ -154,11 +148,11 @@ def drop_bag():
 
 @app.route('/delivery', methods=['GET', 'POST'])
 def set_delivery():
-	total_weight = session.get('delivery').get('total_weight')
-	total_price = session.get('delivery').get('price')
+	total_weight = session.get('product').get('total_weight')
+	total_price = session.get('product').get('price')
 	bag_refactored = session.get('bag_refactored')
 	bag = session.get('bag')
-	loaders_calc = session.get('loaders_calc')
+	weight_calc = session.get('weight_calc')
 	
 	
 
@@ -171,7 +165,8 @@ def set_delivery():
 
 			if  request.method == 'POST':
 				delivery_value = int(request.form.get('delivery'))
-				load_coficient = float(request.form.get('load_coficient'))
+				load_name = request.form.get('load_coficient')
+				load_coficient = float(load_cof.get(load_name))
 				
 				delivery_dict = None
 				load_list = None
@@ -182,7 +177,7 @@ def set_delivery():
 				if load_coficient > 0:
 					load_list = []
 					for i in loaders_options:
-						for weight, num in loaders_calc.items():
+						for weight, num in weight_calc.items():
 							if float(weight) == float(i.get('weight')):
 								price = float(i.get('price')) * float(load_coficient)
 								total_price = price * num
@@ -194,6 +189,13 @@ def set_delivery():
 									'price': round(price,2),
 									'total_price': num * float(i.get('price'))* float(load_coficient)
 									})
+					session['load_list'] = load_list
+					session['load_name'] = load_name
+					session['total_load_price'] = total_load_price
+				else:
+					session['load_list'] = []
+					session['load_name'] = ''
+					session['total_load_price'] = 0
 								
 				
 				if delivery_value > 1:
@@ -206,10 +208,12 @@ def set_delivery():
 						price_for_once = float(delivery_option.get('price'))
 						need_ride =  math.ceil(float(total_weight) / float(delivery_option.get('max_weight')))
 						total_price = need_ride* price_for_once
-						
+						delivery_location = delivery_option.get('location')
+
 						delivery_dict = {
 										'value': delivery_value,
 										'name':delivery_name,
+										'location':delivery_location,
 										'max_weight':max_weight,
 										'total_weight': total_weight ,
 										'price_for_once': price_for_once,
@@ -217,20 +221,25 @@ def set_delivery():
 										'total_price':total_price
 										}
 						
-
-				if request.form.get('send_order'):
-					return 'ALL READY'
+						session['delivery_dict'] = delivery_dict
+						session['total_delivery_price'] = total_delivery_price
 						
+					
+				else:
+					session['delivery_dict'] = dict()
+					session['total_delivery_price'] = 0
+					
+				if request.form.get('send_order'):
+						return redirect(url_for('complete_order'))			
 				
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 										total_weight=total_weight, total_price=total_price, delivery=delivery_options,
 										loaders=loaders_options, load_cof=load_cof, delivery_value=int(delivery_value),
-										load_coficient=float(load_coficient), load_list=load_list, delivery_dict=delivery_dict,
+										load_name=load_name, load_list=load_list, delivery_dict=delivery_dict,
 										total_load_price = total_load_price, anchor='1', all_total_price = total_load_price+total_delivery_price
 										)
 
 			
-
 
 			return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 			  total_weight=total_weight, total_price=total_price, delivery=delivery_options,\
@@ -245,7 +254,11 @@ def set_delivery():
 
 
 
-
+@app.route('/order', methods=['GET','POST'])
+def complete_order():
+	location = session.get('delivery_dict').get('location')
+	return render_template('complete_order.html', title='Отправить заказ', menu=menu,
+			location=location)
 
 
 
@@ -260,8 +273,7 @@ def before_request():
 		if not session.get('uid'):
 			session['uid'] = uuid.uuid4()
 			session['created'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-		print(session['uid'])
-		print(session['created'])
+		
 	
 	
 	

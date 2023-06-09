@@ -54,13 +54,13 @@
                     <div class="delivery__label dop__label">Для расчета стоимости выгрузки, выберите какая из услуг грузчиков вам нужна:</div>
                     <select class="delivery__select dop__select" id="load__select" name="load_coficient">
                         {% for name,cof in load_cof.items() %}
-                            {% if load_coficient == cof %}
-                                <option class="delivery__value select__value" value="{{ cof }}" selected>
+                            {% if load_name == name %}
+                                <option class="delivery__value select__value" value="{{ name }}" selected>
                                     <div class="option__name">{{ name }}</div>
                                 </option>
                             {% else %}
                             
-                                <option class="delivery__value select__value" value="{{ cof }}">
+                                <option class="delivery__value select__value" value="{{ name }}">
                                     <div class="option__name">{{ name }}</div>
                                 </option>
                             {% endif %}
@@ -77,7 +77,8 @@
                 {% if load_list %}
                 <div class="cart__inner loaders__inner">
                     <table class="cart__tabale">
-                        <div class="table__title"> Стоимость услуг грузчиков</div>
+                        <div class="table__title table__title-top"> Стоимость услуг грузчиков: </div>
+                        <div class="table__title"> {{load_name}} </div>
                         <thead class="cart__items-head">
                             <tr class="cart__table-line">
                                 <th class="cart__items-title cart__item">Вес</th>
@@ -112,7 +113,13 @@
                 
                  <ul class="delivery__list">
                     <li class="cart__product cart__item">
-                       <div class="table__title"> Стоимость доставки</div> 
+                       <div class="table__title-top"> Стоимость доставки:</div> 
+                       <div class="table__title"> {{delivery_dict.name}}</div> 
+                    </li>
+                    
+                    <li class="li__item cart__item">
+                        <div class="li__item-name">Населенный пункт: </div>
+                        <div class="li__item-value">{{delivery_dict.location}}</div>
                     </li>
                     <li class="li__item cart__item">
                         <div class="li__item-name">Общий вес товара: </div>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{{super()}}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bag.css')}}">
+{% endblock styles %}
+
+{% block header %}
+    {% block top_menu %}
+        {{super()}}
+    {% endblock top_menu %}
+{% endblock header %}
+
+{% block content %}
+{{super()}}
+<form action="{{url_for('complete_order')}}" method="post" class="order__form">
+{% if location %}
+    Укажите адресс доставки для населенного пункта: {{location}}
+    <input type="text">
+{% endif %}
+
+
+</form>
+
+
+{% endblock content %}

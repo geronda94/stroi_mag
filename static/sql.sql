@@ -101,11 +101,10 @@ CREATE TABLE IF NOT EXISTS order_info(
     id SERIAL PRIMARY KEY,
     session_id TEXT,
     ip_addres inet,
+    location TEXT,
     address TEXT, 
     phone VARCHAR(15),
     total_price DECIMAL,
-    loader INT REFERENCES loaders(id),
-    driver INT REFERENCES drivers(id),
     date_time TIMESTAMP,
     order_status TEXT
 );

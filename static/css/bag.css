@@ -204,6 +204,11 @@
     font-weight: 600;
 }
 
+.table__title-top{
+    font-size: 15px;
+    color: #a5a5a5;
+}
+
 .delivery__list{
     width:320px;
     margin: 0 auto;
@@ -211,6 +216,7 @@
 }
 
 .li__item{
+    margin-top: 10px;
     text-align: left;
     display:grid;
     grid-template-columns: 11fr 5fr;
