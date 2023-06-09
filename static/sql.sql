@@ -78,6 +78,67 @@ CREATE TABLE IF NOT EXISTS delivery_price(
 );
 
 
+CREATE TABLE IF NOT EXISTS drivers(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(30),
+    phone VARCHAR(13),
+    email TEXT,
+    telegram TEXT
+);
+
+CREATE TABLE IF NOT EXISTS loaders(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(30),
+    phone VARCHAR(13),
+    email TEXT,
+    telegram TEXT
+);
+
+
+
+
+CREATE TABLE IF NOT EXISTS order_info(
+    id SERIAL PRIMARY KEY,
+    session_id TEXT,
+    ip_addres inet,
+    address TEXT, 
+    phone VARCHAR(15),
+    total_price DECIMAL,
+    loader INT REFERENCES loaders(id),
+    driver INT REFERENCES drivers(id),
+    date_time TIMESTAMP,
+    order_status TEXT
+);
+
+CREATE TABLE IF NOT EXISTS order_products(
+    order_id INT REFERENCES order_info(id),
+    product_id INT REFERENCES product(id),
+    coll INT,
+    price DECIMAL,
+    total_price DECIMAL,
+    seller_id INT REFERENCES seller(id)   
+);
+
+CREATE TABLE IF NOT EXISTS order_delivery(
+    order_id INT REFERENCES order_info(id),
+    delivery_id INT REFERENCES delivery_price(id),
+    delivery_name TEXT,
+    need_ride INT,
+    delivery_price DECIMAL,
+    total_price DECIMAL
+);
+
+
+CREATE TABLE IF NOT EXISTS order_loaders(
+    order_id INT REFERENCES order_info(id),
+    load_id INT REFERENCES load_price(id),
+    load_name TEXT,
+    load_weight DECIMAL,
+    coll INT,
+    total_price DECIMAL
+);
+
+
 
 INSERT INTO seller(name, description,address,phone,telegram, email) VALUES
 ('self', 'self', 'aval', '77553291', '15444654565', 'iiiliev.igor@gmail.com'),

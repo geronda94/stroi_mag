@@ -6,7 +6,7 @@ from config import DB, load_cof
 import uuid
 from func import return_next, coll_to_int, bag_construct
 import math
-
+from datetime import datetime
 
 cats = products.select_categories()
 cats_submenu = dict((category.get('name'), category.get('link') )for category in products.select_categories())
@@ -256,14 +256,12 @@ def set_delivery():
 
 @app.before_request
 def before_request():
-	if not session.get('history'):
-		session['history'] = list()
-
-	link =request.path
-
-	if 'static' not in link and 'bag' not in link:
-		session['history'].append(link)
-		session.modified = True
+	if request.endpoint and request.endpoint != 'static' and not request.path.startswith(url_for('static', filename='')):
+		if not session.get('uid'):
+			session['uid'] = uuid.uuid4()
+			session['created'] = datetime.now().strftime('%Y-%m-%d %H:%M')
+		print(session['uid'])
+		print(session['created'])
 	
 	
 	
