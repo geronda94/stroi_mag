@@ -117,3 +117,79 @@ def clear_bag():
     session['total_load_price '] = 0.0
     session['total_delivery_price '] = 0.0
     session['dl_total_price'] = 0.0
+
+
+def number_validator(number: str):
+    new_number = ''
+    for i in range(len(number)):
+        if (number[0] =='+' and i == 0) or number[i].isdigit():
+            new_number += number[i]
+
+        else:
+            return False
+    
+    return False if 15 < len(new_number) or len(new_number) < 8 else new_number
+
+
+
+
+def string_validator(value: str):
+    sql_commands = [
+    "SELECT",
+    "INSERT",
+    "UPDATE",
+    "DELETE",
+    "CREATE",
+    "DROP",
+    "ALTER",
+    "TRUNCATE",
+    "COMMIT",
+    "ROLLBACK",
+    "GRANT",
+    "REVOKE",
+    "JOIN",
+    "INNER",
+    "OUTER",
+    "LEFT",
+    "RIGHT",
+    "FULL",
+    "WHERE",
+    "ORDER",
+    "BY",
+    "GROUP",
+    "HAVING",
+    "DISTINCT",
+    "LIMIT",
+    "OFFSET",
+    "UNION",
+    "EXCEPT",
+    "INTERSECT",
+    "CASE",
+    "WHEN",
+    "THEN",
+    "ELSE",
+    "END",
+    "IN",
+    "NOT",
+    "EXISTS",
+    "LIKE",
+    "BETWEEN",
+    "IS",
+    "NULL",
+    "ASC",
+    "DESC",
+    "CONSTRAINT",
+    "PRIMARY",
+    "FOREIGN",
+    "REFERENCES",
+    "INDEX",
+    "VIEW",
+    "TRIGGER"
+    ]
+    for i in sql_commands:
+        if i in value.upper():
+            return False
+    
+    return True
+
+

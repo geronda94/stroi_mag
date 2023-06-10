@@ -15,11 +15,23 @@
 {% block content %}
 {{super()}}
 <form action="{{url_for('complete_order')}}" method="post" class="order__form">
-{% if location %}
-    Укажите адресс доставки для населенного пункта: {{location}}
-    <input type="text">
-{% endif %}
+    <div class="form__inner">
 
+    {% if location %}
+        <label for="location" class="form__item">
+            <div class="form__input-title">Вы выбрали доставку в: <div class="input__title-span">{{location}}</div></div>
+            
+            <input type="address" id="location" name="address" class="form__input" placeholder="Укажите улицу и номер дома"">
+        </label>
+    {% endif %}
+    <label for="location" class="form__item">
+        <div class="form__input-title"> <div class="input__title-span">Укажите ваш номер телефона:</div></div>
+        
+        <input id="location" name="phone" class="form__input" placeholder="0 777 77 777" type="text">
+    </label>
+    <div for="location" class="form__item">
+        <input type="submit" class="form__submit" name="order_submit" value="Отправить заявку">
+    </div>
 
 </form>
 

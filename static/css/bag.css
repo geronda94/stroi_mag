@@ -235,6 +235,61 @@
     margin-bottom: 0;
 }
 
+
+.form__inner{
+    width: 650px;
+    padding: 30px;
+    margin: 0 auto;
+    display: flex;
+    gap: 35px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border:#d4e8f1 1px dotted;
+}
+
+.form__item{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form__input-title{
+    font-size: 16px;
+    color: #414146;
+}
+
+.input__title-span{
+    display: inline;
+    color:rgb(25, 73, 218);
+}
+
+.form__input{
+    border: 1px solid rgb(25, 73, 218);
+    width: 400px;
+    padding: 10px;
+    text-align: center;
+}
+
+.form__submit{
+    margin-top: 10px;
+    padding: 10px 20px;
+    color: rgb(25, 73, 218);
+    border: 1px solid rgb(25, 73, 218);
+    background: #fff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.form__submit:hover, 
+.form__submit:active{
+    background: rgb(25, 73, 218);
+    color: #fff;
+    transition: 0.3s;
+}
+
+
 @media(max-width:1000px){
     .cart__inner{
         width:300%;

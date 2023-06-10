@@ -4,7 +4,7 @@ from app import app
 from pg import PgConnect, PgRequest, products
 from config import DB, load_cof
 import uuid
-from func import coll_to_int, bag_construct, clear_bag
+from func import coll_to_int, bag_construct, clear_bag, number_validator, string_validator
 import math
 from datetime import datetime
 
@@ -260,6 +260,17 @@ def complete_order():
 	bag = session.get('bag')
 	if (bag and bag_refactored) and (bag == bag_refactored):
 		location = session.get('delivery_dict').get('location')
+
+		if request.method == 'POST':
+			number_phone = number_validator(request.form.get('phone'))
+			
+			if location:
+				address = string_validator(request.form.get('address'))
+				if not address:
+					flash(message='Ошибка в адресе, введите еще раз')
+			
+			if number_phone in [None, False]:
+				flash(message='Не правильный номер телефона')
 
 
 
