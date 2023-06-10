@@ -67,12 +67,8 @@ def add_to_bag():
 	product_name = request.form.get("product_name")
 
 	if not session.get('bag'):
-		session['bag'] = dict()
-	
-	if not session.get('delivery'):
-		session['delivery'] = dict()
-		session['delivery']['total_weight'] = 0
-	
+		clear_bag()
+
 	if session['bag'].get(product_id):
 		session['bag'][product_id] += coll
 	else:
@@ -99,8 +95,12 @@ def add_to_bag():
 
 @app.route('/bag')
 def get_bag():
-	cart = session.get('bag')
-	
+	cart = False
+	if not session.get('bag'):
+		clear_bag()
+	else:
+		cart = session.get('bag')
+
 	if cart:
 		bag_refactored = bag_construct(cart)
 		
@@ -256,9 +256,17 @@ def set_delivery():
 
 @app.route('/order', methods=['GET','POST'])
 def complete_order():
-	location = session.get('delivery_dict').get('location')
-	return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-			location=location)
+	bag_refactored = session.get('bag_refactored')
+	bag = session.get('bag')
+	if (bag and bag_refactored) and (bag == bag_refactored):
+		location = session.get('delivery_dict').get('location')
+
+
+
+		return render_template('complete_order.html', title='Отправить заказ', menu=menu,
+				location=location)
+	else:
+		return redirect(url_for('get_bag'))
 
 
 
