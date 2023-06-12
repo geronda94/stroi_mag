@@ -224,7 +224,7 @@ def set_delivery():
 										}
 						
 						session['delivery_dict'] = delivery_dict
-						session['total_delivery_price'] = total_delivery_price
+						session['total_delivery_price'] = total_price
 						
 					
 				else:
@@ -261,13 +261,19 @@ def complete_order():
 	bag_refactored = session.get('bag_refactored')
 	bag = session.get('bag')
 	number_phone = False
-	address= False
+	address = None
+
+	products_price = session.get('product').get('total_price')
+	delivery_price = session.get('total_delivery_price')
+	load_price = session.get('total_load_price')
+	full_price = products_price + delivery_price + load_price
 
 	if (bag and bag_refactored) and (bag == bag_refactored):
 		location = session.get('delivery_dict').get('location')
 
 		if request.method == 'POST':
 			number_phone = number_validator(request.form.get('phone'))
+
 
 			print('DELIVERY DICT: ',session.get('delivery_dict'))
 			print('-'*90)
@@ -280,25 +286,41 @@ def complete_order():
 
 			if location:
 				address = string_validator(request.form.get('address'))
-				if not address:
+				if not address or address == '':
 					flash(message='Ошибка в адресе, введите еще раз', category='error')
 					
 					
 					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-											location=location, number_phone=number_phone)
+											location=location, number_phone=number_phone, full_price=full_price)
 			
 			if number_phone in [None, False]:
 				flash(message='Не правильный номер телефона', category='error')
 				return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-				location=location, address=address)
+				location=location, address=address, full_price=full_price)
 
+		
 
-
+			order_id = products.new_order(
+				session_id = str(session.get('uid')),
+				ip_address = request.remote_addr,
+				location = location,
+				address = address,
+				full_price = full_price,
+				phone=number_phone,
+				product_price=products_price,
+				delivery_price=delivery_price,
+				load_price=load_price
+				)
+			
+			print(products.products_to_order(order_id=order_id, product_lst=session.get('bag_list')))
+			
+		
+		
 
 
 
 		return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-				location=location)
+				location=location, full_price=full_price)
 	else:
 		return redirect(url_for('get_bag'))
 

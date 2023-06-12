@@ -38,6 +38,8 @@ def time():
 def today():
     return datetime.now().strftime('%Y-%m-%d')
 
+def datetime_now():
+    return datetime.now().strftime('%d-%m-%Y %H:%M:%S')
 
 def refactor_img(text):
     base = url_for('static', filename='html_img/') 
@@ -78,6 +80,15 @@ class PgConnect:
 class PgRequest:
     def __init__(self, db: PgConnect):
         self.__db = db
+
+
+    def execute(self, request, params=None):
+        with self.__db as conn:
+            with conn.cursor() as cur:
+                cur.execute(request, params)
+                return cur.fetchone()[0]
+
+
 
     def insert(self, request, params=None):
         with self.__db as conn:
@@ -257,37 +268,73 @@ class Products:
         return self.__request.selectd("SELECT * FROM delivery_price ORDER BY order_num;")
 
 
-    def add_order(self, args):
-        return  self.__request.insert("""INSERT INTO order_info(session_id, 
-                                                                ip_addres ,
-                                                                location,
-                                                                address , 
-                                                                full_price ,
-                                                                phone ,
-                                                                product_price ,
-                                                                delivery_price ,
-                                                                load_price ,
-                                                                total_price ,
-                                                                driver_id ,
-                                                                loader_id ,
-                                                                date_time ,
-                                                                order_status )
-                VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                RETURNING id;""",
-                                                                args)    
+    
 
-    def new_order(self, args):
+    def new_order(self, 
+                  session_id=None, 
+                  ip_address='127.0.0.1',
+                  location = None,
+                  address = None,
+                  full_price = None,
+                  phone=None,
+                  product_price = None,
+                  delivery_price = None,
+                  load_price = None,
+                  driver_id = None,
+                  loader_id = None,
+                  order_status='posted'
+                  
+                  ):
         query = """
-                    INSERT INTO order_info(session_id, ip_addres, location, address, full_price, phone, product_price,
-                                        delivery_price, load_price, total_price, driver_id, loader_id, date_time, order_status)
-                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    INSERT INTO order_info(session_id, ip_addres, location, address, full_price, 
+                                        phone, product_price, delivery_price, load_price, 
+                                          driver_id, loader_id, date_time, order_status)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     RETURNING id;
                 """
-        return  self.__request.insert(query,('NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL',))
+        return  self.__request.execute(query,
+                                       (session_id, ip_address, location, address,
+                                        full_price, phone,  product_price, delivery_price,
+                                        load_price,  driver_id, loader_id, 
+                                        datetime_now(), order_status))
+    
 
+    def products_to_order(self, order_id: int = None, product_lst: list = []):
+        query = """INSERT INTO order_products(order_id, product_id, product_name,coll, price, total_price, seller_id) 
+                    VALUES"""
+        
+        products_id = ','.join([str(x.get('product_id')) for x in product_lst])
+        
+        products = self.__request.selectd(f'SELECT id,seller_id, name FROM product WHERE id IN({products_id})')
+        
 
+        for i in product_lst:
+            pid = i.get('product_id')
+            pdict = next(filter(lambda x: int(x.get('id')) == int(pid), products), {})
+
+            pname = pdict.get('name')
+            sid = pdict.get('seller_id')
+            if i.get('sale') != '-':
+                price = i.get('sale')
+            else:
+                price = i.get('price')
+
+            query += f"('{order_id}','{pid}', '{pname}', '{i.get('coll')}', '{price}', '{i.get('total')}', '{sid}')"
+            if i != product_lst[-1]:
+                query +=', '
+            else:
+                query +=';'
+            
+        try:
+            self.__request.insert(query)
+            return True
+        except Exception as ex:
+            print(ex)
+            return False
 
 connect = PgConnect(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
 request_db = PgRequest(connect)
 products = Products(request_db)
+
+
 

@@ -193,6 +193,6 @@ def string_validator(value: str):
         if i in value.upper():
             return False
     
-    return value
+    return value.strip()
 
 
