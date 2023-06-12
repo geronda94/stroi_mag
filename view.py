@@ -306,13 +306,25 @@ def complete_order():
 				location = location,
 				address = address,
 				full_price = full_price,
-				phone=number_phone,
-				product_price=products_price,
-				delivery_price=delivery_price,
-				load_price=load_price
+				phone = number_phone,
+				product_price = products_price,
+				delivery_price = delivery_price,
+				load_price= load_price
 				)
 			
-			print(products.products_to_order(order_id=order_id, product_lst=session.get('bag_list')))
+			order_products = products.products_to_order(order_id=order_id, product_lst=session.get('bag_list'))
+			if not order_products:
+				flash(message='Что-то пошло не так при оформлении заказа, попробуйте позже', category='error')
+				return render_template('complete_order.html', title='Отправить заказ', menu=menu,
+				location=location, address=address, full_price=full_price)
+
+			
+			if len(session.get('delivery_dict')) > 0:
+				result = products.delivery_order(order_id=order_id, delivery_dict=session.get('delivery_dict'), address=address)
+				if not result:
+					flash(message='Что-то пошло не так при оформлении доставки, попробуйте позже', category='error')
+					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
+					location=location, address=address, full_price=full_price)
 			
 		
 		

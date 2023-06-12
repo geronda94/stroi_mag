@@ -131,6 +131,7 @@ CREATE TABLE IF NOT EXISTS order_delivery(
     delivery_name TEXT,
     products_weight DECIMAL,
     max_weight DECIMAL,
+    delivery_address VARCHAR(100),
     need_ride INT,
     delivery_price DECIMAL,
     total_price DECIMAL

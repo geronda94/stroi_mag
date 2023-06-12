@@ -332,6 +332,37 @@ class Products:
             print(ex)
             return False
 
+    
+    def delivery_order(self,order_id: int = None, delivery_dict: dict = None, address: str = None):
+        delivery_id = delivery_dict.get('value')
+        name = delivery_dict.get('name')
+        need_ride = delivery_dict.get('need_ride')
+        price = delivery_dict.get('price_for_once')
+        total_price = delivery_dict.get('total_price')
+        weight = delivery_dict.get('total_weight')
+        max_weight = delivery_dict.get('max_weight')
+        
+
+
+        try:
+            self.__request.insert("""
+                INSERT INTO order_delivery (order_id, delivery_id,delivery_name, need_ride, 
+                delivery_price, total_price, product_weight, max_weight,address) 
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)""", (order_id, delivery_id, name,need_ride,
+                    price, total_price, weight, max_weight, address))
+
+            return True
+        
+        except Exception as ex:
+            print(ex)
+            return False
+        
+
+
+
+
+
+
 connect = PgConnect(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
 request_db = PgRequest(connect)
 products = Products(request_db)
