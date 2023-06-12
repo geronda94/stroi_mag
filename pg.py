@@ -257,6 +257,35 @@ class Products:
         return self.__request.selectd("SELECT * FROM delivery_price ORDER BY order_num;")
 
 
+    def add_order(self, args):
+        return  self.__request.insert("""INSERT INTO order_info(session_id, 
+                                                                ip_addres ,
+                                                                location,
+                                                                address , 
+                                                                full_price ,
+                                                                phone ,
+                                                                product_price ,
+                                                                delivery_price ,
+                                                                load_price ,
+                                                                total_price ,
+                                                                driver_id ,
+                                                                loader_id ,
+                                                                date_time ,
+                                                                order_status )
+                VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                RETURNING id;""",
+                                                                args)    
+
+    def new_order(self, args):
+        query = """
+                    INSERT INTO order_info(session_id, ip_addres, location, address, full_price, phone, product_price,
+                                        delivery_price, load_price, total_price, driver_id, loader_id, date_time, order_status)
+                    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING id;
+                """
+        return  self.__request.insert(query,('NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL','NULL',))
+
+
 
 connect = PgConnect(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
 request_db = PgRequest(connect)

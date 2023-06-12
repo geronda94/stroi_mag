@@ -103,10 +103,17 @@ CREATE TABLE IF NOT EXISTS order_info(
     ip_addres inet,
     location TEXT,
     address TEXT, 
+    full_price DECIMAL,
     phone VARCHAR(15),
+    product_price DECIMAL,
+    delivery_price DECIMAL,
+    load_price DECIMAL,
     total_price DECIMAL,
+    driver_id INT REFERENCES drivers(id),
+    loader_id INT REFERENCES loaders(id),
     date_time TIMESTAMP,
     order_status TEXT
+    
 );
 
 CREATE TABLE IF NOT EXISTS order_products(

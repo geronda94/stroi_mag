@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {{super()}}
 
+{% if number_phone %}
+    {% set phone_number = number_phone %}
+{% else %}
+    {% set phone_number =  '' %}
+{% endif %}
+
+
+{% if address %}
+    {% set address = address %}
+{% else %}
+    {% set address =  '' %}
+{% endif %}
+
+
+
 {% block styles %}
     {{super()}}
     <link rel="stylesheet" href="{{url_for('static', filename='css/bag.css')}}">
@@ -21,13 +36,13 @@
         <label for="location" class="form__item">
             <div class="form__input-title">Вы выбрали доставку в: <div class="input__title-span">{{location}}</div></div>
             
-            <input type="address" id="location" name="address" class="form__input" placeholder="Укажите улицу и номер дома"">
+            <input type="address" id="location" name="address" value="{{address}}" class="form__input" placeholder="Укажите улицу и номер дома"">
         </label>
     {% endif %}
     <label for="location" class="form__item">
         <div class="form__input-title"> <div class="input__title-span">Укажите ваш номер телефона:</div></div>
         
-        <input id="location" name="phone" class="form__input" placeholder="0 777 77 777" type="text">
+        <input id="location" name="phone" class="form__input" value="{{phone_number}}" placeholder="0 777 77 777" type="text">
     </label>
     <div for="location" class="form__item">
         <input type="submit" class="form__submit" name="order_submit" value="Отправить заявку">

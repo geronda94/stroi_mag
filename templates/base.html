@@ -26,7 +26,7 @@
 <body>
     <header class="block__header">
         {% for cat,msg in get_flashed_messages(with_categories=true) %}
-            <div class="flash__inner">
+            <div class="flash__inner flash__{{cat}}">
                 <input id="toggle__flash" class="flash__close" type="checkbox" >                                  
                 <label for="toggle__flash" class="flash__close-btn"><div class="close__flash-x"> X </div></label>
                                     

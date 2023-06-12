@@ -8,7 +8,7 @@
     justify-content: space-between;
     align-items: center;
     bottom:20px;
-    background-color: rgba(66, 89, 130, 0.5);
+    background-color: rgba(66, 89, 130, 0.7);
     backdrop-filter: blur(3px);
 }
 
@@ -100,6 +100,16 @@
 }
 #toggle__flash:checked ~ .close-flash-x  {
     display: none;
+}
+
+
+.flash__error{
+    color: rgb(107, 10, 35);
+    background-color: rgba(191, 218, 243, 0.7);
+}
+.flash__success{
+    color: rgb(37, 107, 10);
+    background-color: rgba(191, 218, 243, 0.7);
 }
 
 

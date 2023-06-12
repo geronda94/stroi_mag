@@ -97,6 +97,7 @@ def bag_construct(cart:dict):
         session['product'] = dict()
 
     session['bag_refactored'] = cart
+    session['bag_list'] = bag_refactored
     session['weight_calc'] = weight_calc
     session['product']['total_weight'] = total_weight
     session['product']['total_price'] = total_price
@@ -117,6 +118,7 @@ def clear_bag():
     session['total_load_price '] = 0.0
     session['total_delivery_price '] = 0.0
     session['dl_total_price'] = 0.0
+    session['bag_list'] = dict()
 
 
 def number_validator(number: str):
@@ -184,12 +186,13 @@ def string_validator(value: str):
     "REFERENCES",
     "INDEX",
     "VIEW",
-    "TRIGGER"
+    "TRIGGER",
+    "SET"
     ]
     for i in sql_commands:
         if i in value.upper():
             return False
     
-    return True
+    return value
 
 

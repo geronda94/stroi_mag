@@ -180,6 +180,7 @@ def set_delivery():
 						for weight, num in weight_calc.items():
 							if float(weight) == float(i.get('weight')):
 								price = float(i.get('price')) * float(load_coficient)
+								price_id = i.get('id')
 								total_price = price * num
 								total_load_price += total_price
 
@@ -187,6 +188,7 @@ def set_delivery():
 									'weight':float(weight),
 									'coll':num,
 									'price': round(price,2),
+									'price_id':price_id,
 									'total_price': num * float(i.get('price'))* float(load_coficient)
 									})
 					session['load_list'] = load_list
@@ -258,19 +260,40 @@ def set_delivery():
 def complete_order():
 	bag_refactored = session.get('bag_refactored')
 	bag = session.get('bag')
+	number_phone = False
+	address= False
+
 	if (bag and bag_refactored) and (bag == bag_refactored):
 		location = session.get('delivery_dict').get('location')
 
 		if request.method == 'POST':
 			number_phone = number_validator(request.form.get('phone'))
-			
+
+			print('DELIVERY DICT: ',session.get('delivery_dict'))
+			print('-'*90)
+			print('BAG REFACTORED: ',session.get('bag_list'))
+			print('-'*90)
+			print('LOAD LIST: ',session.get('load_list'))
+			print('-'*90)
+			print('LOAD NAME: ',session.get('load_name'))
+			print('-'*90)
+
 			if location:
 				address = string_validator(request.form.get('address'))
 				if not address:
-					flash(message='Ошибка в адресе, введите еще раз')
+					flash(message='Ошибка в адресе, введите еще раз', category='error')
+					
+					
+					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
+											location=location, number_phone=number_phone)
 			
 			if number_phone in [None, False]:
-				flash(message='Не правильный номер телефона')
+				flash(message='Не правильный номер телефона', category='error')
+				return render_template('complete_order.html', title='Отправить заказ', menu=menu,
+				location=location, address=address)
+
+
+
 
 
 
