@@ -357,7 +357,32 @@ class Products:
             print(ex)
             return False
         
+    def load_order(self, order_id: int =None, order_list: list = None, load_name:str = None):
+        query = """INSERT INTO order_loaders(order_id, load_id, load_name, load_weight, 
+        coll, price, total_price) VALUES"""
 
+        for i in order_list:
+            load_id = i.get('price_id')
+            load_name = load_name
+            load_weight = i.get('weight')
+            coll = i.get('coll')
+            price = i.get('price')
+            total_price = i.get('total_price')
+
+
+            query += f"""('{order_id}', '{load_id}', '{load_name}', '{load_weight}', '{coll}', '{price}', '{total_price}')"""
+            if i == order_list[-1]:
+                query += ';'
+            else:
+                query +=','
+
+
+        try:
+            self.__request.insert(query)
+            return True
+        except Exception as ex:
+            print(ex)
+            return False
 
 
 

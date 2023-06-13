@@ -29,22 +29,46 @@
 
 {% block content %}
 {{super()}}
+
+<div class="form__top-title">Общая сумма вашего заказа: <div class="input__title-span">{{full_price}} р.</div></div>
+<div class="delivery__list-inner">                
+    <ul class="delivery__list prices__list">
+        {% if products_price %}
+        <li class="cart__product cart__item">
+            <div class="table__title-top"> Материалы:</div> 
+            <div class="table__title">{{products_price}} р.</div> 
+         </li>
+        {% endif %}
+        {% if load_price %}
+        <li class="cart__product cart__item">
+            <div class="table__title-top"> Грузчики:</div> 
+            <div class="table__title">{{load_price}} р.</div> 
+         </li>
+        {% endif %}
+        {% if delivery_price %}
+        <li class="cart__product cart__item">
+            <div class="table__title-top"> Доставка:</div> 
+            <div class="table__title">{{delivery_price}} р.</div> 
+         </li>
+        {% endif %}
+        <li class="cart__product cart__item">
+            <a href="{{url_for('get_bag')}}" class="clear__cart">Изменить</a> 
+        </li>
+       
+    </ul>
+</div>
+
 <form action="{{url_for('complete_order')}}" method="post" class="order__form">
     <div class="form__inner">
-    
-    <div>Общая сумма вашего заказа: {{full_price}} р.</div>
-    <div>Заполните форму ниже чтобы подтвердить заявку</div>
-
-
     {% if location %}
         <label for="location" class="form__item">
             <div class="form__input-title">Вы выбрали доставку в: <div class="input__title-span">{{location}}</div></div>
-            <div class="form__input-title"> <div class="input__title-span">Укажите куда будем доставлять:</div></div>
+            <div class="form__input-title"> <div class="input__title-span">Укажите адрес доствки:</div></div>
             <input type="address" id="location" name="address" value="{{address}}" class="form__input" placeholder="Напишите улицу и номер дома"">
         </label>
     {% endif %}
     <label for="location" class="form__item">
-        <div class="form__input-title"> <div class="input__title-span">Укажите ваш номер телефона:</div></div>
+        <div class="form__input-title"> <div class="input__title-span">Ваш номер телефона:</div></div>
         
         <input id="location" name="phone" class="form__input" value="{{phone_number}}" placeholder="В формате 0 777 77 777" type="text">
     </label>

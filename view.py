@@ -263,9 +263,9 @@ def complete_order():
 	number_phone = False
 	address = None
 
-	products_price = session.get('product').get('total_price')
-	delivery_price = session.get('total_delivery_price')
-	load_price = session.get('total_load_price')
+	products_price = round(session.get('product').get('total_price'),2)
+	delivery_price = round(session.get('total_delivery_price'),2)
+	load_price = round(session.get('total_load_price'),2)
 	full_price = products_price + delivery_price + load_price
 
 	if (bag and bag_refactored) and (bag == bag_refactored):
@@ -291,12 +291,14 @@ def complete_order():
 					
 					
 					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-											location=location, number_phone=number_phone, full_price=full_price)
+											location=location, number_phone=number_phone, load_price=load_price, delivery_price=delivery_price,
+											products_price=products_price, full_price=full_price)
 			
 			if number_phone in [None, False]:
 				flash(message='Не правильный номер телефона', category='error')
 				return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-				location=location, address=address, full_price=full_price)
+				location=location, address=address, load_price=load_price, delivery_price=delivery_price,
+				products_price=products_price, full_price=full_price)
 
 		
 
@@ -316,7 +318,8 @@ def complete_order():
 			if not order_products:
 				flash(message='Что-то пошло не так при оформлении заказа, попробуйте позже', category='error')
 				return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-				location=location, address=address, full_price=full_price)
+				location=location, address=address,load_price=load_price, delivery_price=delivery_price,
+				products_price=products_price, full_price=full_price)
 
 			
 			if len(session.get('delivery_dict')) > 0:
@@ -324,15 +327,24 @@ def complete_order():
 				if not result:
 					flash(message='Что-то пошло не так при оформлении доставки, попробуйте позже', category='error')
 					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-					location=location, address=address, full_price=full_price)
+					location=location, address=address, load_price=load_price, delivery_price=delivery_price,
+					products_price=products_price, full_price=full_price)
 			
-		
+			if len(session.get('load_list')):
+				result =  products.load_order(order_id=order_id, order_list=session.get('load_list'),
+				  			load_name=session.get('load_name'))
+				if not result:
+					flash(message='Что-то пошло не так при заказе услуг грузчиков, попробуйте позже', category='error')
+					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
+					location=location, address=address, load_price=load_price, delivery_price=delivery_price,
+					products_price=products_price, full_price=full_price)
 		
 
-
+			return "Ваша заявка отправлена на сервер"
 
 		return render_template('complete_order.html', title='Отправить заказ', menu=menu,
-				location=location, full_price=full_price)
+				location=location, load_price=load_price, delivery_price=delivery_price,
+				products_price=products_price, full_price=full_price)
 	else:
 		return redirect(url_for('get_bag'))
 

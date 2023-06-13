@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS order_delivery(
     delivery_address VARCHAR(100),
     need_ride INT,
     delivery_price DECIMAL,
+    delivery_time TIMESTAMP,
     total_price DECIMAL
 );
 
@@ -144,6 +145,7 @@ CREATE TABLE IF NOT EXISTS order_loaders(
     load_name TEXT,
     load_weight DECIMAL,
     coll INT,
+    price DECIMAL,
     total_price DECIMAL
 );
 
