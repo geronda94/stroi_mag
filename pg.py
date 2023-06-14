@@ -347,7 +347,7 @@ class Products:
         try:
             self.__request.insert("""
                 INSERT INTO order_delivery (order_id, delivery_id,delivery_name, need_ride, 
-                delivery_price, total_price, product_weight, max_weight,address) 
+                delivery_price, total_price, products_weight, max_weight, delivery_address) 
                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)""", (order_id, delivery_id, name,need_ride,
                     price, total_price, weight, max_weight, address))
 

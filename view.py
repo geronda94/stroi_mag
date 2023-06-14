@@ -274,16 +274,6 @@ def complete_order():
 		if request.method == 'POST':
 			number_phone = number_validator(request.form.get('phone'))
 
-
-			print('DELIVERY DICT: ',session.get('delivery_dict'))
-			print('-'*90)
-			print('BAG REFACTORED: ',session.get('bag_list'))
-			print('-'*90)
-			print('LOAD LIST: ',session.get('load_list'))
-			print('-'*90)
-			print('LOAD NAME: ',session.get('load_name'))
-			print('-'*90)
-
 			if location:
 				address = string_validator(request.form.get('address'))
 				if not address or address == '':
@@ -338,9 +328,12 @@ def complete_order():
 					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 					location=location, address=address, load_price=load_price, delivery_price=delivery_price,
 					products_price=products_price, full_price=full_price)
-		
+
+			clear_bag()
 
 			return "Ваша заявка отправлена на сервер"
+
+
 
 		return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 				location=location, load_price=load_price, delivery_price=delivery_price,
