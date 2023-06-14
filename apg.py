@@ -72,7 +72,8 @@ async def main():
     for row in result:
         print(row)
 
-
+db = Database(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
+    
 
 
 loop = asyncio.get_event_loop()

@@ -5,6 +5,7 @@ import asyncio
 import logging #импортируем библиотеку логирования
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+from apg import db
 
 
 #Блок инициализации#############################
@@ -22,11 +23,9 @@ async def get_start(message: Message, bot: Bot): #Функция срабаты�
 ###############################################
 
 async def job_function(bot: Bot):
-    # Ваш код действий, которые должны выполняться каждую минуту
-    # Например, отправка сообщения или выполнение каких-либо операций
+    extract = await db.selectd('SELECT id, order_status FROM order_info;')
 
-    # Пример отправки сообщения каждую минуту в чат с ADMIN
-    await bot.send_message(ADMIN, text='Выполняется действие каждую минуту')
+    await bot.send_message(ADMIN, text=str(extract))
 
 
 
