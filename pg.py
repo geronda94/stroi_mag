@@ -386,11 +386,35 @@ class Products:
 
 
 
+class Orders:
+    def __init__(self, request: PgRequest):
+        self.__request = request
+
+    def get_orders(self):
+        return self.__request.selectd('SELECT * FROM order_info WHERE order_status = %s',('posted',))
+
+    def oreder_status(self, order_id, status='in process'):
+        try:
+            self.__request.insert(f"UPDATE order_info SET order_status=%s WHERE id = %s", (order_id, status))
+            return True
+        except Exception as ex:
+            print(ex)
+            return False
+
+    def get_products(self, order_id):
+        try:
+            return self.__request.selectd("SELECT * FROM order_products WHERE order_id = %s", (order_id,))
+        except Exception as ex:
+            print(ex)
+
+
 
 
 connect = PgConnect(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
 request_db = PgRequest(connect)
+
 products = Products(request_db)
+orders = Orders(request_db)
 
 
 

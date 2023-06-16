@@ -6,6 +6,7 @@ import logging #импортируем библиотеку логировани
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from apg import db
+from pg import orders
 
 
 #Блок инициализации#############################
@@ -23,9 +24,36 @@ async def get_start(message: Message, bot: Bot): #Функция срабаты�
 ###############################################
 
 async def job_function(bot: Bot):
-    extract = await db.selectd('SELECT id, order_status FROM order_info;')
 
-    await bot.send_message(ADMIN, text=str(extract))
+    extract = orders.get_orders()
+    if len(extract)> 0:
+        for i in extract:
+            order_id = str(i.get('id'))
+
+            datetime = i.get('date_time')
+            order_date = datetime.strftime('%d.%m') if datetime else None
+            order_time = datetime.strftime('%H:%M') if datetime else None
+            location = i.get('location')
+            address = i.get('address')
+            full_price = i.get('full_price')
+            product_price = i.get('product_price')
+            delivery_price = i.get('delivery_price')
+            loaders_price = i.get('loaders_price')
+            
+            order_info = f"<b>Новый заказ с сайта</b>\n\n\t Заказ <b>№ {order_id}</b>, \n\tот {order_date} в {order_time} \n\tна сумму: <b>{full_price} р.</b>"
+
+            products = orders.get_products(order_id)
+            order_products = f"<b>Товары по заказу № {order_id}</b>\n\n"
+            for prod in products:
+                order_products += f"<b>{prod.get('product_name')}</b> | {prod.get('coll')} шт. | {prod.get('price')} р. за шт. | Сумма: <b>{prod.get('total_price')} р. </b>\n\n"
+
+
+            # orders.in_process(order_id=order_id)
+            await bot.send_message(ADMIN, text=str(order_info))
+            await bot.send_message(ADMIN, text=str(order_products))
+    else:
+        await bot.send_message(ADMIN, text='Нет новых заявок\n 123\n123\n 077553291')
+
 
 
 
@@ -41,7 +69,7 @@ async def start():
     dp.shutdown.register(stop_bot)
 
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(job_function, 'interval', minutes=1, args=(bot,))
+    scheduler.add_job(job_function, 'interval', seconds=1, args=(bot,))
 
 
 
@@ -63,7 +91,5 @@ async def start():
 
 
 #Запускаем функцию Бота########################
-if __name__ =="__main__":
+if __name__ == "__main__":
     asyncio.run(start())
-
-

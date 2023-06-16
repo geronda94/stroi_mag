@@ -64,17 +64,7 @@ class Database:
         return res
 
 
-async def main():
-    db = Database(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
-    
 
-    result = await db.selectd("SELECT id, order_status FROM order_info WHERE order_status = 'posted';")
-    for row in result:
-        print(row)
 
 db = Database(host=DB.host, port=DB.port, database=DB.database, user=DB.user, password=DB.password)
     
-
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
