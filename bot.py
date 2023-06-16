@@ -38,25 +38,26 @@ async def job_function(bot: Bot):
             order_time = datetime.strftime('%H:%M') if datetime else None
             location = i.get('location')
             address = i.get('address')
+            order_phone = i.get('phone')
             full_price = i.get('full_price')
             product_price = i.get('product_price')
             delivery_price = i.get('delivery_price')
-            loaders_price = i.get('loaders_price')
+            loaders_price = i.get('load_price')
             
             #Формируем сообщение о наличии заявки
-            order_info = f"<b>Новый заказ с сайта</b>\n\n\t Заказ <b>№ {order_id}</b>, \n\tот {order_date} в {order_time} \n\tна сумму: <b>{full_price} р.</b>"
+            order_info = f"<b>✅ Новый заказ с сайта ✅</b>\n\n\tЗаказ <b>№ {order_id}</b>, \n\t<b>от {order_date} в {order_time}</b>"
             
             #Извлекаем список товаров из заявки
             products = orders.get_products(order_id)
-            order_products = f"<b>Товары по заказу № {order_id}</b>\n\n"
+            order_products = f"----------------------------\n🛒<b> Товары по заказу № {order_id}</b>\n\n  "
             for prod in products:
-                order_products += f"<b>{prod.get('product_name')}</b> | {prod.get('coll')} шт. | {prod.get('price')} р. за шт. | Сумма: <b>{prod.get('total_price')} р. </b>\n\n"
+                order_products += f"📦 <b>{prod.get('product_name')}</b> | {prod.get('coll')} шт. | {prod.get('price')} р. за шт. | Сумма: <b>{prod.get('total_price')} р. </b>\n\n"
                 #Формируем сообщение со списком заявок
             order_products += f"\t\t<b>Итого за товар: {product_price} р.</b>"
 
             #Формируем сообщение доставки если есть доставка
-            delivery_message = 'Доставка не нужна'
-            if delivery_price > 0 or not None:
+            delivery_message = '----------------------------\n🚛 Доставка не нужна'
+            if float(delivery_price) > 0:
                 delivery_items = orders.get_delivery(order_id=order_id)[0]
                 if delivery_items and len(delivery_items) > 0:
                     d_name = delivery_items.get('delivery_name')
@@ -66,25 +67,35 @@ async def job_function(bot: Bot):
                     d_price = delivery_items.get('delivery_price')
                     total_price = delivery_items.get('total_price')
 
-                    delivery_message =  f"Заказана доставка: <b>{d_name}</b>\n" \
-                                        f"По адресу: <b>{location}, {address}</b>\n"\
+                    delivery_message =  f"----------------------------\n🚛 Доставка к заказу <b>№{order_id}</b> \n\n <b>{d_name}</b> \n " \
+                                        f"По адресу: <b>{location}, {address}</b>\n\n"\
                                         f"Товар весит: <b>{int(p_weight) / 1000} т.</b>\n"\
                                         f"Грузоподъемность машины: <b>{int(max_weight) / 1000} т.</b>\n"\
                                         f"Нужно рейсов: <b>{need_ride}</b>\n"\
-                                        f"Цена рейса: <b>{d_price} р.</b>\n"\
+                                        f"Цена рейса: <b>{d_price} р.</b>\n\n"\
                                         f"\t\t<b>Итого за доставку: {total_price} р.</b>\n"\
             
-            loaders_message = 'Грузчики не нужны'
-            if loaders_price > 0:
-                True
+            loaders_message = '----------------------------\n👷‍♂️ Грузчики не нужны '
+            if float(loaders_price) > 0:
+                loaders_items = orders.get_loaders(order_id=order_id)
+                l_name = loaders_items[0].get('load_name')
+                
+                loaders_message = f"----------------------------\n👷‍♂️ Услуги грузчиков к заказу <b>№{order_id}</b> \n\n <b>{l_name}</b> \n\n"
+                for load in loaders_items:
+                    l_weight = load.get('load_weight')
+                    l_coll = load.get('coll')
+                    l_price = load.get('price')
+                    l_tprice = load.get('total_price')
+                    loaders_message += f'➕ Вес: <b>{l_weight} кг.</b> | {l_coll} шт. | Цена: {l_price} | Сумма: <b>{l_tprice}</b>\n\n'
+                
+                loaders_message += f"\t\t<b>Итого за разгрузку: {loaders_price} р.</b>\n"\
 
+            orders.order_status(order_id=order_id, status='in process')
+            finally_message = f"{order_info} \n\n\n{order_products} \n\n\n{delivery_message} \n\n\n{loaders_message} \n\n\n<b>ОБЩАЯ СУММА: {full_price} </b>"
 
-            # orders.in_process(order_id=order_id)
-            await bot.send_message(ADMIN, text=str(order_info))
-            await bot.send_message(ADMIN, text=str(order_products))
-            await bot.send_message(ADMIN, text=str(delivery_message))
-    else:
-        await bot.send_message(ADMIN, text='Нет новых заявок\n 123\n123\n 077553291')
+            await bot.send_message(ADMIN, text=str(finally_message))
+            await bot.send_message(ADMIN, text="☎️ Телефон заказчика: ☎️")
+            await bot.send_message(ADMIN, text=f"<b>{order_phone}</b>")
 
 
 

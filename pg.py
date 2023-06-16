@@ -391,11 +391,11 @@ class Orders:
         self.__request = request
 
     def get_orders(self):
-        return self.__request.selectd('SELECT * FROM order_info WHERE order_status = %s',('posted',))
+        return self.__request.selectd('SELECT * FROM order_info WHERE order_status = %s ORDER BY id;',('posted',))
 
-    def oreder_status(self, order_id, status='in process'):
+    def order_status(self, order_id, status='in process'):
         try:
-            self.__request.insert(f"UPDATE order_info SET order_status=%s WHERE id = %s", (order_id, status))
+            self.__request.insert("UPDATE order_info SET order_status=%s WHERE id = %s;", (status, order_id))
             return True
         except Exception as ex:
             print(ex)
@@ -403,13 +403,19 @@ class Orders:
 
     def get_products(self, order_id):
         try:
-            return self.__request.selectd("SELECT * FROM order_products WHERE order_id = %s", (order_id,))
+            return self.__request.selectd("SELECT * FROM order_products WHERE order_id = %s;", (order_id,))
         except Exception as ex:
             print(ex)
 
     def get_delivery(self, order_id):
         try:
-            return self.__request.selectd("SELECT * FROM order_delivery WHERE order_id = %s", (order_id,))
+            return self.__request.selectd("SELECT * FROM order_delivery WHERE order_id = %s;", (order_id,))
+        except Exception as ex:
+            print(ex)
+
+    def get_loaders(self, order_id):
+        try:
+            return self.__request.selectd("SELECT * FROM order_loaders WHERE order_id = %s;", (order_id,))
         except Exception as ex:
             print(ex)
 
