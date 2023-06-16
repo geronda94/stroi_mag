@@ -407,6 +407,11 @@ class Orders:
         except Exception as ex:
             print(ex)
 
+    def get_delivery(self, order_id):
+        try:
+            return self.__request.selectd("SELECT * FROM order_delivery WHERE order_id = %s", (order_id,))
+        except Exception as ex:
+            print(ex)
 
 
 
