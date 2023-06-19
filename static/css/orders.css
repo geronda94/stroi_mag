@@ -1,0 +1,38 @@
+.orders__inner {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.order__item{
+    padding: 20px 40px;
+    width: 100%;
+    border: 2px dotted #d4e8f1;
+}
+
+.order__info-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:30px;
+
+}
+.order__date, .full__price-order{
+    min-width: 300px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 14px;
+}
+
+.order__title-span{
+    font-weight:700px;
+    color:rgb(25, 73, 218);
+    font-size: 15px;
+}
+
+.order__option-title{
+    margin-top: 20px;
+}

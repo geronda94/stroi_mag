@@ -390,8 +390,11 @@ class Orders:
     def __init__(self, request: PgRequest):
         self.__request = request
 
+
+#Для телеграм бота
     def get_orders(self):
         return self.__request.selectd('SELECT * FROM order_info WHERE order_status = %s ORDER BY id;',('posted',))
+
 
     def order_status(self, order_id, status='in process'):
         try:
@@ -418,6 +421,45 @@ class Orders:
             return self.__request.selectd("SELECT * FROM order_loaders WHERE order_id = %s;", (order_id,))
         except Exception as ex:
             print(ex)
+
+
+
+#Для списка заявок в кабинете пользователя
+    def orders_for_user(self, session_id:str = None):
+        res =  self.__request.selectd('SELECT * FROM order_info WHERE session_id = %s ORDER BY date_time DESC',(session_id,))
+        new_list = []
+        for item in res:
+            if len(item)>0:
+                new_list.append({
+                    'id':item.get('id'),
+                    'date':item.get('date_time').strftime('%d-%m-%Y'),
+                    'time':item.get('date_time').strftime('%H:%M'),
+                    'full_price':item.get('full_price'),
+                    'product_price':item.get('product_price'),
+                    'delivery_price':item.get('delivery_price'),
+                    'load_price':item.get('load_price')
+                })
+        return new_list
+
+
+    def products_for_orders(self, orders_list:str):        
+        return self.__request.selectd(f'SELECT * FROM order_products WHERE order_id IN({orders_list})')
+    
+    def loaders_for_orders(self, orders_list:str):        
+        return self.__request.selectd(f'SELECT * FROM order_loaders WHERE order_id IN({orders_list})')
+    
+    def delivery_for_orders(self, orders_list:str):        
+        return self.__request.selectd(f'SELECT * FROM order_delivery WHERE order_id IN({orders_list})')
+    
+        
+
+
+
+
+
+
+
+
 
 
 

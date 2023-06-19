@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, session, request,flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from app import app
-from pg import PgConnect, PgRequest, products
+from pg import PgConnect, PgRequest, products, orders
 from config import DB, load_cof
 import uuid
 from func import coll_to_int, bag_construct, clear_bag, number_validator, string_validator
@@ -329,9 +329,9 @@ def complete_order():
 					location=location, address=address, load_price=load_price, delivery_price=delivery_price,
 					products_price=products_price, full_price=full_price)
 
-			clear_bag()
+			# clear_bag()
 
-			return "Ваша заявка отправлена на сервер"
+			return redirect(url_for('orders_history'))
 
 
 
@@ -340,6 +340,36 @@ def complete_order():
 				products_price=products_price, full_price=full_price)
 	else:
 		return redirect(url_for('get_bag'))
+
+
+
+
+@app.route('/orders_history')
+def orders_history():
+	session_id = str(session.get('uid'))
+	orders_list = orders.orders_for_user(session_id=session_id)
+
+	orders_id = ', '.join(str(order_id) for order_id in [order_item.get('id') for order_item in orders_list])
+	
+	products = orders.products_for_orders(orders_id)
+
+
+	return render_template('orders.html', title='История заказов', menu=menu, orders_list=orders_list,
+			products=products)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
