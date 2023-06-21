@@ -24,7 +24,9 @@
                             {% if i.order_id == order.id %}
                                 <tr class="table__line">
                                     <td class="table__item">{{i.product_name}}</td>
-                                    <td class="table__item">{{i.product_coll}}</td>
+                                    <td class="table__item">{{i.coll}} шт.</td>
+                                    <td class="table__item">{{i.price}} р. за 1 шт.</td>
+                                    <td class="table__item">Сумма: {{i.total_price}} р. </td>
                                     
                                 </tr>
                             {% endif %}
