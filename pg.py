@@ -432,7 +432,7 @@ class Orders:
             if len(item)>0:
                 new_list.append({
                     'id':item.get('id'),
-                    'date':item.get('date_time').strftime('%d-%m-%Y'),
+                    'date':item.get('date_time').strftime('%d/%m/%Y'),
                     'time':item.get('date_time').strftime('%H:%M'),
                     'full_price':item.get('full_price'),
                     'product_price':item.get('product_price'),
@@ -449,7 +449,6 @@ class Orders:
         return self.__request.selectd(f'SELECT * FROM order_loaders WHERE order_id IN({orders_list})')
     
     def delivery_for_orders(self, orders_list:str):
-        print(orders_list)
         return self.__request.selectd(f'SELECT * FROM order_delivery WHERE order_id IN({orders_list})')
     
         

@@ -12,29 +12,74 @@
         {% for order in orders_list %}
         <div class="order__item">
             <div class="order__info-header">
-                <div class="order__date">Заказ от: <span class="order__title-span">{{order.time}} {{order.date}}</span></div>
-                <div class="full__price-order">На сумму: <span class="order__title-span">{{order.full_price}} р.</span></div>                
+                <div class="order__date">Заказ от: <span class="order__title-span">{{order.date[0:5]}}     {{order.time}} </span></div>           
             </div>
 
             <div class="order__body">
                 <div class="order__option">
-                    <div class="option__title">Товары из заказа:</div>
+                    <div class="option__title">Товары: {{order.product_price}} р.</div>
                     <table class="order__table">
                         {% for i in products %}
                             {% if i.order_id == order.id %}
                                 <tr class="table__line">
-                                    <td class="table__item">{{i.product_name}}</td>
+                                    <td class="table__item"><b>{{i.product_name}}</b></td>
                                     <td class="table__item">{{i.coll}} шт.</td>
                                     <td class="table__item">{{i.price}} р. за 1 шт.</td>
-                                    <td class="table__item">Сумма: {{i.total_price}} р. </td>
+                                    <td class="table__item">Всего: <b>{{i.total_price}} р.</b> </td>
                                     
                                 </tr>
                             {% endif %}
                         {% endfor %}
                     </table>
                 </div>
+                
+                <div class="order__option">
+                    <div class="option__title">Доставка: {{order.delivery_price}} р.</div>
+                {% for i in delivery %}
+                    
+                    {% if i.order_id == order.id %}
+                        
+                    <table class="order__table">
+                        <tr class="table__line">
+                            <td class="table__item"><b>{{i.delivery_name[0:24]}}</b></td>
+                            <td class="table__item">{{i.products_weight}} кг.</td>
+                            <td class="table__item">Рейсов: {{i.need_ride}}</td>
+                            <td class="table__item">Цена: <b>{{i.total_price}} р.</b></td>
+                        </tr>
+                    </table>                        
+                        
+                    {% endif %}
+                {% endfor %}
+                
+                </div>
+
+                <div class="order__option">
+                    <div class="option__title">Грузчики: {{order.load_price}} р.</div>
+                    <table class="order__table">
+                        {% for i in loaders %}
+                            {% if i.order_id == order.id %}
+                                <tr class="table__line">
+                                    <td class="table__item">Вес: <b>{{i.load_weight}} кг.</b></td>
+                                    <td class="table__item">{{i.coll}} шт.</td>
+                                    <td class="table__item">{{i.price}} р. за 1 шт.</td>
+                                    <td class="table__item">Всего: <b>{{i.total_price}} р.</b> </td>
+                                    
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+                
+                    
+               
+
+                
+
+                
             </div>
-            
+            <div class="order__info-header">
+                <div class="full__price-order">На сумму: <span class="order__title-span">{{order.full_price}} р.</span></div>     
+            </div>
         </div>
             
         {% endfor %}

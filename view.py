@@ -351,9 +351,11 @@ def orders_history():
 	if orders_list:
 		orders_id = ', '.join(str(order_id) for order_id in [order_item.get('id') for order_item in orders_list])
 		products = orders.products_for_orders(orders_id)
+		delivery = orders.delivery_for_orders(orders_id)
+		loaders = orders.loaders_for_orders(orders_id)
 		
 		return render_template('orders.html', title='История заказов', menu=menu, orders_list=orders_list,
-				products=products)
+				products=products, delivery=delivery, loaders=loaders)
 
 	return render_template('orders.html', title='История заказов пуста', menu=menu)
 
