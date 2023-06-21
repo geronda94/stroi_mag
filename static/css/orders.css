@@ -36,3 +36,19 @@
 .order__option-title{
     margin-top: 20px;
 }
+
+.order__body{
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.option__title{
+    color:rgb(25, 73, 218);
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 3px;
+}

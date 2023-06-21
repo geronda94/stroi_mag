@@ -348,16 +348,14 @@ def complete_order():
 def orders_history():
 	session_id = str(session.get('uid'))
 	orders_list = orders.orders_for_user(session_id=session_id)
+	if orders_list:
+		orders_id = ', '.join(str(order_id) for order_id in [order_item.get('id') for order_item in orders_list])
+		products = orders.products_for_orders(orders_id)
+		
+		return render_template('orders.html', title='История заказов', menu=menu, orders_list=orders_list,
+				products=products)
 
-	orders_id = ', '.join(str(order_id) for order_id in [order_item.get('id') for order_item in orders_list])
-	
-	products = orders.products_for_orders(orders_id)
-
-
-	return render_template('orders.html', title='История заказов', menu=menu, orders_list=orders_list,
-			products=products)
-
-
+	return render_template('orders.html', title='История заказов пуста', menu=menu)
 
 
 

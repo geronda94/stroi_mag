@@ -442,13 +442,14 @@ class Orders:
         return new_list
 
 
-    def products_for_orders(self, orders_list:str):        
+    def products_for_orders(self, orders_list:str):
         return self.__request.selectd(f'SELECT * FROM order_products WHERE order_id IN({orders_list})')
     
     def loaders_for_orders(self, orders_list:str):        
         return self.__request.selectd(f'SELECT * FROM order_loaders WHERE order_id IN({orders_list})')
     
-    def delivery_for_orders(self, orders_list:str):        
+    def delivery_for_orders(self, orders_list:str):
+        print(orders_list)
         return self.__request.selectd(f'SELECT * FROM order_delivery WHERE order_id IN({orders_list})')
     
         
