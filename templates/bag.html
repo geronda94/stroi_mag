@@ -18,7 +18,7 @@
         {% if cart %}
         <table class="cart__tabale">
             <thead class="cart__items-head">
-                <tr class="cart__table-line">
+                <tr class="cart__table-line cart__table-line--head">
                     <th class="cart__items-title cart__item"></th>
                     <th class="cart__items-title cart__item">Название</th>
                     <th class="cart__items-title cart__item">Кол-во</th>
@@ -39,14 +39,31 @@
                     </td>
 
                     <td class="cart__product cart__item ">
+                        <div class="row__title">Товар:</div>
                         <a href="{{url_for('get_product', link=i.link)}}" class="p__name">{{i.product_name}}</a>
                     </td>
-                    <td class="cart__product cart__item">{{i.coll}} шт.</td>
-                    <td class="cart__product cart__item">{{i.weight}} кг.</td>
-                    <td class="cart__product cart__item">{{i.price}} р.</td>
-                    <td class="cart__product cart__item">{{i.sale}} </td>
-                    <td class="cart__product cart__item">{{i.total}} </td>
+                    <td class="cart__product cart__item ">
+                        <div class="row__title">Кол-во:</div>
+                        <div class="row__element">{{i.coll}} шт.</div>
+                    </td>
                     <td class="cart__product cart__item">
+                        <div class="row__title">Вес:</div>
+                        <div class="row__element">{{i.weight}} кг.</div>
+                    </td>
+                    <td class="cart__product cart__item">
+                        <div class="row__title">Цена:</div>
+                        <div class="row__element">{{i.price}} р.</div>
+                    </td>
+                    <td class="cart__product cart__item">
+                        <div class="row__title">Скидка:</div>
+                        <div class="row__element">{{i.sale}}</div>
+                        </td>
+                    <td class="cart__product cart__item">
+                        <div class="row__title">Сумма:</div>
+                        <div class="row__element">{{i.total}} р.</div>
+                        </td>
+                    <td class="cart__product cart__item cart__form">
+                        <div class="row__title row__title-change">Изменить количество:</div>
                         <form action="{{url_for('edit_bag')}}" method="post" class="cart__edit">
                             <label for="minus__{{i.product_id}}">
                                 <div class="input__wrapper">
@@ -75,6 +92,7 @@
 
             <div class="total__block">
                 <div class="total__clear">
+                    <a href="{{url_for('orders_history')}}" class="clear__cart">История заказов</a>
                     <a href="{{url_for('drop_bag')}}" class="clear__cart">Очистить корзину</a>
                 </div>
                 <div class="total__info">
