@@ -51,7 +51,7 @@
             
             <div class="delivery__block">                
                 <div class="load__select">
-                    <div class="delivery__label dop__label">Для расчета стоимости выгрузки, выберите какая из услуг грузчиков вам нужна:</div>
+                    <div class="delivery__label dop__label">Выберите услугу разгрузки:</div>
                     <select class="delivery__select dop__select" id="load__select" name="load_coficient">
                         {% for name,cof in load_cof.items() %}
                             {% if load_name == name %}
@@ -76,31 +76,31 @@
             {% if load_list or delivery_dict %}
                 {% if load_list %}
                 <div class="cart__inner loaders__inner">
-                    <table class="cart__tabale">
-                        <div class="table__title table__title-top"> Стоимость услуг грузчиков: </div>
-                        <div class="table__title"> {{load_name}} </div>
-                        <thead class="cart__items-head">
-                            <tr class="cart__table-line">
-                                <th class="cart__items-title cart__item">Вес</th>
-                                <th class="cart__items-title cart__item">Кол-во</th>
-                                <th class="cart__items-title cart__item">За единицу</th>
-                                <th class="cart__items-title cart__item">Сумма</th>
+                    <table class="cart__tabale table__loaders">
+                        <div class="table__title table__title-top table__loaders-top"> Стоимость услуг грузчиков: </div>
+                        <div class="table__title table__loaders-title"> {{load_name}} </div>
+                        <thead class="cart__items-head table__loaders-head">
+                            <tr class="cart__table-line table__loaders-line">
+                                <th class="cart__items-title cart__item table__loaders-item">Вес</th>
+                                <th class="cart__items-title cart__item table__loaders-item">Кол-во</th>
+                                <th class="cart__items-title cart__item table__loaders-item">За единицу</th>
+                                <th class="cart__items-title cart__item table__loaders-item">Сумма</th>
                         
                             </tr>
                         </thead>
-                        <tbody class="cart__items">
+                        <tbody class="cart__items loaders__items">
                         {% for i in load_list %}
-                            <tr class="cart__table-line">
-                                <td class="cart__product cart__item">{{i.weight}} кг.</td>
-                                <td class="cart__product cart__item">{{i.coll}} шт.</td>
-                                <td class="cart__product cart__item">{{i.price}} р.</td>
-                                <td class="cart__product cart__item">{{i.total_price}} р.</td>                             
+                            <tr class="cart__table-line loaders__table-line">
+                                <td class="cart__product cart__item table__loaders-line">{{i.weight}} кг.</td>
+                                <td class="cart__product cart__item table__loaders-line">{{i.coll}} шт.</td>
+                                <td class="cart__product cart__item table__loaders-line">{{i.price}} р.</td>
+                                <td class="cart__product cart__item table__loaders-line">{{i.total_price}} р.</td>                             
                             </tr>
                         {% endfor %}
-                        <tr class="cart__table-line">
-                            <td class="cart__product cart__item"></td><td class="cart__product cart__item"></td>                            
-                            <td class="cart__product cart__item"><b>Итого:</b></td>
-                            <td class="cart__product cart__item"><b>{{total_load_price}} р.</b></td>                             
+                        <tr class="cart__table-line loaders__table-line">
+                            <td class="cart__product cart__item table__loaders-line"></td><td class="cart__product cart__item"></td>                            
+                            <td class="cart__product cart__item table__loaders-line"><b>Итого:</b></td>
+                            <td class="cart__product cart__item table__loaders-line"><b>{{total_load_price}} р.</b></td>                             
                         </tr>
                         </tbody>
                         </table>
@@ -112,32 +112,32 @@
             <div class="delivery__list-inner">
                 
                  <ul class="delivery__list">
-                    <li class="cart__product cart__item">
-                       <div class="table__title-top"> Стоимость доставки:</div> 
-                       <div class="table__title"> {{delivery_dict.name}}</div> 
+                    <li class="cart__product cart__item delivery__item ul__delivery-title">
+                       <div class="table__title-top delivery__title-top"> Стоимость доставки:</div> 
+                       <div class="table__title delivery__top"> {{delivery_dict.name}}</div> 
                     </li>
                     
-                    <li class="li__item cart__item">
+                    <li class="li__item cart__item delivery__item">
                         <div class="li__item-name">Населенный пункт: </div>
                         <div class="li__item-value">{{delivery_dict.location}}</div>
                     </li>
-                    <li class="li__item cart__item">
+                    <li class="li__item cart__item delivery__item">
                         <div class="li__item-name">Общий вес товара: </div>
                         <div class="li__item-value">{{delivery_dict.total_weight / 1000}} т.</div>
                     </li>
-                    <li class="li__item cart__item">
+                    <li class="li__item cart__item delivery__item">
                         <div class="li__item-name">Грузподъемность: </div>
                         <div class="li__item-value">{{delivery_dict.max_weight / 1000}} т.</div>
                     </li>
-                    <li class="li__item cart__item">
+                    <li class="li__item cart__item delivery__item">
                         <div class="li__item-name">Цена за рейс: </div>
                         <div class="li__item-value">{{delivery_dict.price_for_once}} р.</div>
                     </li>
-                    <li class="li__item cart__item">
+                    <li class="li__item cart__item delivery__item">
                         <div class="li__item-name">Необходимо рейсов: </div>
                         <div class="li__item-value">{{delivery_dict.need_ride}}</div>
                     </li>
-                    <li class="li__item cart__item">
+                    <li class="li__item cart__item delivery__item">
                         <div class="li__item-name">Итого: </div>
                         <div class="li__item-value">{{delivery_dict.total_price}} р.</div>
                     </li>
