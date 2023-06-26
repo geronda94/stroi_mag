@@ -92,7 +92,9 @@
 
 
 @media(max-width:700px){
-    
+    .table__item{
+        min-width: 50%;
+    }
     .table__line{
         display: grid;
         grid-template-columns: 1fr 1fr;
