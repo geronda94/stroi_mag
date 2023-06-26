@@ -97,10 +97,10 @@
                                 <td class="cart__product cart__item table__loaders-line">{{i.total_price}} р.</td>                             
                             </tr>
                         {% endfor %}
-                        <tr class="cart__table-line loaders__table-line">
-                            <td class="cart__product cart__item table__loaders-line"></td><td class="cart__product cart__item"></td>                            
-                            <td class="cart__product cart__item table__loaders-line"><b>Итого:</b></td>
-                            <td class="cart__product cart__item table__loaders-line"><b>{{total_load_price}} р.</b></td>                             
+                        <tr class="cart__table-line loaders__table-line loaders__line-total">
+                           
+                            <td class="cart__product cart__item table__loaders-line loaders__item-total"><b>Итого:</b></td>
+                            <td class="cart__product cart__item table__loaders-line loaders__item-total"><b>{{total_load_price}} р.</b></td>                             
                         </tr>
                         </tbody>
                         </table>
@@ -112,32 +112,32 @@
             <div class="delivery__list-inner">
                 
                  <ul class="delivery__list">
-                    <li class="cart__product cart__item delivery__item ul__delivery-title">
-                       <div class="table__title-top delivery__title-top"> Стоимость доставки:</div> 
-                       <div class="table__title delivery__top"> {{delivery_dict.name}}</div> 
+                    <li class="delivery__item ul__delivery-title">
+                       <div class="delivery__title-top"> Стоимость доставки:</div> 
+                       <div class="delivery__top"> {{delivery_dict.name}}</div> 
                     </li>
                     
-                    <li class="li__item cart__item delivery__item">
+                    <li class="li__item delivery__item">
                         <div class="li__item-name">Населенный пункт: </div>
                         <div class="li__item-value">{{delivery_dict.location}}</div>
                     </li>
-                    <li class="li__item cart__item delivery__item">
+                    <li class="li__item delivery__item">
                         <div class="li__item-name">Общий вес товара: </div>
                         <div class="li__item-value">{{delivery_dict.total_weight / 1000}} т.</div>
                     </li>
-                    <li class="li__item cart__item delivery__item">
+                    <li class="li__item delivery__item">
                         <div class="li__item-name">Грузподъемность: </div>
                         <div class="li__item-value">{{delivery_dict.max_weight / 1000}} т.</div>
                     </li>
-                    <li class="li__item cart__item delivery__item">
+                    <li class="li__item delivery__item">
                         <div class="li__item-name">Цена за рейс: </div>
                         <div class="li__item-value">{{delivery_dict.price_for_once}} р.</div>
                     </li>
-                    <li class="li__item cart__item delivery__item">
+                    <li class="li__item delivery__item">
                         <div class="li__item-name">Необходимо рейсов: </div>
                         <div class="li__item-value">{{delivery_dict.need_ride}}</div>
                     </li>
-                    <li class="li__item cart__item delivery__item">
+                    <li class="li__item delivery__item">
                         <div class="li__item-name">Итого: </div>
                         <div class="li__item-value">{{delivery_dict.total_price}} р.</div>
                     </li>
