@@ -1,5 +1,5 @@
 .orders__inner {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -59,13 +59,90 @@
 
 .order__option{
     position: relative;
+    width: 100%;
 }
 
+.order__table{
+    width:100%;
+}
 
 .table__item{
     padding: 10px 15px;
     border: 1px solid #cacad4;
-    width: 200px;
+    min-width: 120px;
+    max-width: 250px;
     text-align: center;
 }
 
+
+
+@media(max-width:1020px){
+    .order__item{
+        padding: 10px;
+    }
+
+    .table__item {
+        padding: 7px;
+        
+    }
+
+
+}
+
+
+
+@media(max-width:700px){
+    
+    .table__line{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: 2px solid rgb(25, 73, 218);
+        gap:0;
+    }
+
+}
+
+
+@media(max-width:600px){
+    .order__date, 
+    .full__price-order{
+        font-size: 18px;
+    }
+
+    .order__title-span{
+        font-size: 19px;
+    }
+
+    .table__item{
+        font-size: 13px;
+        min-width: 50px;
+    }
+}
+
+@media(max-width:400px){
+    .order__body{
+        width:95%;
+    }
+    .table__item{
+        font-size: 11px;
+        min-width: 40px;
+        padding:5px 2px;
+    }
+
+    
+    .delivery__name{
+        font-size: 9px;
+    }
+
+
+    .order__date, 
+    .full__price-order{
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .order__title-span{
+        font-size: 15px;
+    }
+
+}

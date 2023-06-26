@@ -40,8 +40,8 @@
                     {% if i.order_id == order.id %}
                         
                     <table class="order__table">
-                        <tr class="table__line">
-                            <td class="table__item"><b>{{i.delivery_name[0:24]}}</b></td>
+                        <tr class="table__line delivery__line">
+                            <td class="table__item delivery__name"><b>{{i.delivery_name[0:24]}}</b></td>
                             <td class="table__item">{{i.products_weight}} кг.</td>
                             <td class="table__item">Рейсов: {{i.need_ride}}</td>
                             <td class="table__item">Цена: <b>{{i.total_price}} р.</b></td>
@@ -78,7 +78,7 @@
                 
             </div>
             <div class="order__info-header">
-                <div class="full__price-order">На сумму: <span class="order__title-span">{{order.full_price}} р.</span></div>     
+                <div class="full__price-order">Общая сумма: <span class="order__title-span">{{order.full_price}} р.</span></div>     
             </div>
         </div>
             

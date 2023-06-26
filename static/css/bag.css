@@ -218,7 +218,7 @@
 
 
 .delivery__list{
-    width:380px;
+    width:400px;
     margin: 0 auto;
     text-align: right;
 }
@@ -234,6 +234,22 @@
 .li__item-value{
     font-weight: 700;
 }
+
+.ul__delivery-title{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    color: #a5a5a5;
+}
+
+.delivery__top{
+    font-size: 16px;
+    color: rgb(25, 73, 218);
+    font-weight: 600;
+}
+
 
 .send__order-block--delivery{
     margin-top: 0;
@@ -403,6 +419,8 @@
 
     .loaders__inner{
         width: 90%;
+        justify-content: center;
+        align-items: center;
     }
 
     .form__inner,
@@ -432,7 +450,7 @@
 
     .table__loaders-line{
         padding: 5px 6px;
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .loaders__item-total{
@@ -461,10 +479,13 @@
         grid-template-rows: 1fr 1fr;
     } */
 
-    .form__inner,
-    .form__top-title{
+    .form__inner {
         width: 400px;
         font-size: 15px;
+    }
+
+    .form__top-title{
+        width: 300px;
     }
     input__title-span{
         font-size: 16px;
@@ -472,9 +493,33 @@
     .form__input{
         width: 350px;
     }
+
+    .prices__list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .order__form-title{
+        font-size: 17px;
+        margin-bottom: 40px;
+    }
+    .form__inner{
+        margin-top: 40px;
+        border: none;
+        padding: 10px;
+        width: 90%;
+    }
+    .form__input {
+        width:320px;
+    }
 }
 
 @media(max-width:485px){
+
+    .order__form-title {
+        font-size: 15px;
+    }
     .cart__table-line {
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -491,7 +536,6 @@
     }
     .table__loaders-line{
         padding: 5px 3px;
-        font-size: 11px;
     }
     .loaders__item-total{
         min-width: 40%;
@@ -518,12 +562,59 @@
         width: 320px;
     }
 
-    .form__inner,
     .form__top-title{
+        width: 250px;
+    }
+
+
+    .form__inner{
         width: 330px;
     }
 
     .form__input{
         width: 300px;
+    }
+    .delivery__list {
+        width: 350px;
+    }
+
+    .delivery__item{
+        font-size: 13px;
+    }
+    .li__item-name{
+        font-size: 11px;
+    }
+    .li__item {
+        display: grid;
+        grid-template-columns: 4fr 2fr;
+    }
+}
+
+
+@media(max-width:400px){
+    .delivery__list {
+        width: 280px;
+    }
+
+    .form__inner {
+        width: 300px;
+    }
+
+    .form__input-title {
+        font-size: 13px;
+    }
+
+    
+    .form__input {
+        width: 250px;
+        font-size: 11px;
+    }
+
+    .form__submit{
+        font-size: 11px;
+    }
+    .form__top-title{
+        width: 95%;
+        font-size: 14px;
     }
 }
