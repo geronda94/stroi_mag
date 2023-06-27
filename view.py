@@ -329,7 +329,7 @@ def complete_order():
 					location=location, address=address, load_price=load_price, delivery_price=delivery_price,
 					products_price=products_price, full_price=full_price)
 
-			# clear_bag()
+			clear_bag()
 
 			return redirect(url_for('orders_history'))
 
