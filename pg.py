@@ -39,7 +39,8 @@ def today():
     return datetime.now().strftime('%Y-%m-%d')
 
 def datetime_now():
-    return datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    #return datetime.now().strftime('%d-%m-%Y %H:%M:%S')
 
 def refactor_img(text):
     base = url_for('static', filename='html_img/') 
