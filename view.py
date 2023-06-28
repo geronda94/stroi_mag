@@ -36,7 +36,8 @@ def index():
 
 @app.route('/json')
 def json_try():
-	return json.dumps({'status':200, 'time':datetime.now().strftime('%H:%M:%S'), 'date':datetime.now().strftime('%Y-%m-%d')}, indent=4),200
+	return json.dumps({'status':200, 'time':datetime.now().strftime('%H:%M:%S'), 'date':datetime.now().strftime('%Y-%m-%d')}, indent=4), \
+		200, {'Content-Type':'applycation/json'}
 
 
 
