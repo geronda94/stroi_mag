@@ -7,6 +7,7 @@ import uuid
 from func import coll_to_int, bag_construct, clear_bag, number_validator, string_validator
 import math
 from datetime import datetime
+import json
 
 cats = products.select_categories()
 cats_submenu = dict((category.get('name'), category.get('link') )for category in products.select_categories())
@@ -30,7 +31,12 @@ def index():
 	list_products = products.select_4_for_category()
 
 	return render_template('index.html', title='Стройматериалы в Тирасполе и ПМР', menu=menu, cats=cats, \
-			products=list_products)
+			products=list_products), 200
+
+
+@app.route('/json')
+def json_try():
+	return json.dump({'hello':'world'}),200
 
 
 @app.route('/category/<cat>')
@@ -39,7 +45,7 @@ def category(cat):
 	category_info = products.cat_info(category_link=cat)
 
 	return render_template('category.html', title='Категория товаров',menu=menu, cat=category_info[0], \
-							products=list_products)
+							products=list_products),200
 
 
 @app.route('/product/<link>')
@@ -55,7 +61,7 @@ def get_product(link):
 		product_title = False
 
 	return render_template('product.html', title=product_title, menu=menu, \
-			products=product_info)
+			products=product_info),200
 
 
 
@@ -83,12 +89,12 @@ def add_to_bag():
 		next_url = request.args.get('next')
 		if next_url is None:
 			next_url = 'index'
-		return redirect(request.referrer+'#'+str(anchor))
+		return redirect(request.referrer+'#'+str(anchor)),200
 					
 		
 	
 	elif request.form.get('buy'):
-		return redirect(url_for('get_bag'))
+		return redirect(url_for('get_bag')),200
 	
 
 
@@ -106,13 +112,13 @@ def get_bag():
 		
 
 		return render_template('bag.html', title='Корзина', menu=menu, cart=bag_refactored,\
-							total=session['product']['total_price'], weight=session['product']['total_weight'])
+							total=session['product']['total_price'], weight=session['product']['total_weight']),200
 
 
 	else:
 		bag_refactored = False
 
-		return render_template('bag.html', title='Корзина', menu=menu)
+		return render_template('bag.html', title='Корзина', menu=menu),200
 
 	
 
@@ -134,7 +140,7 @@ def edit_bag():
 			session['bag'][product_id] += coll
 			flash(message=f'Добавили в корзину {coll} шт. {product_name}', category='success')
 	
-	return redirect(url_for('get_bag'))
+	return redirect(url_for('get_bag')),200
 
 
 @app.route('/drop_bag')
@@ -142,7 +148,7 @@ def drop_bag():
 	clear_bag()
 	flash(message=f'Корзина очищена',category='success')
 
-	return redirect(url_for('get_bag'))
+	return redirect(url_for('get_bag')),200
 
 
 
@@ -232,25 +238,25 @@ def set_delivery():
 					session['total_delivery_price'] = 0
 					
 				if request.form.get('send_order'):
-						return redirect(url_for('complete_order'))			
+						return redirect(url_for('complete_order')),200	
 				
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 										total_weight=total_weight, total_price=total_price, delivery=delivery_options,
 										loaders=loaders_options, load_cof=load_cof, delivery_value=int(delivery_value),
 										load_name=load_name, load_list=load_list, delivery_dict=delivery_dict,
 										total_load_price = total_load_price, anchor='1', all_total_price = total_load_price+total_delivery_price
-										)
+										),200
 
 			
 
 			return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 			  total_weight=total_weight, total_price=total_price, delivery=delivery_options,\
-				loaders=loaders_options, load_cof=load_cof)
+				loaders=loaders_options, load_cof=load_cof),200
 		
 		else:
-			return redirect(url_for('get_bag'))
+			return redirect(url_for('get_bag')),200
 	else:
-		return redirect(url_for('get_bag'))
+		return redirect(url_for('get_bag')),200
 	
 
 
@@ -282,13 +288,13 @@ def complete_order():
 					
 					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 											location=location, number_phone=number_phone, load_price=load_price, delivery_price=delivery_price,
-											products_price=products_price, full_price=full_price)
+											products_price=products_price, full_price=full_price),200
 			
 			if number_phone in [None, False]:
 				flash(message='Не правильный номер телефона', category='error')
 				return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 				location=location, address=address, load_price=load_price, delivery_price=delivery_price,
-				products_price=products_price, full_price=full_price)
+				products_price=products_price, full_price=full_price),200
 
 		
 
@@ -309,7 +315,7 @@ def complete_order():
 				flash(message='Что-то пошло не так при оформлении заказа, попробуйте позже', category='error')
 				return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 				location=location, address=address,load_price=load_price, delivery_price=delivery_price,
-				products_price=products_price, full_price=full_price)
+				products_price=products_price, full_price=full_price),200
 
 			
 			if len(session.get('delivery_dict')) > 0:
@@ -318,7 +324,7 @@ def complete_order():
 					flash(message='Что-то пошло не так при оформлении доставки, попробуйте позже', category='error')
 					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 					location=location, address=address, load_price=load_price, delivery_price=delivery_price,
-					products_price=products_price, full_price=full_price)
+					products_price=products_price, full_price=full_price),200
 			
 			if len(session.get('load_list')):
 				result =  products.load_order(order_id=order_id, order_list=session.get('load_list'),
@@ -327,19 +333,19 @@ def complete_order():
 					flash(message='Что-то пошло не так при заказе услуг грузчиков, попробуйте позже', category='error')
 					return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 					location=location, address=address, load_price=load_price, delivery_price=delivery_price,
-					products_price=products_price, full_price=full_price)
+					products_price=products_price, full_price=full_price),200
 
 			clear_bag()
 
-			return redirect(url_for('orders_history'))
+			return redirect(url_for('orders_history')),200
 
 
 
 		return render_template('complete_order.html', title='Отправить заказ', menu=menu,
 				location=location, load_price=load_price, delivery_price=delivery_price,
-				products_price=products_price, full_price=full_price)
+				products_price=products_price, full_price=full_price),200
 	else:
-		return redirect(url_for('get_bag'))
+		return redirect(url_for('get_bag')),200
 
 
 
@@ -355,9 +361,9 @@ def orders_history():
 		loaders = orders.loaders_for_orders(orders_id)
 		
 		return render_template('orders.html', title='История заказов', menu=menu, orders_list=orders_list,
-				products=products, delivery=delivery, loaders=loaders)
+				products=products, delivery=delivery, loaders=loaders),200
 
-	return render_template('orders.html', title='История заказов пуста', menu=menu)
+	return render_template('orders.html', title='История заказов пуста', menu=menu),200
 
 
 
