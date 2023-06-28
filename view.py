@@ -34,10 +34,10 @@ def index():
 			products=list_products), 200
 
 
-@app.route('/json')
+@app.route('/json', methods=['POST', 'GET'])
 def json_try():
 	return json.dumps({'status':200, 'time':datetime.now().strftime('%H:%M:%S'), 'date':datetime.now().strftime('%Y-%m-%d')}, indent=4), \
-		200, {'Content-Type':'applycation/json'}
+		200
 
 
 
