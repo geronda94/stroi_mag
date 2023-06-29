@@ -91,12 +91,12 @@ def add_to_bag():
 		next_url = request.args.get('next')
 		if next_url is None:
 			next_url = 'index'
-		return redirect(request.referrer+'#'+str(anchor)),200
+		return redirect(request.referrer+'#'+str(anchor), code=302),200
 					
 		
 	
 	elif request.form.get('buy'):
-		return redirect(url_for('get_bag')),200
+		return redirect(url_for('get_bag'), code=302),200
 	
 
 
@@ -142,7 +142,7 @@ def edit_bag():
 			session['bag'][product_id] += coll
 			flash(message=f'Добавили в корзину {coll} шт. {product_name}', category='success')
 	
-	return redirect(url_for('get_bag')),200
+	return redirect(url_for('get_bag'), code=302),200
 
 
 @app.route('/drop_bag')
@@ -150,7 +150,7 @@ def drop_bag():
 	clear_bag()
 	flash(message=f'Корзина очищена',category='success')
 
-	return redirect(url_for('get_bag')),200
+	return redirect(url_for('get_bag'), code=302),200
 
 
 
@@ -240,7 +240,7 @@ def set_delivery():
 					session['total_delivery_price'] = 0
 					
 				if request.form.get('send_order'):
-						return redirect(url_for('complete_order')),200	
+						return redirect(url_for('complete_order'), code=302),200	
 				
 				return render_template('delivery_order.html', title='Способ доставки и разгрузки', menu=menu,
 										total_weight=total_weight, total_price=total_price, delivery=delivery_options,
@@ -256,9 +256,9 @@ def set_delivery():
 				loaders=loaders_options, load_cof=load_cof),200
 		
 		else:
-			return redirect(url_for('get_bag')),200
+			return redirect(url_for('get_bag'), code=302),200
 	else:
-		return redirect(url_for('get_bag')),200
+		return redirect(url_for('get_bag'), code=302),200
 	
 
 
@@ -339,7 +339,7 @@ def complete_order():
 
 			clear_bag()
 
-			return redirect(url_for('orders_history')),200
+			return redirect(url_for('orders_history'), code=302),200
 
 
 
@@ -347,7 +347,7 @@ def complete_order():
 				location=location, load_price=load_price, delivery_price=delivery_price,
 				products_price=products_price, full_price=full_price),200
 	else:
-		return redirect(url_for('get_bag')),200
+		return redirect(url_for('get_bag'), code=302),200
 
 
 
