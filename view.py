@@ -301,7 +301,8 @@ def complete_order():
 
 			order_id = products.new_order(
 				session_id = str(session.get('uid')),
-				ip_address = request.remote_addr,
+				#ip_address = request.remote_addr,
+				ip_address = '127.0.0.1',
 				location = location,
 				address = address,
 				full_price = full_price,
