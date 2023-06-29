@@ -286,6 +286,9 @@ class Products:
                   order_status='posted'
                   
                   ):
+        if str(ip_address.strip()) == "":
+            ip_address = '127.0.0.1'
+            
         query = """
                     INSERT INTO order_info(session_id, ip_addres, location, address, full_price, 
                                         phone, product_price, delivery_price, load_price, 
