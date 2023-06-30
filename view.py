@@ -41,7 +41,7 @@ def json_try():
 
 @app.route('/req', methods=['POST', 'GET'])
 def req_json():
-	return json.dumps(request, indent=4)
+	return str(request.headers)
 
 
 @app.route('/category/<cat>')
@@ -305,7 +305,7 @@ def complete_order():
 
 			order_id = products.new_order(
 				session_id = str(session.get('uid')),
-				ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr),
+				ip_address = str(request.headers.get('X-Real-Ip').split(',')[0]),
 				location = location,
 				address = address,
 				full_price = full_price,
