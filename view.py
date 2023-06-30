@@ -39,6 +39,10 @@ def json_try():
 	return json.dumps({'status':200, 'time':datetime.now().strftime('%H:%M:%S'), 'date':datetime.now().strftime('%Y-%m-%d')}, indent=4)
 
 
+@app.route('/req', methods=['POST', 'GET'])
+def req_json():
+	return json.dumps(request, indent=4)
+
 
 @app.route('/category/<cat>')
 def category(cat):
