@@ -41,8 +41,7 @@ def json_try():
 
 @app.route('/req', methods=['POST', 'GET'])
 def req_json():
-	#return json.dumps(request, indent=4)
-	return 'Hello World'
+	return json.dumps(request, indent=4)
 
 
 @app.route('/category/<cat>')
