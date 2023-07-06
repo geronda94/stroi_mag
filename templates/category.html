@@ -27,7 +27,7 @@
                                     <img class="card__ava" src="{{url_for('static', filename='img/catalog/')}}{{ava_link}}" alt="">
                                 </div>
                                 <div class="card__title">{{i.product_name}}</div>
-                                <div class="card__description">{{i.description}}</div>
+                                <div class="card__description">{{i.description | safe}}</div>
                             </a>
                             <div class="inner__more-info"><a href="{{url_for('get_product', link=i.link)}}" class="link__more-info" target="_blank">Подробнее о товаре...</a></div>
 
