@@ -46,6 +46,10 @@
     margin-top: 25px;
     min-width: 100%;
 }
+.made_in{
+    min-width: 100%;
+    margin-top: 20px;
+}
 
 .product__img{
     width: 100%;
