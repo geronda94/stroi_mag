@@ -492,6 +492,7 @@
     }
     .form__input{
         width: 350px;
+        margin:0 auto;
     }
 
     .prices__list {

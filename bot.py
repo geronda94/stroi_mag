@@ -90,7 +90,7 @@ async def job_function(bot: Bot):
                 
                 loaders_message += f"\t\t<b>Итого за разгрузку: {loaders_price} р.</b>\n"\
 
-            #orders.order_status(order_id=order_id, status='in process')
+            orders.order_status(order_id=order_id, status='in process')
             finally_message = f"{order_info} \n\n\n{order_products} \n\n\n{delivery_message} \n\n\n{loaders_message} \n\n\n<b>ОБЩАЯ СУММА: {full_price} </b>"
 
             await bot.send_message(ADMIN, text=str(finally_message))
@@ -113,7 +113,7 @@ async def start():
     dp.shutdown.register(stop_bot)
 
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(job_function, 'interval', seconds=10, args=(bot,))
+    scheduler.add_job(job_function, 'interval', seconds=30, args=(bot,))
 
 
 
