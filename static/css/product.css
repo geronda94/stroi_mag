@@ -40,6 +40,13 @@
     margin:0 15px 15px 0;
 }
 
+.product__description{
+    width: 55%;
+}
+
+.char__prod{
+    min-width: 100%;
+}
 
 .product__img{
     width: 100%;
