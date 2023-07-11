@@ -35,10 +35,23 @@ footer{
     letter-spacing: 5px;
     color: #fff;
     font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 15px;
 }
+
+
+.footer__phone a {
+    padding-top: 2px;
+    line-height: 23px;
+  }
+  
+
 .footer__phone:hover,
 .footer__phone:active{
-    color: rgb(47, 96, 245);
+    color: #34a1f4;
     transition: 0.3s;
     
 }

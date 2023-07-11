@@ -154,7 +154,12 @@
 
     <footer class="block_footer">
         {% block footer %}
-        <div class="footer__phone"><a href="https://domstroi.pro">DOMSTROI.pro © 2023 </a></div>
+        <div class="footer__phone">
+            <img src="{{url_for('static', filename='telegram.svg')}}" width="22px" alt="">
+            <a href="https://t.me/domstroi_pro" target="_blank">Связаться с нами
+            
+            </a>
+        </div>
         {% endblock footer %}
     </footer>
     
