@@ -19,7 +19,6 @@ cats_submenu = dict((category.get('name'), category.get('link') )for category in
 menu = {
 	'Каталог товаров':cats_submenu,
 	'Главная страница':'index',
-	'Достава и разгрузка':'index',
 	'Ваша корзина':'get_bag',
 	}
 
